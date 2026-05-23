@@ -24,43 +24,6 @@
   git clone https://github.com/innodg/vibe-venture.git
   ```
 
-- GitHub Copilot 사용 준비:
-
-  ```bash
-  cd vibe-venture/workshop/week-02
-  ```
-
-  ```bash
-  azd up
-  ```
-
-- VS Code GitHub Copilot 수동 등록
-
-  ```bash
-  echo "id: $(azd env get-value AZURE_OPENAI_GPT_DEPLOYMENT_NAME)"
-  echo "name: Azure GPT 5.3 Codex"
-  echo "url: $(azd env get-value AZURE_OPENAI_ENDPOINT)openai/responses?api-version=2025-04-01-preview"
-  echo "apiKey: $(az cognitiveservices account keys list -g "rg-$(azd env get-value AZURE_ENV_NAME)" -n $(azd env get-value AZURE_OPENAI_NAME) --query key1 -o tsv)"
-  ```
-
-- GitHub Copilot CLI 수동 등록
-
-  ```bash
-  # Windows
-  $env:COPILOT_PROVIDER_BASE_URL = "$(azd env get-value AZURE_OPENAI_ENDPOINT)deployments/$(azd env get-value AZURE_OPENAI_GPT_DEPLOYMENT_NAME)"
-  $env:COPILOT_PROVIDER_TYPE = "azure"
-  $env:COPILOT_PROVIDER_WIRE_API = "responses"
-  $env:COPILOT_PROVIDER_API_KEY = "$(az cognitiveservices account keys list -g "rg-$(azd env get-value AZURE_ENV_NAME)" -n $(azd env get-value AZURE_OPENAI_NAME) --query key1 -o tsv)"
-  $env:COPILOT_MODEL = "$(azd env get-value AZURE_OPENAI_GPT_DEPLOYMENT_NAME)"
-
-  # MacOS
-  export COPILOT_PROVIDER_BASE_URL="$(azd env get-value AZURE_OPENAI_ENDPOINT)deployments/$(azd env get-value AZURE_OPENAI_GPT_DEPLOYMENT_NAME)"
-  export COPILOT_PROVIDER_TYPE="azure"
-  export COPILOT_PROVIDER_WIRE_API="responses"
-  export COPILOT_PROVIDER_API_KEY="$(az cognitiveservices account keys list -g "rg-$(azd env get-value AZURE_ENV_NAME)" -n $(azd env get-value AZURE_OPENAI_NAME) --query key1 -o tsv)"
-  export COPILOT_MODEL="$(azd env get-value AZURE_OPENAI_GPT_DEPLOYMENT_NAME)"
-  ```
-
 - NEIS OpenAPI 키 등록: [https://open.neis.go.kr](https://open.neis.go.kr/portal/guide/actKeyPage.do)
   - 학교 정보 조회 API: [학교기본정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010104913&infSeq=1)
   - 학교별 급식 정보 조회 API: [급식식단정보](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=1)
@@ -79,3 +42,18 @@
     - 기술 스택
   - 앱 구조
   - 앱 보안
+
+## GitHub Copilot 활용 앱 개발하기
+
+- VS Code 활용
+- Copilot CLI 활용
+
+## 과제: 전국 학교별 급식 정보 검색 웹 애플리케이션 만들기
+
+- VS Code 또는 Copilot CLI 활용
+- [`workshop/week-02/data`](./data/) 디렉토리 안의 엑셀 파일 활용 `openapi.json` 문서 만들기
+- `openapi.json` 기반으로 Python 또는 JavaScript 기반 웹 애플리케이션 만들기
+- 시도 교육청 검색 👉 학교 검색 👉 급식 정보 조회 날짜 범위
+- 보안 주의사항:
+  - 검색용 API 키는 화면에 노출시키면 안됨
+  - 검색용 API 키는 애플리케이션 안에 저장하면 안됨
