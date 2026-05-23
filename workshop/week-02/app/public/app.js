@@ -17,24 +17,28 @@ const state = {
   selectedRegion: null,   // { code, name, sido }
   selectedSchool: null,   // { schoolCode, schoolName, schoolType }
   selectedDate: null,     // "YYYY-MM-DD"
+  mode: "day",            // "day" | "week"
 };
 
 // ── DOM 참조 ─────────────────────────────────────────────────
 const $ = (id) => document.getElementById(id);
 
-const regionSelect  = $("region-select");
-const stepSchool    = $("step-school");
-const schoolSearch  = $("school-search");
+const regionSelect   = $("region-select");
+const stepSchool     = $("step-school");
+const schoolSearch   = $("school-search");
 const schoolListWrap = $("school-list-wrap");
-const stepDate      = $("step-date");
-const dateInput     = $("date-input");
-const searchBtn     = $("search-btn");
-const selSummary    = $("selection-summary");
-const resultSection = $("result");
-const resultTitle   = $("result-title");
-const mealCards     = $("meal-cards");
-const loadingEl     = $("loading");
-const errorEl       = $("error-msg");
+const stepDate       = $("step-date");
+const dateInput      = $("date-input");
+const searchBtn      = $("search-btn");
+const selSummary     = $("selection-summary");
+const resultSection  = $("result");
+const resultTitle    = $("result-title");
+const mealCards      = $("meal-cards");
+const loadingEl      = $("loading");
+const errorEl        = $("error-msg");
+const modeDayBtn     = $("mode-day");
+const modeWeekBtn    = $("mode-week");
+const weekRangeLabel = $("week-range-label");
 
 // ── 초기화 ───────────────────────────────────────────────────
 (async function init() {
@@ -136,16 +140,60 @@ function selectSchool(school, el) {
   updateSummary();
 }
 
+// ── 모드 토글 ─────────────────────────────────────────────────
+modeDayBtn.addEventListener("click", () => setMode("day"));
+modeWeekBtn.addEventListener("click", () => setMode("week"));
+
+function setMode(m) {
+  state.mode = m;
+  modeDayBtn.classList.toggle("active", m === "day");
+  modeWeekBtn.classList.toggle("active", m === "week");
+  updateWeekRangeLabel();
+  resultSection.classList.add("hidden");
+  hideError();
+}
+
+/** 선택한 날짜가 속한 주의 월요일~금요일 반환 */
+function getWeekRange(dateStr) {
+  const d = new Date(dateStr);
+  const day = d.getDay(); // 0=일, 1=월 ... 6=토
+  const diffToMon = (day === 0 ? -6 : 1 - day);
+  const mon = new Date(d); mon.setDate(d.getDate() + diffToMon);
+  const fri = new Date(mon); fri.setDate(mon.getDate() + 4);
+  return { mon, fri };
+}
+
+function toApiDate(d) {
+  return d.toISOString().slice(0, 10).replace(/-/g, "");
+}
+
+function toDisplayDate(d) {
+  return `${d.getMonth() + 1}/${d.getDate()}`;
+}
+
+function updateWeekRangeLabel() {
+  if (state.mode === "week" && dateInput.value) {
+    const { mon, fri } = getWeekRange(dateInput.value);
+    const label = `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 (월) ~ ${fri.getMonth()+1}월 ${fri.getDate()}일 (금)`;
+    weekRangeLabel.textContent = label;
+    weekRangeLabel.classList.remove("hidden");
+  } else {
+    weekRangeLabel.classList.add("hidden");
+  }
+}
+
 // ── 날짜 변경 ────────────────────────────────────────────────
 dateInput.addEventListener("change", () => {
   state.selectedDate = dateInput.value || null;
   updateSummary();
+  updateWeekRangeLabel();
   searchBtn.disabled = !state.selectedDate;
 });
 
 // 초기 오늘 날짜가 있으면 버튼 활성화 상태 유지 (학교 선택 후)
 dateInput.addEventListener("input", () => {
   searchBtn.disabled = !dateInput.value;
+  updateWeekRangeLabel();
 });
 
 // ── 급식 조회 ────────────────────────────────────────────────
@@ -154,16 +202,26 @@ searchBtn.addEventListener("click", fetchMeal);
 async function fetchMeal() {
   if (!state.selectedRegion || !state.selectedSchool || !dateInput.value) return;
 
-  const date = dateInput.value.replace(/-/g, ""); // YYYYMMDD
   hideError();
   showLoading(true);
   resultSection.classList.add("hidden");
 
   try {
-    const meals = await apiFetch(
-      `/api/meal?atptCode=${state.selectedRegion.code}&schoolCode=${state.selectedSchool.schoolCode}&date=${date}`
-    );
-    renderMeals(meals, state.selectedSchool.schoolName, dateInput.value);
+    if (state.mode === "week") {
+      const { mon, fri } = getWeekRange(dateInput.value);
+      const fromDate = toApiDate(mon);
+      const toDate   = toApiDate(fri);
+      const meals = await apiFetch(
+        `/api/meal?atptCode=${state.selectedRegion.code}&schoolCode=${state.selectedSchool.schoolCode}&fromDate=${fromDate}&toDate=${toDate}`
+      );
+      renderWeekMeals(meals, state.selectedSchool.schoolName, mon, fri);
+    } else {
+      const date = dateInput.value.replace(/-/g, "");
+      const meals = await apiFetch(
+        `/api/meal?atptCode=${state.selectedRegion.code}&schoolCode=${state.selectedSchool.schoolCode}&date=${date}`
+      );
+      renderMeals(meals, state.selectedSchool.schoolName, dateInput.value);
+    }
   } catch (err) {
     showError("급식 정보를 가져오지 못했습니다: " + err.message);
   } finally {
@@ -171,7 +229,57 @@ async function fetchMeal() {
   }
 }
 
-// ── 급식 결과 렌더 ───────────────────────────────────────────
+// ── 주간 급식표 렌더 ──────────────────────────────────────────
+const DAY_NAMES = ["월", "화", "수", "목", "금"];
+
+function renderWeekMeals(meals, schoolName, mon, fri) {
+  const monStr = `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일`;
+  const friStr = `${fri.getMonth()+1}월 ${fri.getDate()}일`;
+  resultTitle.textContent = `${schoolName} · ${monStr} ~ ${friStr}`;
+  mealCards.innerHTML = "";
+
+  // 날짜별로 급식 그룹화
+  const byDate = {};
+  for (const meal of (meals || [])) {
+    if (!byDate[meal.date]) byDate[meal.date] = [];
+    byDate[meal.date].push(meal);
+  }
+
+  const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const grid = document.createElement("div");
+  grid.className = "week-table";
+
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(mon);
+    d.setDate(mon.getDate() + i);
+    const dateKey = toApiDate(d);
+    const isToday = dateKey === todayStr;
+    const dayMeals = byDate[dateKey] || [];
+
+    const card = document.createElement("div");
+    card.className = "week-day-card";
+    card.innerHTML = `
+      <div class="week-day-header ${isToday ? "today" : ""}">
+        ${DAY_NAMES[i]} (${toDisplayDate(d)})
+      </div>
+      <div class="week-day-meals">
+        ${dayMeals.length === 0
+          ? '<div class="week-no-meal">급식 없음</div>'
+          : dayMeals.map((m) => `
+              <div class="week-meal-block">
+                <div class="week-meal-type">${escHtml(m.mealType)}</div>
+                <div class="week-dish">${m.dishes.map((d) => escHtml(d.replace(/\([\d.,\s]+\.\)/g, "").trim())).join("<br>")}</div>
+              </div>`).join("")}
+      </div>`;
+    grid.appendChild(card);
+  }
+
+  mealCards.appendChild(grid);
+  resultSection.classList.remove("hidden");
+  resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ── 일간 급식 결과 렌더 ───────────────────────────────────────
 const MEAL_ICONS = { "조식": "🌅", "중식": "🍚", "석식": "🌙" };
 
 function renderMeals(meals, schoolName, dateStr) {

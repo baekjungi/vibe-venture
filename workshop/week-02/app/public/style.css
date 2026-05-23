@@ -282,6 +282,93 @@ button#search-btn:disabled { background: var(--gray-400); cursor: not-allowed; }
 }
 .no-meal .icon { font-size: 2.5rem; margin-bottom: .75rem; }
 
+/* ── Mode Toggle ───────────────────────────────────────────── */
+.mode-toggle {
+  display: flex;
+  gap: .4rem;
+  margin-bottom: .75rem;
+  background: var(--gray-100);
+  padding: .25rem;
+  border-radius: 8px;
+  width: fit-content;
+}
+.mode-btn {
+  padding: .4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--gray-600);
+  transition: background .15s, color .15s;
+}
+.mode-btn.active {
+  background: #fff;
+  color: var(--brand);
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.week-range-label {
+  margin-top: .5rem;
+  font-size: .85rem;
+  color: var(--brand-dark);
+  background: var(--brand-light);
+  padding: .35rem .8rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* ── Weekly Table ──────────────────────────────────────────── */
+.week-table {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .6rem;
+  margin-top: .5rem;
+}
+.week-day-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.week-day-header {
+  text-align: center;
+  padding: .5rem;
+  font-size: .8rem;
+  font-weight: 700;
+  background: var(--brand);
+  color: #fff;
+}
+.week-day-header.today { background: var(--success); }
+.week-day-meals { padding: .5rem; }
+.week-meal-block { margin-bottom: .5rem; }
+.week-meal-block:last-child { margin-bottom: 0; }
+.week-meal-type {
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--gray-600);
+  margin-bottom: .2rem;
+}
+.week-dish {
+  font-size: .75rem;
+  color: var(--gray-800);
+  line-height: 1.5;
+}
+.week-no-meal {
+  font-size: .75rem;
+  color: var(--gray-400);
+  text-align: center;
+  padding: .5rem 0;
+}
+
+@media (max-width: 600px) {
+  .week-table { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 360px) {
+  .week-table { grid-template-columns: 1fr; }
+}
+
 /* ── Utilities ─────────────────────────────────────────────── */
 .hidden { display: none !important; }
 

@@ -57,10 +57,16 @@
           <h2>날짜 선택</h2>
         </div>
         <div class="step-body">
+          <!-- 일간/주간 토글 -->
+          <div class="mode-toggle">
+            <button class="mode-btn active" id="mode-day" type="button">📅 일간</button>
+            <button class="mode-btn" id="mode-week" type="button">📆 주간</button>
+          </div>
           <div class="date-row">
             <input type="date" id="date-input" disabled />
             <button id="search-btn" disabled>급식 조회</button>
           </div>
+          <div id="week-range-label" class="week-range-label hidden"></div>
         </div>
       </div>
     </div>

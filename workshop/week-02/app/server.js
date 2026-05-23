@@ -180,10 +180,11 @@ app.get("/api/schools", async (req, res) => {
 
 /**
  * 급식 정보 반환
- * ?atptCode=D10&schoolCode=7281014&date=20240304
+ * 단일 날짜:  ?atptCode=D10&schoolCode=7281014&date=20240304
+ * 날짜 범위:  ?atptCode=D10&schoolCode=7281014&fromDate=20240304&toDate=20240308
  */
 app.get("/api/meal", async (req, res) => {
-  const { atptCode, schoolCode, date } = req.query;
+  const { atptCode, schoolCode, date, fromDate, toDate } = req.query;
 
   if (!atptCode || !/^[A-Z][0-9]{2}$/.test(atptCode)) {
     return res.status(400).json({ error: "유효하지 않은 atptCode입니다." });
@@ -191,35 +192,49 @@ app.get("/api/meal", async (req, res) => {
   if (!schoolCode || !/^\d{7,8}$/.test(schoolCode)) {
     return res.status(400).json({ error: "유효하지 않은 schoolCode입니다." });
   }
-  if (!date || !/^\d{8}$/.test(date)) {
-    return res.status(400).json({ error: "날짜 형식이 올바르지 않습니다 (YYYYMMDD)." });
+
+  // 날짜 파라미터 결정: 범위(fromDate+toDate) 우선, 없으면 단일 date
+  const useRange = fromDate && toDate;
+  if (useRange) {
+    if (!/^\d{8}$/.test(fromDate) || !/^\d{8}$/.test(toDate)) {
+      return res.status(400).json({ error: "날짜 형식이 올바르지 않습니다 (YYYYMMDD)." });
+    }
+  } else {
+    if (!date || !/^\d{8}$/.test(date)) {
+      return res.status(400).json({ error: "날짜 형식이 올바르지 않습니다 (YYYYMMDD)." });
+    }
   }
 
   try {
-    const data = await callNeisApi("mealServiceDietInfo", {
+    const params = {
       ATPT_OFCDC_SC_CODE: atptCode,
       SD_SCHUL_CODE: schoolCode,
-      MLSV_YMD: date,
-    });
+    };
+    if (useRange) {
+      params.MLSV_FROM_YMD = fromDate;
+      params.MLSV_TO_YMD   = toDate;
+    } else {
+      params.MLSV_YMD = date;
+    }
 
+    const data = await callNeisApi("mealServiceDietInfo", params);
     const { rows, empty } = extractRows(data, "mealServiceDietInfo");
     if (empty) return res.json([]);
 
     const meals = rows.map((r) => ({
-      mealType: r.MMEAL_SC_NM || "",        // 조식/중식/석식
-      date: r.MLSV_YMD || "",
-      schoolName: r.SCHUL_NM || "",
-      dishes: (r.DDISH_NM || "").split("<br/>").map((s) => s.trim()).filter(Boolean),
-      calories: r.CAL_INFO || "",
-      nutrition: (r.NTR_INFO || "").split("<br/>").map((s) => s.trim()).filter(Boolean),
-      origin: (r.ORPLC_INFO || "").split("<br/>").map((s) => s.trim()).filter(Boolean),
-      headcount: r.MLSV_FGR || "",
+      mealType:   r.MMEAL_SC_NM || "",
+      date:       r.MLSV_YMD   || "",
+      schoolName: r.SCHUL_NM   || "",
+      dishes:     (r.DDISH_NM  || "").split("<br/>").map((s) => s.trim()).filter(Boolean),
+      calories:   r.CAL_INFO   || "",
+      nutrition:  (r.NTR_INFO  || "").split("<br/>").map((s) => s.trim()).filter(Boolean),
+      origin:     (r.ORPLC_INFO|| "").split("<br/>").map((s) => s.trim()).filter(Boolean),
+      headcount:  r.MLSV_FGR   || "",
     }));
 
     return res.json(meals);
   } catch (err) {
     console.error("[/api/meal]", err.message);
-    // API 키나 내부 오류 메시지를 클라이언트에 그대로 노출하지 않음
     const safe = err.neisCode
       ? `NEIS 오류 (${err.neisCode}): ${err.message}`
       : "급식 정보를 가져오는 중 오류가 발생했습니다.";
