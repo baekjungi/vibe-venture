@@ -1,0 +1,193 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "NEIS 급식식단정보 오픈 API",
+    "description": "나이스 교육정보 개방 포털에서 제공하는 학교 급식식단정보 조회 API 명세.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://open.neis.go.kr/hub",
+      "description": "NEIS Open API Hub"
+    }
+  ],
+  "paths": {
+    "/mealServiceDietInfo": {
+      "get": {
+        "summary": "급식식단정보 조회",
+        "description": "시도교육청코드와 행정표준코드를 기반으로 학교 급식식단 정보를 조회합니다. 요청제한횟수: 제한없음.",
+        "operationId": "getMealServiceDietInfo",
+        "parameters": [
+          {
+            "name": "KEY",
+            "in": "query",
+            "required": true,
+            "description": "인증키 (기본값: sample key)",
+            "schema": { "type": "string", "default": "sample key" }
+          },
+          {
+            "name": "Type",
+            "in": "query",
+            "required": true,
+            "description": "호출 문서 형식 (xml, json). 기본값: xml",
+            "schema": {
+              "type": "string",
+              "enum": ["xml", "json"],
+              "default": "xml"
+            }
+          },
+          {
+            "name": "pIndex",
+            "in": "query",
+            "required": true,
+            "description": "페이지 위치 (기본값: 1, sample key는 1 고정)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "pSize",
+            "in": "query",
+            "required": true,
+            "description": "페이지 당 요청 숫자 (기본값: 100, sample key는 5 고정, 최대 1000)",
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          {
+            "name": "ATPT_OFCDC_SC_CODE",
+            "in": "query",
+            "required": true,
+            "description": "시도교육청코드 (시도교육청구분코드)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "SD_SCHUL_CODE",
+            "in": "query",
+            "required": true,
+            "description": "행정표준코드",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "MMEAL_SC_CODE",
+            "in": "query",
+            "required": false,
+            "description": "식사코드 (식사구분코드)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "MLSV_YMD",
+            "in": "query",
+            "required": false,
+            "description": "급식일자 (YYYYMMDD)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "MLSV_FROM_YMD",
+            "in": "query",
+            "required": false,
+            "description": "급식시작일자 (YYYYMMDD)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "MLSV_TO_YMD",
+            "in": "query",
+            "required": false,
+            "description": "급식종료일자 (YYYYMMDD)",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "정상 처리되었습니다.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MealServiceDietInfoResponse" }
+              },
+              "application/xml": {
+                "schema": { "$ref": "#/components/schemas/MealServiceDietInfoResponse" }
+              }
+            }
+          },
+          "default": {
+            "description": "에러 또는 정보 메시지",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ResultMessage" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MealServiceDietInfoRow": {
+        "type": "object",
+        "description": "급식식단정보 출력 행",
+        "properties": {
+          "ATPT_OFCDC_SC_CODE": { "type": "string", "description": "시도교육청코드 (시도교육청구분코드)" },
+          "ATPT_OFCDC_SC_NM":   { "type": "string", "description": "시도교육청명 (시도교육청구분명)" },
+          "SD_SCHUL_CODE":      { "type": "string", "description": "행정표준코드" },
+          "SCHUL_NM":           { "type": "string", "description": "학교명" },
+          "MMEAL_SC_CODE":      { "type": "string", "description": "식사코드 (식사구분코드)" },
+          "MMEAL_SC_NM":        { "type": "string", "description": "식사명 (식사구분명)" },
+          "MLSV_YMD":           { "type": "string", "description": "급식일자 (YYYYMMDD)" },
+          "MLSV_FGR":           { "type": "string", "description": "급식인원수" },
+          "DDISH_NM":           { "type": "string", "description": "요리명" },
+          "ORPLC_INFO":         { "type": "string", "description": "원산지정보" },
+          "CAL_INFO":           { "type": "string", "description": "칼로리정보" },
+          "NTR_INFO":           { "type": "string", "description": "영양정보" },
+          "MLSV_FROM_YMD":      { "type": "string", "description": "급식시작일자 (YYYYMMDD)" },
+          "MLSV_TO_YMD":        { "type": "string", "description": "급식종료일자 (YYYYMMDD)" },
+          "LOAD_DTM":           { "type": "string", "description": "수정일자 (적재일시)" }
+        }
+      },
+      "Head": {
+        "type": "object",
+        "properties": {
+          "list_total_count": { "type": "integer", "description": "총 데이터 건수" },
+          "RESULT": { "$ref": "#/components/schemas/Result" }
+        }
+      },
+      "Result": {
+        "type": "object",
+        "properties": {
+          "CODE": { "type": "string", "description": "결과 코드" },
+          "MESSAGE": { "type": "string", "description": "결과 메시지" }
+        }
+      },
+      "MealServiceDietInfoResponse": {
+        "type": "object",
+        "properties": {
+          "mealServiceDietInfo": {
+            "type": "array",
+            "description": "[0]: head (메타데이터), [1]: row (데이터 배열)",
+            "items": {
+              "type": "object",
+              "properties": {
+                "head": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Head" }
+                },
+                "row": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/MealServiceDietInfoRow" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResultMessage": {
+        "type": "object",
+        "description": "API 결과 메시지. 코드 목록: ERROR 300(필수값 누락), 290(인증키 무효), 310(서비스 없음), 333(요청위치 타입오류), 336(최대 1000건 초과), 337(일별 트래픽 초과), 500(서버 오류), 600(DB 연결 오류), 601(SQL 오류); INFO 000(정상), 100(참고용), 200(데이터 없음), 300(인증키 사용 제한)",
+        "properties": {
+          "RESULT": { "$ref": "#/components/schemas/Result" }
+        }
+      }
+    }
+  }
+}

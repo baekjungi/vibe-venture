@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>학교 급식 정보 검색</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🍱 학교 급식 정보</h1>
+      <p class="subtitle">지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요</p>
+    </header>
+
+    <!-- 3단계 선택 위저드 -->
+    <div class="wizard">
+      <!-- Step 1: 지역 -->
+      <div class="step" id="step-region">
+        <div class="step-header">
+          <span class="step-badge">1</span>
+          <h2>지역 선택</h2>
+        </div>
+        <div class="step-body">
+          <select id="region-select">
+            <option value="">-- 시·도 교육청을 선택하세요 --</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Step 2: 학교 -->
+      <div class="step disabled" id="step-school">
+        <div class="step-header">
+          <span class="step-badge">2</span>
+          <h2>학교 선택</h2>
+        </div>
+        <div class="step-body">
+          <div class="search-wrap">
+            <input
+              type="text"
+              id="school-search"
+              placeholder="학교 이름으로 검색..."
+              autocomplete="off"
+              disabled
+            />
+          </div>
+          <div id="school-list-wrap">
+            <div class="hint">지역을 먼저 선택해 주세요</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: 날짜 -->
+      <div class="step disabled" id="step-date">
+        <div class="step-header">
+          <span class="step-badge">3</span>
+          <h2>날짜 선택</h2>
+        </div>
+        <div class="step-body">
+          <div class="date-row">
+            <input type="date" id="date-input" disabled />
+            <button id="search-btn" disabled>급식 조회</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 선택 요약 -->
+    <div id="selection-summary" class="selection-summary hidden"></div>
+
+    <!-- 결과 -->
+    <section id="result" class="result-section hidden">
+      <h2 id="result-title"></h2>
+      <div id="meal-cards"></div>
+    </section>
+
+    <!-- 로딩 / 오류 -->
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <span>급식 정보를 가져오는 중...</span>
+    </div>
+    <div id="error-msg" class="error-msg hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
