@@ -816,17 +816,118 @@ footer {
   .meal-card-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
-/* ── Responsive ────────────────────────────────────────────── */
-@media (max-width: 600px) {
-  body { padding: 1.5rem .75rem 3rem; }
-  header h1 { font-size: 1.65rem; }
-  .week-table { grid-template-columns: repeat(2, 1fr); }
-  .date-row { flex-wrap: wrap; }
-  .date-row input[type="date"] { min-width: 0; }
-  button#search-btn { width: 100%; justify-content: center; }
+/* ── Responsive (Tablet) ───────────────────────────────────── */
+@media (max-width: 900px) {
+  body { padding: 1.5rem 1rem 3rem; }
+  .wizard { gap: 1rem; }
+  .step { padding: 1.25rem; }
+  .week-table { grid-template-columns: repeat(3, 1fr); }
+  .meal-cards { grid-template-columns: 1fr; }
+  .allergy-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
 }
+
+/* ── Responsive (Mobile) ───────────────────────────────────── */
+@media (max-width: 600px) {
+  body { padding: 1rem .75rem 3rem; }
+  header { margin-bottom: 1.25rem; }
+  header h1 { font-size: 1.5rem; }
+  header p { font-size: .9rem; }
+  .theme-toggle { top: .5rem; right: .5rem; width: 40px; height: 40px; font-size: 1.1rem; }
+
+  .step { padding: 1rem; border-radius: 14px; }
+  .step-header { gap: .6rem; }
+  .step-num {
+    width: 28px; height: 28px; font-size: .9rem;
+    min-width: 28px;
+  }
+  .step-header h2 { font-size: 1.05rem; }
+
+  /* 학교 리스트는 모바일에서 더 컴팩트하게 */
+  .school-list-wrap { max-height: 280px; }
+  .school-item { padding: .65rem .75rem; gap: .5rem; }
+  .school-name { font-size: .95rem; }
+  .school-type { font-size: .75rem; padding: .15rem .4rem; }
+  .fav-star { font-size: 1.1rem; }
+
+  /* 날짜 영역 줄바꿈 + 풀너비 버튼 */
+  .date-row { flex-wrap: wrap; gap: .5rem; }
+  .date-row input[type="date"] {
+    min-width: 0; flex: 1 1 100%;
+    font-size: 16px; /* iOS 자동 줌 방지 */
+    padding: .75rem;
+  }
+  #prev-date-btn, #next-date-btn {
+    flex: 1; min-width: 0;
+    padding: .65rem;
+  }
+  button#search-btn {
+    width: 100%; justify-content: center;
+    padding: .9rem; font-size: 1.05rem;
+    margin-top: .5rem;
+  }
+
+  /* 모드 토글 */
+  .mode-toggle { width: 100%; }
+  .mode-toggle button { flex: 1; padding: .6rem; font-size: .9rem; }
+
+  /* 결과 카드 */
+  .result-header { flex-direction: column; align-items: flex-start; gap: .75rem; }
+  .result-actions { width: 100%; justify-content: flex-end; }
+  #result-title { font-size: 1.1rem; line-height: 1.4; }
+
+  .meal-card-header { padding: .85rem 1rem; flex-wrap: wrap; }
+  .meal-card-header h3 { font-size: 1.05rem; }
+  .meal-icon { font-size: 1.6rem; }
+  .headcount { font-size: .8rem; }
+  .meal-card-body { padding: 1rem; }
+  .dish-list { gap: .4rem; }
+  .dish-tag { padding: .5rem .7rem; font-size: .9rem; }
+
+  /* 주간 그리드 - 가로 스크롤 대신 카드 stack */
+  .week-table { grid-template-columns: 1fr; gap: .75rem; }
+  .week-day-card { min-height: auto; }
+  .week-day-header { font-size: .95rem; padding: .6rem; }
+  .week-day-meals { padding: .75rem; }
+
+  /* 즐겨찾기 칩 */
+  .favorites-bar { padding: .75rem; }
+  .fav-chip { font-size: .85rem; padding: .4rem .75rem; }
+
+  /* 선택 요약 */
+  .selection-summary { font-size: .85rem; padding: .65rem .85rem; flex-wrap: wrap; }
+
+  /* 토스트는 모바일에서 하단 가운데 */
+  .toast {
+    left: 1rem; right: 1rem; bottom: 1rem;
+    max-width: none; text-align: center;
+  }
+
+  /* 키보드 힌트는 모바일에서 숨김 */
+  .keyboard-hint { display: none; }
+
+  /* 알레르기 범례 */
+  .allergy-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: .4rem; }
+  .allergy-item { font-size: .8rem; padding: .35rem .5rem; }
+  .allergy-num { width: 20px; height: 20px; font-size: .7rem; }
+}
+
+/* ── Responsive (Small Mobile) ─────────────────────────────── */
 @media (max-width: 380px) {
-  .week-table { grid-template-columns: 1fr; }
+  header h1 { font-size: 1.3rem; }
+  .step { padding: .85rem; }
+  .meal-card-body { padding: .85rem; }
+  .allergy-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Touch-friendly (no hover devices) ─────────────────────── */
+@media (hover: none) {
+  .school-item:hover { background: var(--card-bg); }
+  .meal-card:hover { transform: none; }
+  .fav-chip:hover { transform: none; }
+  /* 터치 타깃 최소 44px */
+  button, .school-item, .fav-star, .fav-chip {
+    min-height: 44px;
+  }
 }
 
 /* ── Reduce motion ─────────────────────────────────────────── */
