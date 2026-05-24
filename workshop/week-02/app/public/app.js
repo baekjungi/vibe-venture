@@ -9,26 +9,47 @@
 
 "use strict";
 
+// ── 상수 ────────────────────────────────────────────────────
+const ALLERGY_MAP = {
+  1: "난류", 2: "우유", 3: "메밀", 4: "땅콩", 5: "대두", 6: "밀",
+  7: "고등어", 8: "게", 9: "새우", 10: "돼지고기", 11: "복숭아",
+  12: "토마토", 13: "아황산류", 14: "호두", 15: "닭고기", 16: "쇠고기",
+  17: "오징어", 18: "조개류",
+};
+
+// 청소년 권장 칼로리 (참고용)
+const RECOMMENDED_CALORIES = 2400;
+
+const LS_KEYS = {
+  theme: "meal-app-theme",
+  favorites: "meal-app-favorites",
+};
+
 // ── 상태 ────────────────────────────────────────────────────
 const state = {
   regions: [],
   schools: [],
   filteredSchools: [],
-  selectedRegion: null,   // { code, name, sido }
-  selectedSchool: null,   // { schoolCode, schoolName, schoolType }
-  selectedDate: null,     // "YYYY-MM-DD"
-  mode: "day",            // "day" | "week"
+  selectedRegion: null,
+  selectedSchool: null,
+  selectedDate: null,
+  mode: "day",
+  favorites: [],
 };
 
 // ── DOM 참조 ─────────────────────────────────────────────────
 const $ = (id) => document.getElementById(id);
 
 const regionSelect   = $("region-select");
+const stepRegion     = $("step-region");
 const stepSchool     = $("step-school");
 const schoolSearch   = $("school-search");
 const schoolListWrap = $("school-list-wrap");
+const schoolCountEl  = $("school-count");
 const stepDate       = $("step-date");
 const dateInput      = $("date-input");
+const prevDateBtn    = $("prev-date-btn");
+const nextDateBtn    = $("next-date-btn");
 const searchBtn      = $("search-btn");
 const selSummary     = $("selection-summary");
 const resultSection  = $("result");
@@ -39,16 +60,136 @@ const errorEl        = $("error-msg");
 const modeDayBtn     = $("mode-day");
 const modeWeekBtn    = $("mode-week");
 const weekRangeLabel = $("week-range-label");
+const themeToggle    = $("theme-toggle");
+const favoritesBar   = $("favorites-bar");
+const favoritesList  = $("favorites-list");
+const printBtn       = $("print-btn");
+const shareBtn       = $("share-btn");
+const allergyGrid    = $("allergy-grid");
+const toastEl        = $("toast");
 
 // ── 초기화 ───────────────────────────────────────────────────
 (async function init() {
-  // 날짜 기본값: 오늘
+  initTheme();
+  initAllergyLegend();
+  loadFavorites();
+  renderFavorites();
+
   const today = new Date().toISOString().slice(0, 10);
   dateInput.value = today;
   dateInput.max   = today;
 
   await loadRegions();
+
+  // 딥링크 처리 (?region=D10&school=7281013&date=20260521&mode=week)
+  handleDeepLink();
 })();
+
+// ── 테마 ─────────────────────────────────────────────────────
+function initTheme() {
+  const saved = localStorage.getItem(LS_KEYS.theme);
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const theme = saved || (prefersDark ? "dark" : "light");
+  applyTheme(theme);
+
+  themeToggle.addEventListener("click", () => {
+    const cur = document.documentElement.getAttribute("data-theme");
+    applyTheme(cur === "dark" ? "light" : "dark");
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem(LS_KEYS.theme, theme);
+  themeToggle.querySelector(".theme-icon").textContent = theme === "dark" ? "☀️" : "🌙";
+}
+
+// ── 알레르기 범례 ─────────────────────────────────────────────
+function initAllergyLegend() {
+  allergyGrid.innerHTML = Object.entries(ALLERGY_MAP)
+    .map(([num, name]) => `
+      <div class="allergy-item">
+        <span class="allergy-num">${num}</span>
+        <span>${escHtml(name)}</span>
+      </div>`)
+    .join("");
+}
+
+function allergyTooltip(numsStr) {
+  // "(5.6.)" → "5,6" → "대두, 밀"
+  const nums = numsStr.match(/\d+/g) || [];
+  const names = nums.map((n) => ALLERGY_MAP[parseInt(n, 10)]).filter(Boolean);
+  return names.length ? `알레르기: ${names.join(", ")}` : "";
+}
+
+// ── 즐겨찾기 ─────────────────────────────────────────────────
+function loadFavorites() {
+  try {
+    state.favorites = JSON.parse(localStorage.getItem(LS_KEYS.favorites) || "[]");
+  } catch { state.favorites = []; }
+}
+
+function saveFavorites() {
+  localStorage.setItem(LS_KEYS.favorites, JSON.stringify(state.favorites));
+}
+
+function isFavorite(schoolCode) {
+  return state.favorites.some((f) => f.schoolCode === schoolCode);
+}
+
+function toggleFavorite(school, regionCode, regionSido) {
+  const exists = isFavorite(school.schoolCode);
+  if (exists) {
+    state.favorites = state.favorites.filter((f) => f.schoolCode !== school.schoolCode);
+    showToast(`⭐ 즐겨찾기에서 삭제: ${school.schoolName}`);
+  } else {
+    state.favorites.unshift({
+      schoolCode: school.schoolCode,
+      schoolName: school.schoolName,
+      schoolType: school.schoolType,
+      regionCode,
+      regionSido,
+    });
+    state.favorites = state.favorites.slice(0, 10); // 최대 10개
+    showToast(`⭐ 즐겨찾기에 추가: ${school.schoolName}`);
+  }
+  saveFavorites();
+  renderFavorites();
+  // 학교 리스트에 별 상태 반영
+  document.querySelectorAll(`.fav-star[data-code="${school.schoolCode}"]`)
+    .forEach((s) => s.classList.toggle("active", isFavorite(school.schoolCode)));
+}
+
+function renderFavorites() {
+  if (!state.favorites.length) {
+    favoritesBar.classList.add("hidden");
+    return;
+  }
+  favoritesBar.classList.remove("hidden");
+  favoritesList.innerHTML = state.favorites
+    .map((f) => `
+      <button class="fav-chip" data-code="${f.schoolCode}" data-region="${f.regionCode}" title="${escHtml(f.regionSido)} ${escHtml(f.schoolName)}">
+        ${escHtml(f.schoolName)}
+      </button>`)
+    .join("");
+
+  favoritesList.querySelectorAll(".fav-chip").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const fav = state.favorites.find((f) => f.schoolCode === btn.dataset.code);
+      if (!fav) return;
+      regionSelect.value = fav.regionCode;
+      regionSelect.dispatchEvent(new Event("change"));
+      // 학교 로드 후 자동 선택
+      setTimeout(() => {
+        const item = document.querySelector(`.school-item[data-code="${fav.schoolCode}"]`);
+        if (item) {
+          item.click();
+          item.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 500);
+    });
+  });
+}
 
 // ── 지역 목록 로드 ───────────────────────────────────────────
 async function loadRegions() {
@@ -78,13 +219,14 @@ regionSelect.addEventListener("change", async () => {
 
   state.selectedRegion = state.regions.find((r) => r.code === code) || null;
   resetFrom("region");
-  setStepActive("region");
+  stepRegion.classList.add("done");
   showLoading(true);
 
   try {
     const data = await apiFetch(`/api/schools?regionCode=${code}`);
     state.schools = data;
     state.filteredSchools = data;
+    schoolCountEl.textContent = `${data.length.toLocaleString()}개`;
     renderSchoolList(data);
     enableStep("school");
   } catch (err) {
@@ -100,13 +242,14 @@ schoolSearch.addEventListener("input", () => {
   state.filteredSchools = q
     ? state.schools.filter((s) => s.schoolName.toLowerCase().includes(q))
     : state.schools;
+  schoolCountEl.textContent = `${state.filteredSchools.length.toLocaleString()}개`;
   renderSchoolList(state.filteredSchools);
 });
 
 // ── 학교 목록 렌더 ───────────────────────────────────────────
 function renderSchoolList(schools) {
   if (!schools.length) {
-    schoolListWrap.innerHTML = '<div class="hint">검색 결과가 없습니다</div>';
+    schoolListWrap.innerHTML = '<div class="hint">🔍 검색 결과가 없습니다</div>';
     return;
   }
 
@@ -116,12 +259,21 @@ function renderSchoolList(schools) {
     div.className = "school-item";
     div.tabIndex = 0;
     div.dataset.code = school.schoolCode;
+    const starActive = isFavorite(school.schoolCode);
     div.innerHTML = `
       <span class="school-name">${escHtml(school.schoolName)}</span>
       <span class="school-type">${escHtml(school.schoolType || "")}</span>
+      <button class="fav-star ${starActive ? "active" : ""}" data-code="${school.schoolCode}" title="즐겨찾기 토글" aria-label="즐겨찾기">★</button>
     `;
-    div.addEventListener("click",  () => selectSchool(school, div));
-    div.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") selectSchool(school, div); });
+    div.addEventListener("click", (e) => {
+      if (e.target.closest(".fav-star")) return;
+      selectSchool(school, div);
+    });
+    div.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectSchool(school, div); } });
+    div.querySelector(".fav-star").addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleFavorite(school, state.selectedRegion.code, state.selectedRegion.sido);
+    });
     frag.appendChild(div);
   }
 
@@ -132,7 +284,7 @@ function renderSchoolList(schools) {
 // ── 학교 선택 ────────────────────────────────────────────────
 function selectSchool(school, el) {
   document.querySelectorAll(".school-item").forEach((d) => d.classList.remove("selected"));
-  el.classList.add("selected");
+  if (el) el.classList.add("selected");
 
   state.selectedSchool = school;
   setStepDone("school");
@@ -153,10 +305,9 @@ function setMode(m) {
   hideError();
 }
 
-/** 선택한 날짜가 속한 주의 월요일~금요일 반환 */
 function getWeekRange(dateStr) {
   const d = new Date(dateStr);
-  const day = d.getDay(); // 0=일, 1=월 ... 6=토
+  const day = d.getDay();
   const diffToMon = (day === 0 ? -6 : 1 - day);
   const mon = new Date(d); mon.setDate(d.getDate() + diffToMon);
   const fri = new Date(mon); fri.setDate(mon.getDate() + 4);
@@ -164,18 +315,18 @@ function getWeekRange(dateStr) {
 }
 
 function toApiDate(d) {
-  return d.toISOString().slice(0, 10).replace(/-/g, "");
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const da = String(d.getDate()).padStart(2, "0");
+  return `${y}${m}${da}`;
 }
 
-function toDisplayDate(d) {
-  return `${d.getMonth() + 1}/${d.getDate()}`;
-}
+function toDisplayMd(d) { return `${d.getMonth() + 1}/${d.getDate()}`; }
 
 function updateWeekRangeLabel() {
   if (state.mode === "week" && dateInput.value) {
     const { mon, fri } = getWeekRange(dateInput.value);
-    const label = `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 (월) ~ ${fri.getMonth()+1}월 ${fri.getDate()}일 (금)`;
-    weekRangeLabel.textContent = label;
+    weekRangeLabel.textContent = `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 (월) ~ ${fri.getMonth()+1}월 ${fri.getDate()}일 (금)`;
     weekRangeLabel.classList.remove("hidden");
   } else {
     weekRangeLabel.classList.add("hidden");
@@ -189,11 +340,35 @@ dateInput.addEventListener("change", () => {
   updateWeekRangeLabel();
   searchBtn.disabled = !state.selectedDate;
 });
-
-// 초기 오늘 날짜가 있으면 버튼 활성화 상태 유지 (학교 선택 후)
 dateInput.addEventListener("input", () => {
   searchBtn.disabled = !dateInput.value;
   updateWeekRangeLabel();
+});
+
+prevDateBtn.addEventListener("click", () => shiftDate(-1));
+nextDateBtn.addEventListener("click", () => shiftDate(1));
+
+function shiftDate(days) {
+  if (!dateInput.value || dateInput.disabled) return;
+  const d = new Date(dateInput.value);
+  d.setDate(d.getDate() + days);
+  dateInput.value = d.toISOString().slice(0, 10);
+  dateInput.dispatchEvent(new Event("change"));
+}
+
+// ── 키보드 단축키 ─────────────────────────────────────────────
+document.addEventListener("keydown", (e) => {
+  // 입력 필드 포커스 중이면 화살표는 무시 (Enter 제외)
+  const inField = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName);
+
+  if (e.key === "Enter" && !searchBtn.disabled && !inField) {
+    e.preventDefault();
+    fetchMeal();
+  }
+  if (!inField || document.activeElement === dateInput) {
+    if (e.key === "ArrowLeft")  { e.preventDefault(); shiftDate(state.mode === "week" ? -7 : -1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); shiftDate(state.mode === "week" ? 7 : 1); }
+  }
 });
 
 // ── 급식 조회 ────────────────────────────────────────────────
@@ -209,10 +384,8 @@ async function fetchMeal() {
   try {
     if (state.mode === "week") {
       const { mon, fri } = getWeekRange(dateInput.value);
-      const fromDate = toApiDate(mon);
-      const toDate   = toApiDate(fri);
       const meals = await apiFetch(
-        `/api/meal?atptCode=${state.selectedRegion.code}&schoolCode=${state.selectedSchool.schoolCode}&fromDate=${fromDate}&toDate=${toDate}`
+        `/api/meal?atptCode=${state.selectedRegion.code}&schoolCode=${state.selectedSchool.schoolCode}&fromDate=${toApiDate(mon)}&toDate=${toApiDate(fri)}`
       );
       renderWeekMeals(meals, state.selectedSchool.schoolName, mon, fri);
     } else {
@@ -222,6 +395,7 @@ async function fetchMeal() {
       );
       renderMeals(meals, state.selectedSchool.schoolName, dateInput.value);
     }
+    updateUrl();
   } catch (err) {
     showError("급식 정보를 가져오지 못했습니다: " + err.message);
   } finally {
@@ -235,17 +409,16 @@ const DAY_NAMES = ["월", "화", "수", "목", "금"];
 function renderWeekMeals(meals, schoolName, mon, fri) {
   const monStr = `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일`;
   const friStr = `${fri.getMonth()+1}월 ${fri.getDate()}일`;
-  resultTitle.textContent = `${schoolName} · ${monStr} ~ ${friStr}`;
+  resultTitle.textContent = `🏫 ${schoolName} · ${monStr} ~ ${friStr}`;
   mealCards.innerHTML = "";
 
-  // 날짜별로 급식 그룹화
   const byDate = {};
   for (const meal of (meals || [])) {
     if (!byDate[meal.date]) byDate[meal.date] = [];
     byDate[meal.date].push(meal);
   }
 
-  const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const todayStr = toApiDate(new Date());
   const grid = document.createElement("div");
   grid.className = "week-table";
 
@@ -260,15 +433,15 @@ function renderWeekMeals(meals, schoolName, mon, fri) {
     card.className = "week-day-card";
     card.innerHTML = `
       <div class="week-day-header ${isToday ? "today" : ""}">
-        ${DAY_NAMES[i]} (${toDisplayDate(d)})
+        ${DAY_NAMES[i]} · ${toDisplayMd(d)}
       </div>
       <div class="week-day-meals">
         ${dayMeals.length === 0
-          ? '<div class="week-no-meal">급식 없음</div>'
+          ? '<div class="week-no-meal">🚫 급식 없음</div>'
           : dayMeals.map((m) => `
               <div class="week-meal-block">
                 <div class="week-meal-type">${escHtml(m.mealType)}</div>
-                <div class="week-dish">${m.dishes.map((d) => escHtml(d.replace(/\([\d.,\s]+\.\)/g, "").trim())).join("<br>")}</div>
+                <div class="week-dish">${m.dishes.map((dd) => escHtml(dd.replace(/\([\d.,\s]+\.\)/g, "").trim())).join("<br>")}</div>
               </div>`).join("")}
       </div>`;
     grid.appendChild(card);
@@ -281,10 +454,13 @@ function renderWeekMeals(meals, schoolName, mon, fri) {
 
 // ── 일간 급식 결과 렌더 ───────────────────────────────────────
 const MEAL_ICONS = { "조식": "🌅", "중식": "🍚", "석식": "🌙" };
+const MEAL_CLASSES = { "조식": "breakfast", "중식": "lunch", "석식": "dinner" };
 
 function renderMeals(meals, schoolName, dateStr) {
-  const formattedDate = dateStr.replace(/(\d{4})-(\d{2})-(\d{2})/, "$1년 $2월 $3일");
-  resultTitle.textContent = `${schoolName} · ${formattedDate}`;
+  const dt = new Date(dateStr);
+  const weekday = ["일","월","화","수","목","금","토"][dt.getDay()];
+  const formattedDate = dateStr.replace(/(\d{4})-(\d{2})-(\d{2})/, "$1년 $2월 $3일") + ` (${weekday})`;
+  resultTitle.textContent = `🏫 ${schoolName} · ${formattedDate}`;
   mealCards.innerHTML = "";
 
   if (!meals || meals.length === 0) {
@@ -300,20 +476,38 @@ function renderMeals(meals, schoolName, dateStr) {
 
   for (const meal of meals) {
     const icon = MEAL_ICONS[meal.mealType] || "🍽️";
+    const headerClass = MEAL_CLASSES[meal.mealType] || "";
     const dishesHtml = meal.dishes
       .map((d) => {
-        // 요리명에서 알레르기 번호 분리: "흰쌀밥(5.6.)" → "흰쌀밥" + "(5.6.)"
         const m = d.match(/^(.+?)(\([\d.,\s]+\.\))?$/);
-        const name  = m ? m[1].trim() : d;
-        const allergy = m && m[2] ? `<span class="allergy">${escHtml(m[2])}</span>` : "";
+        const name = m ? m[1].trim() : d;
+        const allergy = m && m[2]
+          ? `<span class="allergy" title="${escHtml(allergyTooltip(m[2]))}">${escHtml(m[2])}</span>`
+          : "";
         return `<li class="dish-tag">${escHtml(name)}${allergy}</li>`;
-      })
-      .join("");
+      }).join("");
 
-    const calHtml = meal.calories
-      ? `<div><strong>칼로리</strong> ${escHtml(meal.calories)}</div>` : "";
+    // 칼로리 막대
+    let calorieBarHtml = "";
+    const calMatch = (meal.calories || "").match(/([\d.]+)/);
+    if (calMatch) {
+      const kcal = parseFloat(calMatch[1]);
+      const pct = Math.min(100, Math.round((kcal / RECOMMENDED_CALORIES) * 100));
+      const isHigh = pct > 40;
+      calorieBarHtml = `
+        <div class="calorie-bar-wrap">
+          <div class="calorie-bar-label">
+            <span>🔥 <strong>${escHtml(meal.calories)}</strong></span>
+            <span>1일 권장 ${RECOMMENDED_CALORIES}kcal 대비 <strong>${pct}%</strong></span>
+          </div>
+          <div class="calorie-bar">
+            <div class="calorie-bar-fill ${isHigh ? "high" : ""}" data-pct="${pct}"></div>
+          </div>
+        </div>`;
+    }
+
     const ntrHtml = meal.nutrition.length
-      ? `<div><strong>영양정보</strong> ${meal.nutrition.map(escHtml).join(" · ")}</div>` : "";
+      ? `<div><strong>영양</strong> ${meal.nutrition.map(escHtml).join(" · ")}</div>` : "";
     const orHtml = meal.origin.length
       ? `<div><strong>원산지</strong> ${meal.origin.map(escHtml).join(" · ")}</div>` : "";
     const hcHtml = meal.headcount
@@ -322,20 +516,87 @@ function renderMeals(meals, schoolName, dateStr) {
     const card = document.createElement("div");
     card.className = "meal-card";
     card.innerHTML = `
-      <div class="meal-card-header">
+      <div class="meal-card-header ${headerClass}">
         <span class="meal-icon">${icon}</span>
         <h3>${escHtml(meal.mealType)}</h3>
         ${hcHtml}
       </div>
       <div class="meal-card-body">
         <ul class="dish-list">${dishesHtml}</ul>
-        <div class="meal-meta">${calHtml}${ntrHtml}${orHtml}</div>
+        ${calorieBarHtml}
+        <div class="meal-meta">${ntrHtml}${orHtml}</div>
       </div>`;
     mealCards.appendChild(card);
   }
 
   resultSection.classList.remove("hidden");
   resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // 칼로리 막대 애니메이션
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".calorie-bar-fill").forEach((bar) => {
+      bar.style.width = bar.dataset.pct + "%";
+    });
+  });
+}
+
+// ── 인쇄 / 공유 ─────────────────────────────────────────────
+printBtn.addEventListener("click", () => window.print());
+
+shareBtn.addEventListener("click", async () => {
+  const url = buildShareUrl();
+  try {
+    await navigator.clipboard.writeText(url);
+    showToast("🔗 링크가 클립보드에 복사되었습니다");
+  } catch {
+    showToast("⚠️ 링크 복사에 실패했습니다");
+  }
+});
+
+function buildShareUrl() {
+  const u = new URL(window.location.href);
+  u.search = "";
+  if (state.selectedRegion) u.searchParams.set("region", state.selectedRegion.code);
+  if (state.selectedSchool) u.searchParams.set("school", state.selectedSchool.schoolCode);
+  if (dateInput.value)      u.searchParams.set("date", dateInput.value);
+  u.searchParams.set("mode", state.mode);
+  return u.toString();
+}
+
+function updateUrl() {
+  window.history.replaceState(null, "", buildShareUrl());
+}
+
+async function handleDeepLink() {
+  const sp = new URLSearchParams(window.location.search);
+  const r = sp.get("region"), s = sp.get("school"), d = sp.get("date"), m = sp.get("mode");
+  if (m === "week") setMode("week");
+  if (!r) return;
+  regionSelect.value = r;
+  regionSelect.dispatchEvent(new Event("change"));
+  if (!s) return;
+  setTimeout(() => {
+    const item = document.querySelector(`.school-item[data-code="${s}"]`);
+    if (item) item.click();
+    if (d) {
+      dateInput.value = d;
+      dateInput.dispatchEvent(new Event("change"));
+      setTimeout(() => fetchMeal(), 200);
+    }
+  }, 500);
+}
+
+// ── 토스트 ───────────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.remove("hidden");
+  requestAnimationFrame(() => toastEl.classList.add("show"));
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toastEl.classList.remove("show");
+    setTimeout(() => toastEl.classList.add("hidden"), 350);
+  }, 2200);
 }
 
 // ── 요약 표시 ────────────────────────────────────────────────
@@ -365,29 +626,23 @@ function enableStep(name) {
   }
 }
 
-function setStepActive(name) {
-  if (name === "region") $("step-region").classList.add("active");
-}
-
 function setStepDone(name) {
   if (name === "school") {
     stepSchool.classList.add("done");
-    stepSchool.classList.remove("active");
   }
 }
 
 function resetFrom(name) {
   if (name === "region") {
-    // 학교 초기화
     state.selectedSchool = null;
     state.schools = [];
     state.filteredSchools = [];
     schoolSearch.value = "";
     schoolSearch.disabled = true;
+    schoolCountEl.textContent = "";
     schoolListWrap.innerHTML = '<div class="hint">지역을 먼저 선택해 주세요</div>';
     stepSchool.classList.add("disabled");
-    stepSchool.classList.remove("done", "active");
-    // 날짜 초기화
+    stepSchool.classList.remove("done");
     resetFrom("school");
   }
   if (name === "school" || name === "region") {
