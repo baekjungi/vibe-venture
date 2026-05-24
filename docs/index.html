@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍱 학교 급식 앱</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card {
+      background: white; border-radius: 20px; padding: 2.5rem 2rem;
+      text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      max-width: 380px; width: 90%;
+    }
+    .emoji { font-size: 4rem; margin-bottom: 1rem; }
+    h1 { font-size: 1.5rem; color: #333; margin-bottom: .5rem; }
+    p { color: #666; font-size: .95rem; margin-bottom: 1.5rem; }
+    .btn {
+      display: inline-block; background: linear-gradient(135deg,#667eea,#764ba2);
+      color: white; padding: .9rem 2rem; border-radius: 50px;
+      text-decoration: none; font-size: 1rem; font-weight: 600;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,.5); }
+    .status { margin-top: 1.5rem; font-size: .8rem; color: #999; }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+           background: #4caf50; margin-right: .3rem; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .loading { color: #999; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="emoji">🍱</div>
+    <h1>전국 학교 급식 검색</h1>
+    <p>지역 · 학교 · 날짜를 선택하면<br>오늘 급식 메뉴를 바로 확인!</p>
+    <div id="btn-area"><span class="loading">⏳ 연결 중...</span></div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    // url.txt에서 현재 터널 URL을 읽어 자동 리다이렉트
+    const RAW_URL = 'https://raw.githubusercontent.com/innodg/vibe-venture/main/docs/url.txt';
+
+    fetch(RAW_URL + '?t=' + Date.now())
+      .then(r => r.text())
+      .then(url => {
+        url = url.trim();
+        if (!url || url === 'pending') {
+          document.getElementById('btn-area').innerHTML =
+            '<p style="color:#e53935">⚠️ 서버가 꺼져 있습니다.<br>잠시 후 다시 시도해 주세요.</p>';
+          return;
+        }
+        document.getElementById('btn-area').innerHTML =
+          `<a class="btn" href="${url}">🍽️ 급식 검색하기</a>`;
+        document.getElementById('status').innerHTML =
+          `<span class="dot"></span>서버 운영 중`;
+        // 1초 후 자동 이동
+        setTimeout(() => { window.location.href = url; }, 1000);
+      })
+      .catch(() => {
+        document.getElementById('btn-area').innerHTML =
+          '<p style="color:#e53935">⚠️ 연결 오류. 새로고침 해주세요.</p>';
+      });
+  </script>
+</body>
+</html>
