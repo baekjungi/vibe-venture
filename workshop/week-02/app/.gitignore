@@ -13,6 +13,10 @@ NEIS_API_KEY*
 node_modules/
 
 # 로그
+start.bat
+start.ps1
+cf-tunnel.log
+tunnel.log
 *.log
 npm-debug.log*
 logs/

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: school-meal-app
+    runtime: node
+    rootDir: workshop/week-02/app
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NEIS_API_KEY
+        sync: false          # 대시보드에서 직접 입력 (코드에 노출 안 됨)
+      - key: PORT
+        value: 10000
+    healthCheckPath: /api/regions
+    autoDeploy: true
