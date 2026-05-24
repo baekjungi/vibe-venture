@@ -56,10 +56,12 @@ const REGIONS = [
 ];
 
 // ── Excel 학교 데이터 로드 (서버 시작 시 1회) ────────────────────────────────
-const EXCEL_PATH = path.resolve(
-  __dirname,
-  "../data/학교기본정보.xlsx"
-);
+// Vercel/Render 배포 시 ./data/, 로컬 개발 시 ../data/ 순으로 탐색
+const EXCEL_PATH = (() => {
+  const localPath = path.resolve(__dirname, "./data/학교기본정보.xlsx");
+  const fallback  = path.resolve(__dirname, "../data/학교기본정보.xlsx");
+  return fs.existsSync(localPath) ? localPath : fallback;
+})();
 
 /** regionCode → [{schoolCode, schoolName, schoolType}] */
 const excelSchoolMap = new Map();
@@ -298,12 +300,17 @@ app.get("/api/meal", rateLimiter(RATE_LIMIT_MEAL), async (req, res) => {
   }
 });
 
-// ── 서버 시작 ────────────────────────────────────────────────────────────────
+// ── 서버 시작 (로컬/Render) 또는 서버리스 export (Vercel) ────────────────────
 loadExcelSchools();
-app.listen(PORT, () => {
-  const hasKey = !!(process.env.NEIS_API_KEY && process.env.NEIS_API_KEY !== "your_neis_api_key_here");
-  console.log(`\n🍱 학교 급식 정보 검색 앱`);
-  console.log(`   URL  : http://localhost:${PORT}`);
-  console.log(`   NEIS 키 : ${hasKey ? "✅ 설정됨" : "❌ 미설정 (.env 파일에 NEIS_API_KEY 입력 필요)"}`);
-  console.log();
-});
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    const hasKey = !!(process.env.NEIS_API_KEY && process.env.NEIS_API_KEY !== "your_neis_api_key_here");
+    console.log(`\n🍱 학교 급식 정보 검색 앱`);
+    console.log(`   URL  : http://localhost:${PORT}`);
+    console.log(`   NEIS 키 : ${hasKey ? "✅ 설정됨" : "❌ 미설정 (.env 파일에 NEIS_API_KEY 입력 필요)"}`);
+    console.log();
+  });
+}
+
+module.exports = app;
