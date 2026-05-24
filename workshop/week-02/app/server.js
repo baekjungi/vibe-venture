@@ -136,12 +136,68 @@ function extractRows(data, key) {
   return { rows, empty: rows.length === 0 };
 }
 
+// ── 간단한 인메모리 Rate Limiter ─────────────────────────────────────────────
+const rateStore = new Map(); // ip → { count, resetAt }
+const RATE_WINDOW_MS = 60_000; // 1분
+const RATE_LIMIT_API  = 60;    // API 엔드포인트: 분당 60회
+const RATE_LIMIT_MEAL = 20;    // /api/meal: 분당 20회 (NEIS 키 보호)
+
+function rateLimiter(maxPerWindow) {
+  return (req, res, next) => {
+    const ip = req.socket.remoteAddress || "unknown";
+    const key = `${ip}:${req.path}`;
+    const now = Date.now();
+    const entry = rateStore.get(key);
+
+    if (!entry || now > entry.resetAt) {
+      rateStore.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS });
+      return next();
+    }
+    entry.count += 1;
+    if (entry.count > maxPerWindow) {
+      res.setHeader("Retry-After", "60");
+      return res.status(429).json({ error: "요청이 너무 많습니다. 잠시 후 다시 시도하세요." });
+    }
+    next();
+  };
+}
+
+// 메모리 누수 방지: 만료된 항목 주기적 정리
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, val] of rateStore) {
+    if (now > val.resetAt) rateStore.delete(key);
+  }
+}, RATE_WINDOW_MS);
+
 // ── Express 앱 설정 ──────────────────────────────────────────────────────────
 const app = express();
+
+// 보안 HTTP 헤더 (helmet 미사용, 직접 설정)
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
+  // CSP: 외부 리소스 차단 (폰트 허용, 인라인 스타일/스크립트 불허)
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; " +
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+    "font-src 'self' https://fonts.gstatic.com; " +
+    "script-src 'self'; " +
+    "img-src 'self' data:; " +
+    "connect-src 'self'; " +
+    "frame-ancestors 'none';"
+  );
+  next();
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // 시도교육청 목록 반환 (정적, API 키 불필요)
-app.get("/api/regions", (_req, res) => {
+app.get("/api/regions", rateLimiter(RATE_LIMIT_API), (_req, res) => {
   res.json(REGIONS);
 });
 
@@ -150,7 +206,7 @@ app.get("/api/regions", (_req, res) => {
  * ?regionCode=B10
  * Excel 데이터 우선, 없으면 NEIS schoolInfo API 호출
  */
-app.get("/api/schools", async (req, res) => {
+app.get("/api/schools", rateLimiter(RATE_LIMIT_API), async (req, res) => {
   const { regionCode } = req.query;
   if (!regionCode || !/^[A-Z][0-9]{2}$/.test(regionCode)) {
     return res.status(400).json({ error: "유효하지 않은 regionCode입니다." });
@@ -183,7 +239,7 @@ app.get("/api/schools", async (req, res) => {
  * 단일 날짜:  ?atptCode=D10&schoolCode=7281014&date=20240304
  * 날짜 범위:  ?atptCode=D10&schoolCode=7281014&fromDate=20240304&toDate=20240308
  */
-app.get("/api/meal", async (req, res) => {
+app.get("/api/meal", rateLimiter(RATE_LIMIT_MEAL), async (req, res) => {
   const { atptCode, schoolCode, date, fromDate, toDate } = req.query;
 
   if (!atptCode || !/^[A-Z][0-9]{2}$/.test(atptCode)) {

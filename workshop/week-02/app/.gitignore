@@ -1,5 +1,13 @@
-# 환경 변수 (API 키 포함) - 절대 커밋 금지
+# ── 환경 변수 / 시크릿 (절대 커밋 금지) ────────────────────
 .env
+.env.local
+.env.*.local
+*.secret
+*secret*
+*apikey*
+*api_key*
+*token*
+NEIS_API_KEY*
 
 # 의존성
 node_modules/
@@ -7,3 +15,11 @@ node_modules/
 # 로그
 *.log
 npm-debug.log*
+logs/
+pids/
+*.pid
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/settings.json
