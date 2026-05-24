@@ -1,0 +1,115 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - heading "🍱 학교 급식 정보" [level=1] [ref=e4]
+    - paragraph [ref=e5]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]: "1"
+        - heading "지역 선택" [level=2] [ref=e10]
+      - combobox [ref=e12]:
+        - option "-- 시·도 교육청을 선택하세요 --"
+        - option "서울"
+        - option "부산"
+        - option "대구" [selected]
+        - option "인천"
+        - option "광주"
+        - option "대전"
+        - option "울산"
+        - option "세종"
+        - option "경기"
+        - option "강원"
+        - option "충북"
+        - option "충남"
+        - option "전북"
+        - option "전남"
+        - option "경북"
+        - option "경남"
+        - option "제주"
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e21]: "2"
+        - heading "학교 선택" [level=2] [ref=e22]
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - text: 🔍
+          - textbox "학교 이름으로 검색..." [ref=e25]: 왕선중
+        - generic [ref=e1479] [cursor=pointer]:
+          - generic [ref=e1480]: 왕선중학교
+          - generic [ref=e1481]: 중학교
+    - generic [ref=e1482]:
+      - generic [ref=e1483]:
+        - generic [ref=e1484]: "3"
+        - heading "날짜 선택" [level=2] [ref=e1485]
+      - generic [ref=e1486]:
+        - generic [ref=e1487]:
+          - button "📅 일간" [ref=e1488] [cursor=pointer]
+          - button "📆 주간" [ref=e1489] [cursor=pointer]
+        - generic [ref=e1490]:
+          - textbox [ref=e1491]: 2026-05-23
+          - button "급식 조회" [active] [ref=e1492] [cursor=pointer]
+        - generic [ref=e1496]: 2026년 5월 18일 (월) ~ 5월 22일 (금)
+  - generic [ref=e13]:
+    - generic [ref=e1493]: 📍 대구
+    - text: ›
+    - generic [ref=e1494]: 🏫 왕선중학교
+    - text: ›
+    - generic [ref=e1495]: 📅 2026-05-23
+  - generic [ref=e1497]:
+    - heading "왕선중학교 · 2026년 5월 18일 ~ 5월 22일" [level=2] [ref=e1498]
+    - generic [ref=e1500]:
+      - generic [ref=e1501]:
+        - generic [ref=e1502]: 월 (5/18)
+        - generic [ref=e1504]:
+          - generic [ref=e1505]: 중식
+          - generic [ref=e1506]:
+            - text: 현미흑미밥
+            - text: 한우갈비탕 (5.6.16)
+            - text: 반고개무침/납작만두 (1.5.6.13.17)
+            - text: 미역줄기볶음 (5.6)
+            - text: 총각김치(완) (9)
+            - text: 그린키위(완)
+      - generic [ref=e1507]:
+        - generic [ref=e1508]: 화 (5/19)
+        - generic [ref=e1510]:
+          - generic [ref=e1511]: 중식
+          - generic [ref=e1512]:
+            - text: 검은콩밥 (5)
+            - text: 손수제비국 (5.6.9)
+            - text: 어묵야채조림 (1.5.6.13)
+            - text: 훈제오리야채구이/사워크림소스 (1.2.5.6.13)
+            - text: 아삭고추무침 (5.6.13)
+            - text: 배추김치(완) (9)
+      - generic [ref=e1513]:
+        - generic [ref=e1514]: 수 (5/20)
+        - generic [ref=e1516]:
+          - generic [ref=e1517]: 중식
+          - generic [ref=e1518]:
+            - text: 마파두부덮밥 (5.6.10.12.13.18)
+            - text: 팽이버섯유부국 (5.6.9.13)
+            - text: 큐브치즈샐러드 (2.12.13)
+            - text: 대마왕지파이 (1.2.5.6.15.18)
+            - text: 배추김치(완) (9)
+            - text: 비타후르츠주스 (13)
+      - generic [ref=e1519]:
+        - generic [ref=e1520]: 목 (5/21)
+        - generic [ref=e1522]:
+          - generic [ref=e1523]: 중식
+          - generic [ref=e1524]:
+            - text: 미소된장국 (5.6)
+            - text: 하트단무지
+            - text: 미나리무생채 (13)
+            - text: 불향주꾸미덮밥 (5.6.13)
+            - text: 수제고르곤졸라또띠아1/2 (2.5.6.12.13)
+            - text: 저당골드키위주스 (13)
+      - generic [ref=e1525]:
+        - generic [ref=e1526]: 금 (5/22)
+        - generic [ref=e1528]:
+          - generic [ref=e1529]: 중식
+          - generic [ref=e1530]:
+            - text: 클로렐라밥
+            - text: 에그타르트 (1.2.5.6)
+            - text: 소고기버섯전골 (16)
+            - text: 매운돼지갈비찜 (5.6.10.13)
+            - text: 시금치무침
+            - text: 배추김치(완) (9)

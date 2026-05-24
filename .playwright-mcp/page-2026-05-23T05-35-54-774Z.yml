@@ -1,0 +1,49 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - heading "🍱 학교 급식 정보" [level=1] [ref=e4]
+    - paragraph [ref=e5]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]: "1"
+        - heading "지역 선택" [level=2] [ref=e10]
+      - combobox [ref=e12]:
+        - option "-- 시·도 교육청을 선택하세요 --" [selected]
+        - option "서울"
+        - option "부산"
+        - option "대구"
+        - option "인천"
+        - option "광주"
+        - option "대전"
+        - option "울산"
+        - option "세종"
+        - option "경기"
+        - option "강원"
+        - option "충북"
+        - option "충남"
+        - option "전북"
+        - option "전남"
+        - option "경북"
+        - option "경남"
+        - option "제주"
+    - generic:
+      - generic:
+        - generic: "2"
+        - heading "학교 선택" [level=2]
+      - generic:
+        - generic:
+          - text: 🔍
+          - textbox "학교 이름으로 검색..." [disabled]
+        - generic:
+          - generic: 지역을 먼저 선택해 주세요
+    - generic:
+      - generic:
+        - generic: "3"
+        - heading "날짜 선택" [level=2]
+      - generic:
+        - generic:
+          - button "📅 일간"
+          - button "📆 주간"
+        - generic:
+          - textbox [disabled]: 2026-05-23
+          - button "급식 조회" [disabled]

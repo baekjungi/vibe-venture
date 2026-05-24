@@ -1,0 +1,2044 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - button "테마 전환" [ref=e4] [cursor=pointer]:
+        - generic [ref=e5]: 🌙
+      - heading "🍱 학교 급식 정보" [level=1] [ref=e6]
+      - paragraph [ref=e7]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: ✓ 1
+          - heading "지역 선택" [level=2] [ref=e12]
+        - combobox [ref=e14]:
+          - option "-- 시·도 교육청을 선택하세요 --"
+          - option "서울"
+          - option "부산"
+          - option "대구" [selected]
+          - option "인천"
+          - option "광주"
+          - option "대전"
+          - option "울산"
+          - option "세종"
+          - option "경기"
+          - option "강원"
+          - option "충북"
+          - option "충남"
+          - option "전북"
+          - option "전남"
+          - option "경북"
+          - option "경남"
+          - option "제주"
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: ✓ 2
+          - heading "학교 선택" [level=2] [ref=e20]
+          - generic [ref=e21]: 484개
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - text: 🔍
+            - textbox "학교 이름으로 검색..." [ref=e24]
+          - generic [ref=e25]:
+            - generic [ref=e26] [cursor=pointer]:
+              - generic [ref=e27]: 가창중학교
+              - generic [ref=e28]: 중학교
+              - button "즐겨찾기" [ref=e29]: ★
+            - generic [ref=e30] [cursor=pointer]:
+              - generic [ref=e31]: 강동고등학교
+              - generic [ref=e32]: 고등학교
+              - button "즐겨찾기" [ref=e33]: ★
+            - generic [ref=e34] [cursor=pointer]:
+              - generic [ref=e35]: 강동중학교
+              - generic [ref=e36]: 중학교
+              - button "즐겨찾기" [ref=e37]: ★
+            - generic [ref=e38] [cursor=pointer]:
+              - generic [ref=e39]: 강북고등학교
+              - generic [ref=e40]: 고등학교
+              - button "즐겨찾기" [ref=e41]: ★
+            - generic [ref=e42] [cursor=pointer]:
+              - generic [ref=e43]: 강북중학교
+              - generic [ref=e44]: 중학교
+              - button "즐겨찾기" [ref=e45]: ★
+            - generic [ref=e46] [cursor=pointer]:
+              - generic [ref=e47]: 경구중학교
+              - generic [ref=e48]: 중학교
+              - button "즐겨찾기" [ref=e49]: ★
+            - generic [ref=e50] [cursor=pointer]:
+              - generic [ref=e51]: 경덕여자고등학교
+              - generic [ref=e52]: 고등학교
+              - button "즐겨찾기" [ref=e53]: ★
+            - generic [ref=e54] [cursor=pointer]:
+              - generic [ref=e55]: 경명여자고등학교
+              - generic [ref=e56]: 고등학교
+              - button "즐겨찾기" [ref=e57]: ★
+            - generic [ref=e58] [cursor=pointer]:
+              - generic [ref=e59]: 경명여자중학교
+              - generic [ref=e60]: 중학교
+              - button "즐겨찾기" [ref=e61]: ★
+            - generic [ref=e62] [cursor=pointer]:
+              - generic [ref=e63]: 경북고등학교
+              - generic [ref=e64]: 고등학교
+              - button "즐겨찾기" [ref=e65]: ★
+            - generic [ref=e66] [cursor=pointer]:
+              - generic [ref=e67]: 경북공업고등학교
+              - generic [ref=e68]: 고등학교
+              - button "즐겨찾기" [ref=e69]: ★
+            - generic [ref=e70] [cursor=pointer]:
+              - generic [ref=e71]: 경북기계공업고등학교
+              - generic [ref=e72]: 고등학교
+              - button "즐겨찾기" [ref=e73]: ★
+            - generic [ref=e74] [cursor=pointer]:
+              - generic [ref=e75]: 경북기계공업고등학교부설대구문화예술산업학교
+              - generic [ref=e76]: 각종학교(고)
+              - button "즐겨찾기" [ref=e77]: ★
+            - generic [ref=e78] [cursor=pointer]:
+              - generic [ref=e79]: 경북대학교사범대학부설고등학교
+              - generic [ref=e80]: 고등학교
+              - button "즐겨찾기" [ref=e81]: ★
+            - generic [ref=e82] [cursor=pointer]:
+              - generic [ref=e83]: 경북대학교사범대학부설중학교
+              - generic [ref=e84]: 중학교
+              - button "즐겨찾기" [ref=e85]: ★
+            - generic [ref=e86] [cursor=pointer]:
+              - generic [ref=e87]: 경북대학교사범대학부설초등학교
+              - generic [ref=e88]: 초등학교
+              - button "즐겨찾기" [ref=e89]: ★
+            - generic [ref=e90] [cursor=pointer]:
+              - generic [ref=e91]: 경북여자고등학교
+              - generic [ref=e92]: 고등학교
+              - button "즐겨찾기" [ref=e93]: ★
+            - generic [ref=e94] [cursor=pointer]:
+              - generic [ref=e95]: 경북여자상업고등학교
+              - generic [ref=e96]: 고등학교
+              - button "즐겨찾기" [ref=e97]: ★
+            - generic [ref=e98] [cursor=pointer]:
+              - generic [ref=e99]: 경북예술고등학교
+              - generic [ref=e100]: 고등학교
+              - button "즐겨찾기" [ref=e101]: ★
+            - generic [ref=e102] [cursor=pointer]:
+              - generic [ref=e103]: 경상고등학교
+              - generic [ref=e104]: 고등학교
+              - button "즐겨찾기" [ref=e105]: ★
+            - generic [ref=e106] [cursor=pointer]:
+              - generic [ref=e107]: 경상공업고등학교
+              - generic [ref=e108]: 고등학교
+              - button "즐겨찾기" [ref=e109]: ★
+            - generic [ref=e110] [cursor=pointer]:
+              - generic [ref=e111]: 경상여자고등학교
+              - generic [ref=e112]: 고등학교
+              - button "즐겨찾기" [ref=e113]: ★
+            - generic [ref=e114] [cursor=pointer]:
+              - generic [ref=e115]: 경상중학교
+              - generic [ref=e116]: 중학교
+              - button "즐겨찾기" [ref=e117]: ★
+            - generic [ref=e118] [cursor=pointer]:
+              - generic [ref=e119]: 경상중학교부설방송통신중학교
+              - generic [ref=e120]: 방송통신중학교
+              - button "즐겨찾기" [ref=e121]: ★
+            - generic [ref=e122] [cursor=pointer]:
+              - generic [ref=e123]: 경서중학교
+              - generic [ref=e124]: 중학교
+              - button "즐겨찾기" [ref=e125]: ★
+            - generic [ref=e126] [cursor=pointer]:
+              - generic [ref=e127]: 경신고등학교
+              - generic [ref=e128]: 고등학교
+              - button "즐겨찾기" [ref=e129]: ★
+            - generic [ref=e130] [cursor=pointer]:
+              - generic [ref=e131]: 경신중학교
+              - generic [ref=e132]: 중학교
+              - button "즐겨찾기" [ref=e133]: ★
+            - generic [ref=e134] [cursor=pointer]:
+              - generic [ref=e135]: 경암중학교
+              - generic [ref=e136]: 중학교
+              - button "즐겨찾기" [ref=e137]: ★
+            - generic [ref=e138] [cursor=pointer]:
+              - generic [ref=e139]: 경운중학교
+              - generic [ref=e140]: 중학교
+              - button "즐겨찾기" [ref=e141]: ★
+            - generic [ref=e142] [cursor=pointer]:
+              - generic [ref=e143]: 경원고등학교
+              - generic [ref=e144]: 고등학교
+              - button "즐겨찾기" [ref=e145]: ★
+            - generic [ref=e146] [cursor=pointer]:
+              - generic [ref=e147]: 경일여자고등학교
+              - generic [ref=e148]: 고등학교
+              - button "즐겨찾기" [ref=e149]: ★
+            - generic [ref=e150] [cursor=pointer]:
+              - generic [ref=e151]: 경일여자중학교
+              - generic [ref=e152]: 중학교
+              - button "즐겨찾기" [ref=e153]: ★
+            - generic [ref=e154] [cursor=pointer]:
+              - generic [ref=e155]: 경일중학교
+              - generic [ref=e156]: 중학교
+              - button "즐겨찾기" [ref=e157]: ★
+            - generic [ref=e158] [cursor=pointer]:
+              - generic [ref=e159]: 경혜여자중학교
+              - generic [ref=e160]: 중학교
+              - button "즐겨찾기" [ref=e161]: ★
+            - generic [ref=e162] [cursor=pointer]:
+              - generic [ref=e163]: 경화여자고등학교
+              - generic [ref=e164]: 고등학교
+              - button "즐겨찾기" [ref=e165]: ★
+            - generic [ref=e166] [cursor=pointer]:
+              - generic [ref=e167]: 계성고등학교
+              - generic [ref=e168]: 고등학교
+              - button "즐겨찾기" [ref=e169]: ★
+            - generic [ref=e170] [cursor=pointer]:
+              - generic [ref=e171]: 계성중학교
+              - generic [ref=e172]: 중학교
+              - button "즐겨찾기" [ref=e173]: ★
+            - generic [ref=e174] [cursor=pointer]:
+              - generic [ref=e175]: 계성초등학교
+              - generic [ref=e176]: 초등학교
+              - button "즐겨찾기" [ref=e177]: ★
+            - generic [ref=e178] [cursor=pointer]:
+              - generic [ref=e179]: 고산중학교
+              - generic [ref=e180]: 중학교
+              - button "즐겨찾기" [ref=e181]: ★
+            - generic [ref=e182] [cursor=pointer]:
+              - generic [ref=e183]: 공산중학교
+              - generic [ref=e184]: 중학교
+              - button "즐겨찾기" [ref=e185]: ★
+            - generic [ref=e186] [cursor=pointer]:
+              - generic [ref=e187]: 관음중학교
+              - generic [ref=e188]: 중학교
+              - button "즐겨찾기" [ref=e189]: ★
+            - generic [ref=e190] [cursor=pointer]:
+              - generic [ref=e191]: 관천중학교
+              - generic [ref=e192]: 중학교
+              - button "즐겨찾기" [ref=e193]: ★
+            - generic [ref=e194] [cursor=pointer]:
+              - generic [ref=e195]: 구남중학교
+              - generic [ref=e196]: 중학교
+              - button "즐겨찾기" [ref=e197]: ★
+            - generic [ref=e198] [cursor=pointer]:
+              - generic [ref=e199]: 구암고등학교
+              - generic [ref=e200]: 고등학교
+              - button "즐겨찾기" [ref=e201]: ★
+            - generic [ref=e202] [cursor=pointer]:
+              - generic [ref=e203]: 구암중학교
+              - generic [ref=e204]: 중학교
+              - button "즐겨찾기" [ref=e205]: ★
+            - generic [ref=e206] [cursor=pointer]:
+              - generic [ref=e207]: 구지중학교
+              - generic [ref=e208]: 중학교
+              - button "즐겨찾기" [ref=e209]: ★
+            - generic [ref=e210] [cursor=pointer]:
+              - generic [ref=e211]: 군위고등학교
+              - generic [ref=e212]: 고등학교
+              - button "즐겨찾기" [ref=e213]: ★
+            - generic [ref=e214] [cursor=pointer]:
+              - generic [ref=e215]: 군위중학교
+              - generic [ref=e216]: 중학교
+              - button "즐겨찾기" [ref=e217]: ★
+            - generic [ref=e218] [cursor=pointer]:
+              - generic [ref=e219]: 군위중학교우보캠퍼스
+              - generic [ref=e220]: 중학교
+              - button "즐겨찾기" [ref=e221]: ★
+            - generic [ref=e222] [cursor=pointer]:
+              - generic [ref=e223]: 남대구초등학교
+              - generic [ref=e224]: 초등학교
+              - button "즐겨찾기" [ref=e225]: ★
+            - generic [ref=e226] [cursor=pointer]:
+              - generic [ref=e227]: 노변중학교
+              - generic [ref=e228]: 중학교
+              - button "즐겨찾기" [ref=e229]: ★
+            - generic [ref=e230] [cursor=pointer]:
+              - generic [ref=e231]: 논공중학교
+              - generic [ref=e232]: 중학교
+              - button "즐겨찾기" [ref=e233]: ★
+            - generic [ref=e234] [cursor=pointer]:
+              - generic [ref=e235]: 능인고등학교
+              - generic [ref=e236]: 고등학교
+              - button "즐겨찾기" [ref=e237]: ★
+            - generic [ref=e238] [cursor=pointer]:
+              - generic [ref=e239]: 능인중학교
+              - generic [ref=e240]: 중학교
+              - button "즐겨찾기" [ref=e241]: ★
+            - generic [ref=e242] [cursor=pointer]:
+              - generic [ref=e243]: 다사고등학교
+              - generic [ref=e244]: 고등학교
+              - button "즐겨찾기" [ref=e245]: ★
+            - generic [ref=e246] [cursor=pointer]:
+              - generic [ref=e247]: 다사중학교
+              - generic [ref=e248]: 중학교
+              - button "즐겨찾기" [ref=e249]: ★
+            - generic [ref=e250] [cursor=pointer]:
+              - generic [ref=e251]: 달구벌고등학교
+              - generic [ref=e252]: 고등학교
+              - button "즐겨찾기" [ref=e253]: ★
+            - generic [ref=e254] [cursor=pointer]:
+              - generic [ref=e255]: 달서고등학교
+              - generic [ref=e256]: 고등학교
+              - button "즐겨찾기" [ref=e257]: ★
+            - generic [ref=e258] [cursor=pointer]:
+              - generic [ref=e259]: 달서중학교
+              - generic [ref=e260]: 중학교
+              - button "즐겨찾기" [ref=e261]: ★
+            - generic [ref=e262] [cursor=pointer]:
+              - generic [ref=e263]: 달성고등학교
+              - generic [ref=e264]: 고등학교
+              - button "즐겨찾기" [ref=e265]: ★
+            - generic [ref=e266] [cursor=pointer]:
+              - generic [ref=e267]: 달성중학교
+              - generic [ref=e268]: 중학교
+              - button "즐겨찾기" [ref=e269]: ★
+            - generic [ref=e270] [cursor=pointer]:
+              - generic [ref=e271]: 대건고등학교
+              - generic [ref=e272]: 고등학교
+              - button "즐겨찾기" [ref=e273]: ★
+            - generic [ref=e274] [cursor=pointer]:
+              - generic [ref=e275]: 대건중학교
+              - generic [ref=e276]: 중학교
+              - button "즐겨찾기" [ref=e277]: ★
+            - generic [ref=e278] [cursor=pointer]:
+              - generic [ref=e279]: 대곡고등학교
+              - generic [ref=e280]: 고등학교
+              - button "즐겨찾기" [ref=e281]: ★
+            - generic [ref=e282] [cursor=pointer]:
+              - generic [ref=e283]: 대곡중학교
+              - generic [ref=e284]: 중학교
+              - button "즐겨찾기" [ref=e285]: ★
+            - generic [ref=e286] [cursor=pointer]:
+              - generic [ref=e287]: 대구가창초등학교
+              - generic [ref=e288]: 초등학교
+              - button "즐겨찾기" [ref=e289]: ★
+            - generic [ref=e290] [cursor=pointer]:
+              - generic [ref=e291]: 대구감삼초등학교
+              - generic [ref=e292]: 초등학교
+              - button "즐겨찾기" [ref=e293]: ★
+            - generic [ref=e294] [cursor=pointer]:
+              - generic [ref=e295]: 대구감천초등학교
+              - generic [ref=e296]: 초등학교
+              - button "즐겨찾기" [ref=e297]: ★
+            - generic [ref=e298] [cursor=pointer]:
+              - generic [ref=e299]: 대구강동초등학교
+              - generic [ref=e300]: 초등학교
+              - button "즐겨찾기" [ref=e301]: ★
+            - generic [ref=e302] [cursor=pointer]:
+              - generic [ref=e303]: 대구강림초등학교
+              - generic [ref=e304]: 초등학교
+              - button "즐겨찾기" [ref=e305]: ★
+            - generic [ref=e306] [cursor=pointer]:
+              - generic [ref=e307]: 대구강북초등학교
+              - generic [ref=e308]: 초등학교
+              - button "즐겨찾기" [ref=e309]: ★
+            - generic [ref=e310] [cursor=pointer]:
+              - generic [ref=e311]: 대구경동초등학교
+              - generic [ref=e312]: 초등학교
+              - button "즐겨찾기" [ref=e313]: ★
+            - generic [ref=e314] [cursor=pointer]:
+              - generic [ref=e315]: 대구경운초등학교
+              - generic [ref=e316]: 초등학교
+              - button "즐겨찾기" [ref=e317]: ★
+            - generic [ref=e318] [cursor=pointer]:
+              - generic [ref=e319]: 대구경진초등학교
+              - generic [ref=e320]: 초등학교
+              - button "즐겨찾기" [ref=e321]: ★
+            - generic [ref=e322] [cursor=pointer]:
+              - generic [ref=e323]: 대구고등학교
+              - generic [ref=e324]: 고등학교
+              - button "즐겨찾기" [ref=e325]: ★
+            - generic [ref=e326] [cursor=pointer]:
+              - generic [ref=e327]: 대구고등학교부설방송통신고등학교
+              - generic [ref=e328]: 방송통신고등학교
+              - button "즐겨찾기" [ref=e329]: ★
+            - generic [ref=e330] [cursor=pointer]:
+              - generic [ref=e331]: 대구고산초등학교
+              - generic [ref=e332]: 초등학교
+              - button "즐겨찾기" [ref=e333]: ★
+            - generic [ref=e334] [cursor=pointer]:
+              - generic [ref=e335]: 대구공산초등학교
+              - generic [ref=e336]: 초등학교
+              - button "즐겨찾기" [ref=e337]: ★
+            - generic [ref=e338] [cursor=pointer]:
+              - generic [ref=e339]: 대구공업고등학교
+              - generic [ref=e340]: 고등학교
+              - button "즐겨찾기" [ref=e341]: ★
+            - generic [ref=e342] [cursor=pointer]:
+              - generic [ref=e343]: 대구공업고등학교 테크노폴리스 캠퍼스
+              - generic [ref=e344]: 고등학교
+              - button "즐겨찾기" [ref=e345]: ★
+            - generic [ref=e346] [cursor=pointer]:
+              - generic [ref=e347]: 대구과학고등학교
+              - generic [ref=e348]: 고등학교
+              - button "즐겨찾기" [ref=e349]: ★
+            - generic [ref=e350] [cursor=pointer]:
+              - generic [ref=e351]: 대구과학기술고등학교
+              - generic [ref=e352]: 고등학교
+              - button "즐겨찾기" [ref=e353]: ★
+            - generic [ref=e354] [cursor=pointer]:
+              - generic [ref=e355]: 대구관광고등학교
+              - generic [ref=e356]: 고등학교
+              - button "즐겨찾기" [ref=e357]: ★
+            - generic [ref=e358] [cursor=pointer]:
+              - generic [ref=e359]: 대구관남초등학교
+              - generic [ref=e360]: 초등학교
+              - button "즐겨찾기" [ref=e361]: ★
+            - generic [ref=e362] [cursor=pointer]:
+              - generic [ref=e363]: 대구관문초등학교
+              - generic [ref=e364]: 초등학교
+              - button "즐겨찾기" [ref=e365]: ★
+            - generic [ref=e366] [cursor=pointer]:
+              - generic [ref=e367]: 대구관음초등학교
+              - generic [ref=e368]: 초등학교
+              - button "즐겨찾기" [ref=e369]: ★
+            - generic [ref=e370] [cursor=pointer]:
+              - generic [ref=e371]: 대구관천초등학교
+              - generic [ref=e372]: 초등학교
+              - button "즐겨찾기" [ref=e373]: ★
+            - generic [ref=e374] [cursor=pointer]:
+              - generic [ref=e375]: 대구광명학교
+              - generic [ref=e376]: 특수학교
+              - button "즐겨찾기" [ref=e377]: ★
+            - generic [ref=e378] [cursor=pointer]:
+              - generic [ref=e379]: 대구교동초등학교
+              - generic [ref=e380]: 초등학교
+              - button "즐겨찾기" [ref=e381]: ★
+            - generic [ref=e382] [cursor=pointer]:
+              - generic [ref=e383]: 대구교육대학교대구부설초등학교
+              - generic [ref=e384]: 초등학교
+              - button "즐겨찾기" [ref=e385]: ★
+            - generic [ref=e386] [cursor=pointer]:
+              - generic [ref=e387]: 대구구암초등학교
+              - generic [ref=e388]: 초등학교
+              - button "즐겨찾기" [ref=e389]: ★
+            - generic [ref=e390] [cursor=pointer]:
+              - generic [ref=e391]: 대구구지초등학교
+              - generic [ref=e392]: 초등학교
+              - button "즐겨찾기" [ref=e393]: ★
+            - generic [ref=e394] [cursor=pointer]:
+              - generic [ref=e395]: 대구국우초등학교
+              - generic [ref=e396]: 초등학교
+              - button "즐겨찾기" [ref=e397]: ★
+            - generic [ref=e398] [cursor=pointer]:
+              - generic [ref=e399]: 대구국제고등학교
+              - generic [ref=e400]: 고등학교
+              - button "즐겨찾기" [ref=e401]: ★
+            - generic [ref=e402] [cursor=pointer]:
+              - generic [ref=e403]: 대구군위초등학교
+              - generic [ref=e404]: 초등학교
+              - button "즐겨찾기" [ref=e405]: ★
+            - generic [ref=e406] [cursor=pointer]:
+              - generic [ref=e407]: 대구군위초등학교송원캠퍼스
+              - generic [ref=e408]: 초등학교
+              - button "즐겨찾기" [ref=e409]: ★
+            - generic [ref=e410] [cursor=pointer]:
+              - generic [ref=e411]: 대구금계초등학교
+              - generic [ref=e412]: 초등학교
+              - button "즐겨찾기" [ref=e413]: ★
+            - generic [ref=e414] [cursor=pointer]:
+              - generic [ref=e415]: 대구금포초등학교
+              - generic [ref=e416]: 초등학교
+              - button "즐겨찾기" [ref=e417]: ★
+            - generic [ref=e418] [cursor=pointer]:
+              - generic [ref=e419]: 대구남덕초등학교
+              - generic [ref=e420]: 초등학교
+              - button "즐겨찾기" [ref=e421]: ★
+            - generic [ref=e422] [cursor=pointer]:
+              - generic [ref=e423]: 대구남도초등학교
+              - generic [ref=e424]: 초등학교
+              - button "즐겨찾기" [ref=e425]: ★
+            - generic [ref=e426] [cursor=pointer]:
+              - generic [ref=e427]: 대구남동초등학교
+              - generic [ref=e428]: 초등학교
+              - button "즐겨찾기" [ref=e429]: ★
+            - generic [ref=e430] [cursor=pointer]:
+              - generic [ref=e431]: 대구남명초등학교
+              - generic [ref=e432]: 초등학교
+              - button "즐겨찾기" [ref=e433]: ★
+            - generic [ref=e434] [cursor=pointer]:
+              - generic [ref=e435]: 대구남부초등학교
+              - generic [ref=e436]: 초등학교
+              - button "즐겨찾기" [ref=e437]: ★
+            - generic [ref=e438] [cursor=pointer]:
+              - generic [ref=e439]: 대구남산고등학교
+              - generic [ref=e440]: 고등학교
+              - button "즐겨찾기" [ref=e441]: ★
+            - generic [ref=e442] [cursor=pointer]:
+              - generic [ref=e443]: 대구남산초등학교
+              - generic [ref=e444]: 초등학교
+              - button "즐겨찾기" [ref=e445]: ★
+            - generic [ref=e446] [cursor=pointer]:
+              - generic [ref=e447]: 대구남송초등학교
+              - generic [ref=e448]: 초등학교
+              - button "즐겨찾기" [ref=e449]: ★
+            - generic [ref=e450] [cursor=pointer]:
+              - generic [ref=e451]: 대구남양학교
+              - generic [ref=e452]: 특수학교
+              - button "즐겨찾기" [ref=e453]: ★
+            - generic [ref=e454] [cursor=pointer]:
+              - generic [ref=e455]: 대구내당초등학교
+              - generic [ref=e456]: 초등학교
+              - button "즐겨찾기" [ref=e457]: ★
+            - generic [ref=e458] [cursor=pointer]:
+              - generic [ref=e459]: 대구내서초등학교
+              - generic [ref=e460]: 초등학교
+              - button "즐겨찾기" [ref=e461]: ★
+            - generic [ref=e462] [cursor=pointer]:
+              - generic [ref=e463]: 대구노변초등학교
+              - generic [ref=e464]: 초등학교
+              - button "즐겨찾기" [ref=e465]: ★
+            - generic [ref=e466] [cursor=pointer]:
+              - generic [ref=e467]: 대구노전초등학교
+              - generic [ref=e468]: 초등학교
+              - button "즐겨찾기" [ref=e469]: ★
+            - generic [ref=e470] [cursor=pointer]:
+              - generic [ref=e471]: 대구논공초등학교
+              - generic [ref=e472]: 초등학교
+              - button "즐겨찾기" [ref=e473]: ★
+            - generic [ref=e474] [cursor=pointer]:
+              - generic [ref=e475]: 대구농업마이스터고등학교
+              - generic [ref=e476]: 고등학교
+              - button "즐겨찾기" [ref=e477]: ★
+            - generic [ref=e478] [cursor=pointer]:
+              - generic [ref=e479]: 대구다사초등학교
+              - generic [ref=e480]: 초등학교
+              - button "즐겨찾기" [ref=e481]: ★
+            - generic [ref=e482] [cursor=pointer]:
+              - generic [ref=e483]: 대구달산초등학교
+              - generic [ref=e484]: 초등학교
+              - button "즐겨찾기" [ref=e485]: ★
+            - generic [ref=e486] [cursor=pointer]:
+              - generic [ref=e487]: 대구달서초등학교
+              - generic [ref=e488]: 초등학교
+              - button "즐겨찾기" [ref=e489]: ★
+            - generic [ref=e490] [cursor=pointer]:
+              - generic [ref=e491]: 대구달성초등학교
+              - generic [ref=e492]: 초등학교
+              - button "즐겨찾기" [ref=e493]: ★
+            - generic [ref=e494] [cursor=pointer]:
+              - generic [ref=e495]: 대구대곡초등학교
+              - generic [ref=e496]: 초등학교
+              - button "즐겨찾기" [ref=e497]: ★
+            - generic [ref=e498] [cursor=pointer]:
+              - generic [ref=e499]: 대구대남초등학교
+              - generic [ref=e500]: 초등학교
+              - button "즐겨찾기" [ref=e501]: ★
+            - generic [ref=e502] [cursor=pointer]:
+              - generic [ref=e503]: 대구대덕초등학교
+              - generic [ref=e504]: 초등학교
+              - button "즐겨찾기" [ref=e505]: ★
+            - generic [ref=e506] [cursor=pointer]:
+              - generic [ref=e507]: 대구대명초등학교
+              - generic [ref=e508]: 초등학교
+              - button "즐겨찾기" [ref=e509]: ★
+            - generic [ref=e510] [cursor=pointer]:
+              - generic [ref=e511]: 대구대봉초등학교
+              - generic [ref=e512]: 초등학교
+              - button "즐겨찾기" [ref=e513]: ★
+            - generic [ref=e514] [cursor=pointer]:
+              - generic [ref=e515]: 대구대산초등학교
+              - generic [ref=e516]: 초등학교
+              - button "즐겨찾기" [ref=e517]: ★
+            - generic [ref=e518] [cursor=pointer]:
+              - generic [ref=e519]: 대구대서초등학교
+              - generic [ref=e520]: 초등학교
+              - button "즐겨찾기" [ref=e521]: ★
+            - generic [ref=e522] [cursor=pointer]:
+              - generic [ref=e523]: 대구대성초등학교
+              - generic [ref=e524]: 초등학교
+              - button "즐겨찾기" [ref=e525]: ★
+            - generic [ref=e526] [cursor=pointer]:
+              - generic [ref=e527]: 대구대실초등학교
+              - generic [ref=e528]: 초등학교
+              - button "즐겨찾기" [ref=e529]: ★
+            - generic [ref=e530] [cursor=pointer]:
+              - generic [ref=e531]: 대구대진초등학교
+              - generic [ref=e532]: 초등학교
+              - button "즐겨찾기" [ref=e533]: ★
+            - generic [ref=e534] [cursor=pointer]:
+              - generic [ref=e535]: 대구대천초등학교
+              - generic [ref=e536]: 초등학교
+              - button "즐겨찾기" [ref=e537]: ★
+            - generic [ref=e538] [cursor=pointer]:
+              - generic [ref=e539]: 대구대청초등학교
+              - generic [ref=e540]: 초등학교
+              - button "즐겨찾기" [ref=e541]: ★
+            - generic [ref=e542] [cursor=pointer]:
+              - generic [ref=e543]: 대구덕성초등학교
+              - generic [ref=e544]: 초등학교
+              - button "즐겨찾기" [ref=e545]: ★
+            - generic [ref=e546] [cursor=pointer]:
+              - generic [ref=e547]: 대구덕인초등학교
+              - generic [ref=e548]: 초등학교
+              - button "즐겨찾기" [ref=e549]: ★
+            - generic [ref=e550] [cursor=pointer]:
+              - generic [ref=e551]: 대구덕희학교
+              - generic [ref=e552]: 특수학교
+              - button "즐겨찾기" [ref=e553]: ★
+            - generic [ref=e554] [cursor=pointer]:
+              - generic [ref=e555]: 대구도남초등학교
+              - generic [ref=e556]: 초등학교
+              - button "즐겨찾기" [ref=e557]: ★
+            - generic [ref=e558] [cursor=pointer]:
+              - generic [ref=e559]: 대구도림초등학교
+              - generic [ref=e560]: 초등학교
+              - button "즐겨찾기" [ref=e561]: ★
+            - generic [ref=e562] [cursor=pointer]:
+              - generic [ref=e563]: 대구도원초등학교
+              - generic [ref=e564]: 초등학교
+              - button "즐겨찾기" [ref=e565]: ★
+            - generic [ref=e566] [cursor=pointer]:
+              - generic [ref=e567]: 대구동곡초등학교
+              - generic [ref=e568]: 초등학교
+              - button "즐겨찾기" [ref=e569]: ★
+            - generic [ref=e570] [cursor=pointer]:
+              - generic [ref=e571]: 대구동덕초등학교
+              - generic [ref=e572]: 초등학교
+              - button "즐겨찾기" [ref=e573]: ★
+            - generic [ref=e574] [cursor=pointer]:
+              - generic [ref=e575]: 대구동도초등학교
+              - generic [ref=e576]: 초등학교
+              - button "즐겨찾기" [ref=e577]: ★
+            - generic [ref=e578] [cursor=pointer]:
+              - generic [ref=e579]: 대구동문초등학교
+              - generic [ref=e580]: 초등학교
+              - button "즐겨찾기" [ref=e581]: ★
+            - generic [ref=e582] [cursor=pointer]:
+              - generic [ref=e583]: 대구동변초등학교
+              - generic [ref=e584]: 초등학교
+              - button "즐겨찾기" [ref=e585]: ★
+            - generic [ref=e586] [cursor=pointer]:
+              - generic [ref=e587]: 대구동부고등학교
+              - generic [ref=e588]: 고등학교
+              - button "즐겨찾기" [ref=e589]: ★
+            - generic [ref=e590] [cursor=pointer]:
+              - generic [ref=e591]: 대구동부중학교
+              - generic [ref=e592]: 중학교
+              - button "즐겨찾기" [ref=e593]: ★
+            - generic [ref=e594] [cursor=pointer]:
+              - generic [ref=e595]: 대구동부초등학교
+              - generic [ref=e596]: 초등학교
+              - button "즐겨찾기" [ref=e597]: ★
+            - generic [ref=e598] [cursor=pointer]:
+              - generic [ref=e599]: 대구동산초등학교
+              - generic [ref=e600]: 초등학교
+              - button "즐겨찾기" [ref=e601]: ★
+            - generic [ref=e602] [cursor=pointer]:
+              - generic [ref=e603]: 대구동성초등학교
+              - generic [ref=e604]: 초등학교
+              - button "즐겨찾기" [ref=e605]: ★
+            - generic [ref=e606] [cursor=pointer]:
+              - generic [ref=e607]: 대구동신초등학교
+              - generic [ref=e608]: 초등학교
+              - button "즐겨찾기" [ref=e609]: ★
+            - generic [ref=e610] [cursor=pointer]:
+              - generic [ref=e611]: 대구동원초등학교
+              - generic [ref=e612]: 초등학교
+              - button "즐겨찾기" [ref=e613]: ★
+            - generic [ref=e614] [cursor=pointer]:
+              - generic [ref=e615]: 대구동인초등학교
+              - generic [ref=e616]: 초등학교
+              - button "즐겨찾기" [ref=e617]: ★
+            - generic [ref=e618] [cursor=pointer]:
+              - generic [ref=e619]: 대구동일초등학교
+              - generic [ref=e620]: 초등학교
+              - button "즐겨찾기" [ref=e621]: ★
+            - generic [ref=e622] [cursor=pointer]:
+              - generic [ref=e623]: 대구동중학교
+              - generic [ref=e624]: 중학교
+              - button "즐겨찾기" [ref=e625]: ★
+            - generic [ref=e626] [cursor=pointer]:
+              - generic [ref=e627]: 대구동천초등학교
+              - generic [ref=e628]: 초등학교
+              - button "즐겨찾기" [ref=e629]: ★
+            - generic [ref=e630] [cursor=pointer]:
+              - generic [ref=e631]: 대구동촌초등학교
+              - generic [ref=e632]: 초등학교
+              - button "즐겨찾기" [ref=e633]: ★
+            - generic [ref=e634] [cursor=pointer]:
+              - generic [ref=e635]: 대구동평초등학교
+              - generic [ref=e636]: 초등학교
+              - button "즐겨찾기" [ref=e637]: ★
+            - generic [ref=e638] [cursor=pointer]:
+              - generic [ref=e639]: 대구동호초등학교
+              - generic [ref=e640]: 초등학교
+              - button "즐겨찾기" [ref=e641]: ★
+            - generic [ref=e642] [cursor=pointer]:
+              - generic [ref=e643]: 대구두류초등학교
+              - generic [ref=e644]: 초등학교
+              - button "즐겨찾기" [ref=e645]: ★
+            - generic [ref=e646] [cursor=pointer]:
+              - generic [ref=e647]: 대구두산초등학교
+              - generic [ref=e648]: 초등학교
+              - button "즐겨찾기" [ref=e649]: ★
+            - generic [ref=e650] [cursor=pointer]:
+              - generic [ref=e651]: 대구들안길초등학교
+              - generic [ref=e652]: 초등학교
+              - button "즐겨찾기" [ref=e653]: ★
+            - generic [ref=e654] [cursor=pointer]:
+              - generic [ref=e655]: 대구만촌초등학교
+              - generic [ref=e656]: 초등학교
+              - button "즐겨찾기" [ref=e657]: ★
+            - generic [ref=e658] [cursor=pointer]:
+              - generic [ref=e659]: 대구매곡초등학교
+              - generic [ref=e660]: 초등학교
+              - button "즐겨찾기" [ref=e661]: ★
+            - generic [ref=e662] [cursor=pointer]:
+              - generic [ref=e663]: 대구매동초등학교
+              - generic [ref=e664]: 초등학교
+              - button "즐겨찾기" [ref=e665]: ★
+            - generic [ref=e666] [cursor=pointer]:
+              - generic [ref=e667]: 대구매천초등학교
+              - generic [ref=e668]: 초등학교
+              - button "즐겨찾기" [ref=e669]: ★
+            - generic [ref=e670] [cursor=pointer]:
+              - generic [ref=e671]: 대구매호초등학교
+              - generic [ref=e672]: 초등학교
+              - button "즐겨찾기" [ref=e673]: ★
+            - generic [ref=e674] [cursor=pointer]:
+              - generic [ref=e675]: 대구명곡초등학교
+              - generic [ref=e676]: 초등학교
+              - button "즐겨찾기" [ref=e677]: ★
+            - generic [ref=e678] [cursor=pointer]:
+              - generic [ref=e679]: 대구명덕초등학교
+              - generic [ref=e680]: 초등학교
+              - button "즐겨찾기" [ref=e681]: ★
+            - generic [ref=e682] [cursor=pointer]:
+              - generic [ref=e683]: 대구문성초등학교
+              - generic [ref=e684]: 초등학교
+              - button "즐겨찾기" [ref=e685]: ★
+            - generic [ref=e686] [cursor=pointer]:
+              - generic [ref=e687]: 대구반도체마이스터고등학교
+              - generic [ref=e688]: 고등학교
+              - button "즐겨찾기" [ref=e689]: ★
+            - generic [ref=e690] [cursor=pointer]:
+              - generic [ref=e691]: 대구반송초등학교
+              - generic [ref=e692]: 초등학교
+              - button "즐겨찾기" [ref=e693]: ★
+            - generic [ref=e694] [cursor=pointer]:
+              - generic [ref=e695]: 대구반야월초등학교
+              - generic [ref=e696]: 초등학교
+              - button "즐겨찾기" [ref=e697]: ★
+            - generic [ref=e698] [cursor=pointer]:
+              - generic [ref=e699]: 대구방촌초등학교
+              - generic [ref=e700]: 초등학교
+              - button "즐겨찾기" [ref=e701]: ★
+            - generic [ref=e702] [cursor=pointer]:
+              - generic [ref=e703]: 대구범물초등학교
+              - generic [ref=e704]: 초등학교
+              - button "즐겨찾기" [ref=e705]: ★
+            - generic [ref=e706] [cursor=pointer]:
+              - generic [ref=e707]: 대구범어초등학교
+              - generic [ref=e708]: 초등학교
+              - button "즐겨찾기" [ref=e709]: ★
+            - generic [ref=e710] [cursor=pointer]:
+              - generic [ref=e711]: 대구범일초등학교
+              - generic [ref=e712]: 초등학교
+              - button "즐겨찾기" [ref=e713]: ★
+            - generic [ref=e714] [cursor=pointer]:
+              - generic [ref=e715]: 대구보건고등학교
+              - generic [ref=e716]: 고등학교
+              - button "즐겨찾기" [ref=e717]: ★
+            - generic [ref=e718] [cursor=pointer]:
+              - generic [ref=e719]: 대구보건학교
+              - generic [ref=e720]: 특수학교
+              - button "즐겨찾기" [ref=e721]: ★
+            - generic [ref=e722] [cursor=pointer]:
+              - generic [ref=e723]: 대구보명학교
+              - generic [ref=e724]: 특수학교
+              - button "즐겨찾기" [ref=e725]: ★
+            - generic [ref=e726] [cursor=pointer]:
+              - generic [ref=e727]: 대구복명초등학교
+              - generic [ref=e728]: 초등학교
+              - button "즐겨찾기" [ref=e729]: ★
+            - generic [ref=e730] [cursor=pointer]:
+              - generic [ref=e731]: 대구복현초등학교
+              - generic [ref=e732]: 초등학교
+              - button "즐겨찾기" [ref=e733]: ★
+            - generic [ref=e734] [cursor=pointer]:
+              - generic [ref=e735]: 대구본리초등학교
+              - generic [ref=e736]: 초등학교
+              - button "즐겨찾기" [ref=e737]: ★
+            - generic [ref=e738] [cursor=pointer]:
+              - generic [ref=e739]: 대구봉덕초등학교
+              - generic [ref=e740]: 초등학교
+              - button "즐겨찾기" [ref=e741]: ★
+            - generic [ref=e742] [cursor=pointer]:
+              - generic [ref=e743]: 대구봉무초등학교
+              - generic [ref=e744]: 초등학교
+              - button "즐겨찾기" [ref=e745]: ★
+            - generic [ref=e746] [cursor=pointer]:
+              - generic [ref=e747]: 대구부계초등학교
+              - generic [ref=e748]: 초등학교
+              - button "즐겨찾기" [ref=e749]: ★
+            - generic [ref=e750] [cursor=pointer]:
+              - generic [ref=e751]: 대구부계초등학교고매캠퍼스
+              - generic [ref=e752]: 초등학교
+              - button "즐겨찾기" [ref=e753]: ★
+            - generic [ref=e754] [cursor=pointer]:
+              - generic [ref=e755]: 대구부계초등학교석산캠퍼스
+              - generic [ref=e756]: 초등학교
+              - button "즐겨찾기" [ref=e757]: ★
+            - generic [ref=e758] [cursor=pointer]:
+              - generic [ref=e759]: 대구부계초등학교의흥캠퍼스
+              - generic [ref=e760]: 초등학교
+              - button "즐겨찾기" [ref=e761]: ★
+            - generic [ref=e762] [cursor=pointer]:
+              - generic [ref=e763]: 대구부계초등학교효령캠퍼스
+              - generic [ref=e764]: 초등학교
+              - button "즐겨찾기" [ref=e765]: ★
+            - generic [ref=e766] [cursor=pointer]:
+              - generic [ref=e767]: 대구북동초등학교
+              - generic [ref=e768]: 초등학교
+              - button "즐겨찾기" [ref=e769]: ★
+            - generic [ref=e770] [cursor=pointer]:
+              - generic [ref=e771]: 대구북부초등학교
+              - generic [ref=e772]: 초등학교
+              - button "즐겨찾기" [ref=e773]: ★
+            - generic [ref=e774] [cursor=pointer]:
+              - generic [ref=e775]: 대구북비산초등학교
+              - generic [ref=e776]: 초등학교
+              - button "즐겨찾기" [ref=e777]: ★
+            - generic [ref=e778] [cursor=pointer]:
+              - generic [ref=e779]: 대구북중학교
+              - generic [ref=e780]: 중학교
+              - button "즐겨찾기" [ref=e781]: ★
+            - generic [ref=e782] [cursor=pointer]:
+              - generic [ref=e783]: 대구불로초등학교
+              - generic [ref=e784]: 초등학교
+              - button "즐겨찾기" [ref=e785]: ★
+            - generic [ref=e786] [cursor=pointer]:
+              - generic [ref=e787]: 대구비산초등학교
+              - generic [ref=e788]: 초등학교
+              - button "즐겨찾기" [ref=e789]: ★
+            - generic [ref=e790] [cursor=pointer]:
+              - generic [ref=e791]: 대구비슬초등학교
+              - generic [ref=e792]: 초등학교
+              - button "즐겨찾기" [ref=e793]: ★
+            - generic [ref=e794] [cursor=pointer]:
+              - generic [ref=e795]: 대구사수초등학교
+              - generic [ref=e796]: 초등학교
+              - button "즐겨찾기" [ref=e797]: ★
+            - generic [ref=e798] [cursor=pointer]:
+              - generic [ref=e799]: 대구사월초등학교
+              - generic [ref=e800]: 초등학교
+              - button "즐겨찾기" [ref=e801]: ★
+            - generic [ref=e802] [cursor=pointer]:
+              - generic [ref=e803]: 대구산격초등학교
+              - generic [ref=e804]: 초등학교
+              - button "즐겨찾기" [ref=e805]: ★
+            - generic [ref=e806] [cursor=pointer]:
+              - generic [ref=e807]: 대구삼덕초등학교
+              - generic [ref=e808]: 초등학교
+              - button "즐겨찾기" [ref=e809]: ★
+            - generic [ref=e810] [cursor=pointer]:
+              - generic [ref=e811]: 대구삼영초등학교
+              - generic [ref=e812]: 초등학교
+              - button "즐겨찾기" [ref=e813]: ★
+            - generic [ref=e814] [cursor=pointer]:
+              - generic [ref=e815]: 대구삼육초등학교
+              - generic [ref=e816]: 초등학교
+              - button "즐겨찾기" [ref=e817]: ★
+            - generic [ref=e818] [cursor=pointer]:
+              - generic [ref=e819]: 대구상원고등학교
+              - generic [ref=e820]: 고등학교
+              - button "즐겨찾기" [ref=e821]: ★
+            - generic [ref=e822] [cursor=pointer]:
+              - generic [ref=e823]: 대구상원초등학교
+              - generic [ref=e824]: 초등학교
+              - button "즐겨찾기" [ref=e825]: ★
+            - generic [ref=e826] [cursor=pointer]:
+              - generic [ref=e827]: 대구상인초등학교
+              - generic [ref=e828]: 초등학교
+              - button "즐겨찾기" [ref=e829]: ★
+            - generic [ref=e830] [cursor=pointer]:
+              - generic [ref=e831]: 대구새론초등학교
+              - generic [ref=e832]: 초등학교
+              - button "즐겨찾기" [ref=e833]: ★
+            - generic [ref=e834] [cursor=pointer]:
+              - generic [ref=e835]: 대구서도초등학교
+              - generic [ref=e836]: 초등학교
+              - button "즐겨찾기" [ref=e837]: ★
+            - generic [ref=e838] [cursor=pointer]:
+              - generic [ref=e839]: 대구서동초등학교
+              - generic [ref=e840]: 초등학교
+              - button "즐겨찾기" [ref=e841]: ★
+            - generic [ref=e842] [cursor=pointer]:
+              - generic [ref=e843]: 대구서변초등학교
+              - generic [ref=e844]: 초등학교
+              - button "즐겨찾기" [ref=e845]: ★
+            - generic [ref=e846] [cursor=pointer]:
+              - generic [ref=e847]: 대구서부고등학교
+              - generic [ref=e848]: 고등학교
+              - button "즐겨찾기" [ref=e849]: ★
+            - generic [ref=e850] [cursor=pointer]:
+              - generic [ref=e851]: 대구서부초등학교
+              - generic [ref=e852]: 초등학교
+              - button "즐겨찾기" [ref=e853]: ★
+            - generic [ref=e854] [cursor=pointer]:
+              - generic [ref=e855]: 대구서재초등학교
+              - generic [ref=e856]: 초등학교
+              - button "즐겨찾기" [ref=e857]: ★
+            - generic [ref=e858] [cursor=pointer]:
+              - generic [ref=e859]: 대구서평초등학교
+              - generic [ref=e860]: 초등학교
+              - button "즐겨찾기" [ref=e861]: ★
+            - generic [ref=e862] [cursor=pointer]:
+              - generic [ref=e863]: 대구선명학교
+              - generic [ref=e864]: 특수학교
+              - button "즐겨찾기" [ref=e865]: ★
+            - generic [ref=e866] [cursor=pointer]:
+              - generic [ref=e867]: 대구선원초등학교
+              - generic [ref=e868]: 초등학교
+              - button "즐겨찾기" [ref=e869]: ★
+            - generic [ref=e870] [cursor=pointer]:
+              - generic [ref=e871]: 대구성곡초등학교
+              - generic [ref=e872]: 초등학교
+              - button "즐겨찾기" [ref=e873]: ★
+            - generic [ref=e874] [cursor=pointer]:
+              - generic [ref=e875]: 대구성남초등학교
+              - generic [ref=e876]: 초등학교
+              - button "즐겨찾기" [ref=e877]: ★
+            - generic [ref=e878] [cursor=pointer]:
+              - generic [ref=e879]: 대구성당초등학교
+              - generic [ref=e880]: 초등학교
+              - button "즐겨찾기" [ref=e881]: ★
+            - generic [ref=e882] [cursor=pointer]:
+              - generic [ref=e883]: 대구성동초등학교
+              - generic [ref=e884]: 초등학교
+              - button "즐겨찾기" [ref=e885]: ★
+            - generic [ref=e886] [cursor=pointer]:
+              - generic [ref=e887]: 대구성명초등학교
+              - generic [ref=e888]: 초등학교
+              - button "즐겨찾기" [ref=e889]: ★
+            - generic [ref=e890] [cursor=pointer]:
+              - generic [ref=e891]: 대구성보학교
+              - generic [ref=e892]: 특수학교
+              - button "즐겨찾기" [ref=e893]: ★
+            - generic [ref=e894] [cursor=pointer]:
+              - generic [ref=e895]: 대구성북초등학교
+              - generic [ref=e896]: 초등학교
+              - button "즐겨찾기" [ref=e897]: ★
+            - generic [ref=e898] [cursor=pointer]:
+              - generic [ref=e899]: 대구성산초등학교
+              - generic [ref=e900]: 초등학교
+              - button "즐겨찾기" [ref=e901]: ★
+            - generic [ref=e902] [cursor=pointer]:
+              - generic [ref=e903]: 대구성서초등학교
+              - generic [ref=e904]: 초등학교
+              - button "즐겨찾기" [ref=e905]: ★
+            - generic [ref=e906] [cursor=pointer]:
+              - generic [ref=e907]: 대구성지초등학교
+              - generic [ref=e908]: 초등학교
+              - button "즐겨찾기" [ref=e909]: ★
+            - generic [ref=e910] [cursor=pointer]:
+              - generic [ref=e911]: 대구세명학교
+              - generic [ref=e912]: 특수학교
+              - button "즐겨찾기" [ref=e913]: ★
+            - generic [ref=e914] [cursor=pointer]:
+              - generic [ref=e915]: 대구세천초등학교
+              - generic [ref=e916]: 초등학교
+              - button "즐겨찾기" [ref=e917]: ★
+            - generic [ref=e918] [cursor=pointer]:
+              - generic [ref=e919]: 대구세현초등학교
+              - generic [ref=e920]: 초등학교
+              - button "즐겨찾기" [ref=e921]: ★
+            - generic [ref=e922] [cursor=pointer]:
+              - generic [ref=e923]: 대구소프트웨어마이스터고등학교
+              - generic [ref=e924]: 고등학교
+              - button "즐겨찾기" [ref=e925]: ★
+            - generic [ref=e926] [cursor=pointer]:
+              - generic [ref=e927]: 대구송일초등학교
+              - generic [ref=e928]: 초등학교
+              - button "즐겨찾기" [ref=e929]: ★
+            - generic [ref=e930] [cursor=pointer]:
+              - generic [ref=e931]: 대구송정초등학교
+              - generic [ref=e932]: 초등학교
+              - button "즐겨찾기" [ref=e933]: ★
+            - generic [ref=e934] [cursor=pointer]:
+              - generic [ref=e935]: 대구송현초등학교
+              - generic [ref=e936]: 초등학교
+              - button "즐겨찾기" [ref=e937]: ★
+            - generic [ref=e938] [cursor=pointer]:
+              - generic [ref=e939]: 대구수성초등학교
+              - generic [ref=e940]: 초등학교
+              - button "즐겨찾기" [ref=e941]: ★
+            - generic [ref=e942] [cursor=pointer]:
+              - generic [ref=e943]: 대구수창초등학교
+              - generic [ref=e944]: 초등학교
+              - button "즐겨찾기" [ref=e945]: ★
+            - generic [ref=e946] [cursor=pointer]:
+              - generic [ref=e947]: 대구숙천초등학교
+              - generic [ref=e948]: 초등학교
+              - button "즐겨찾기" [ref=e949]: ★
+            - generic [ref=e950] [cursor=pointer]:
+              - generic [ref=e951]: 대구스마트고등학교
+              - generic [ref=e952]: 고등학교
+              - button "즐겨찾기" [ref=e953]: ★
+            - generic [ref=e954] [cursor=pointer]:
+              - generic [ref=e955]: 대구시지초등학교
+              - generic [ref=e956]: 초등학교
+              - button "즐겨찾기" [ref=e957]: ★
+            - generic [ref=e958] [cursor=pointer]:
+              - generic [ref=e959]: 대구신당초등학교
+              - generic [ref=e960]: 초등학교
+              - button "즐겨찾기" [ref=e961]: ★
+            - generic [ref=e962] [cursor=pointer]:
+              - generic [ref=e963]: 대구신매초등학교
+              - generic [ref=e964]: 초등학교
+              - button "즐겨찾기" [ref=e965]: ★
+            - generic [ref=e966] [cursor=pointer]:
+              - generic [ref=e967]: 대구신서초등학교
+              - generic [ref=e968]: 초등학교
+              - button "즐겨찾기" [ref=e969]: ★
+            - generic [ref=e970] [cursor=pointer]:
+              - generic [ref=e971]: 대구신성초등학교
+              - generic [ref=e972]: 초등학교
+              - button "즐겨찾기" [ref=e973]: ★
+            - generic [ref=e974] [cursor=pointer]:
+              - generic [ref=e975]: 대구신암초등학교
+              - generic [ref=e976]: 초등학교
+              - button "즐겨찾기" [ref=e977]: ★
+            - generic [ref=e978] [cursor=pointer]:
+              - generic [ref=e979]: 대구신월초등학교
+              - generic [ref=e980]: 초등학교
+              - button "즐겨찾기" [ref=e981]: ★
+            - generic [ref=e982] [cursor=pointer]:
+              - generic [ref=e983]: 대구신천초등학교
+              - generic [ref=e984]: 초등학교
+              - button "즐겨찾기" [ref=e985]: ★
+            - generic [ref=e986] [cursor=pointer]:
+              - generic [ref=e987]: 대구신흥초등학교
+              - generic [ref=e988]: 초등학교
+              - button "즐겨찾기" [ref=e989]: ★
+            - generic [ref=e990] [cursor=pointer]:
+              - generic [ref=e991]: 대구아양초등학교
+              - generic [ref=e992]: 초등학교
+              - button "즐겨찾기" [ref=e993]: ★
+            - generic [ref=e994] [cursor=pointer]:
+              - generic [ref=e995]: 대구안일초등학교
+              - generic [ref=e996]: 초등학교
+              - button "즐겨찾기" [ref=e997]: ★
+            - generic [ref=e998] [cursor=pointer]:
+              - generic [ref=e999]: 대구여자고등학교
+              - generic [ref=e1000]: 고등학교
+              - button "즐겨찾기" [ref=e1001]: ★
+            - generic [ref=e1002] [cursor=pointer]:
+              - generic [ref=e1003]: 대구연경초등학교
+              - generic [ref=e1004]: 초등학교
+              - button "즐겨찾기" [ref=e1005]: ★
+            - generic [ref=e1006] [cursor=pointer]:
+              - generic [ref=e1007]: 대구영선초등학교
+              - generic [ref=e1008]: 초등학교
+              - button "즐겨찾기" [ref=e1009]: ★
+            - generic [ref=e1010] [cursor=pointer]:
+              - generic [ref=e1011]: 대구영화학교
+              - generic [ref=e1012]: 특수학교
+              - button "즐겨찾기" [ref=e1013]: ★
+            - generic [ref=e1014] [cursor=pointer]:
+              - generic [ref=e1015]: 대구예담학교
+              - generic [ref=e1016]: 각종학교(고)
+              - button "즐겨찾기" [ref=e1017]: ★
+            - generic [ref=e1018] [cursor=pointer]:
+              - generic [ref=e1019]: 대구예아람학교
+              - generic [ref=e1020]: 특수학교
+              - button "즐겨찾기" [ref=e1021]: ★
+            - generic [ref=e1022] [cursor=pointer]:
+              - generic [ref=e1023]: 대구옥산초등학교
+              - generic [ref=e1024]: 초등학교
+              - button "즐겨찾기" [ref=e1025]: ★
+            - generic [ref=e1026] [cursor=pointer]:
+              - generic [ref=e1027]: 대구옥포초등학교
+              - generic [ref=e1028]: 초등학교
+              - button "즐겨찾기" [ref=e1029]: ★
+            - generic [ref=e1030] [cursor=pointer]:
+              - generic [ref=e1031]: 대구온라인학교
+              - generic [ref=e1032]: 각종학교(고)
+              - button "즐겨찾기" [ref=e1033]: ★
+            - generic [ref=e1034] [cursor=pointer]:
+              - generic [ref=e1035]: 대구와룡초등학교
+              - generic [ref=e1036]: 초등학교
+              - button "즐겨찾기" [ref=e1037]: ★
+            - generic [ref=e1038] [cursor=pointer]:
+              - generic [ref=e1039]: 대구왕선초등학교
+              - generic [ref=e1040]: 초등학교
+              - button "즐겨찾기" [ref=e1041]: ★
+            - generic [ref=e1042] [cursor=pointer]:
+              - generic [ref=e1043]: 대구외국어고등학교
+              - generic [ref=e1044]: 고등학교
+              - button "즐겨찾기" [ref=e1045]: ★
+            - generic [ref=e1046] [cursor=pointer]:
+              - generic [ref=e1047]: 대구용계초등학교
+              - generic [ref=e1048]: 초등학교
+              - button "즐겨찾기" [ref=e1049]: ★
+            - generic [ref=e1050] [cursor=pointer]:
+              - generic [ref=e1051]: 대구용산초등학교
+              - generic [ref=e1052]: 초등학교
+              - button "즐겨찾기" [ref=e1053]: ★
+            - generic [ref=e1054] [cursor=pointer]:
+              - generic [ref=e1055]: 대구용전초등학교
+              - generic [ref=e1056]: 초등학교
+              - button "즐겨찾기" [ref=e1057]: ★
+            - generic [ref=e1058] [cursor=pointer]:
+              - generic [ref=e1059]: 대구용지초등학교
+              - generic [ref=e1060]: 초등학교
+              - button "즐겨찾기" [ref=e1061]: ★
+            - generic [ref=e1062] [cursor=pointer]:
+              - generic [ref=e1063]: 대구용천초등학교
+              - generic [ref=e1064]: 초등학교
+              - button "즐겨찾기" [ref=e1065]: ★
+            - generic [ref=e1066] [cursor=pointer]:
+              - generic [ref=e1067]: 대구용호초등학교
+              - generic [ref=e1068]: 초등학교
+              - button "즐겨찾기" [ref=e1069]: ★
+            - generic [ref=e1070] [cursor=pointer]:
+              - generic [ref=e1071]: 대구우보초등학교
+              - generic [ref=e1072]: 초등학교
+              - button "즐겨찾기" [ref=e1073]: ★
+            - generic [ref=e1074] [cursor=pointer]:
+              - generic [ref=e1075]: 대구욱수초등학교
+              - generic [ref=e1076]: 초등학교
+              - button "즐겨찾기" [ref=e1077]: ★
+            - generic [ref=e1078] [cursor=pointer]:
+              - generic [ref=e1079]: 대구운암초등학교
+              - generic [ref=e1080]: 초등학교
+              - button "즐겨찾기" [ref=e1081]: ★
+            - generic [ref=e1082] [cursor=pointer]:
+              - generic [ref=e1083]: 대구월배초등학교
+              - generic [ref=e1084]: 초등학교
+              - button "즐겨찾기" [ref=e1085]: ★
+            - generic [ref=e1086] [cursor=pointer]:
+              - generic [ref=e1087]: 대구월서초등학교
+              - generic [ref=e1088]: 초등학교
+              - button "즐겨찾기" [ref=e1089]: ★
+            - generic [ref=e1090] [cursor=pointer]:
+              - generic [ref=e1091]: 대구월성초등학교
+              - generic [ref=e1092]: 초등학교
+              - button "즐겨찾기" [ref=e1093]: ★
+            - generic [ref=e1094] [cursor=pointer]:
+              - generic [ref=e1095]: 대구월암초등학교
+              - generic [ref=e1096]: 초등학교
+              - button "즐겨찾기" [ref=e1097]: ★
+            - generic [ref=e1098] [cursor=pointer]:
+              - generic [ref=e1099]: 대구월촌초등학교
+              - generic [ref=e1100]: 초등학교
+              - button "즐겨찾기" [ref=e1101]: ★
+            - generic [ref=e1102] [cursor=pointer]:
+              - generic [ref=e1103]: 대구유가초등학교
+              - generic [ref=e1104]: 초등학교
+              - button "즐겨찾기" [ref=e1105]: ★
+            - generic [ref=e1106] [cursor=pointer]:
+              - generic [ref=e1107]: 대구유천초등학교
+              - generic [ref=e1108]: 초등학교
+              - button "즐겨찾기" [ref=e1109]: ★
+            - generic [ref=e1110] [cursor=pointer]:
+              - generic [ref=e1111]: 대구율금초등학교
+              - generic [ref=e1112]: 초등학교
+              - button "즐겨찾기" [ref=e1113]: ★
+            - generic [ref=e1114] [cursor=pointer]:
+              - generic [ref=e1115]: 대구율원초등학교
+              - generic [ref=e1116]: 초등학교
+              - button "즐겨찾기" [ref=e1117]: ★
+            - generic [ref=e1118] [cursor=pointer]:
+              - generic [ref=e1119]: 대구율하초등학교
+              - generic [ref=e1120]: 초등학교
+              - button "즐겨찾기" [ref=e1121]: ★
+            - generic [ref=e1122] [cursor=pointer]:
+              - generic [ref=e1123]: 대구이곡초등학교
+              - generic [ref=e1124]: 초등학교
+              - button "즐겨찾기" [ref=e1125]: ★
+            - generic [ref=e1126] [cursor=pointer]:
+              - generic [ref=e1127]: 대구이룸고등학교
+              - generic [ref=e1128]: 특수학교
+              - button "즐겨찾기" [ref=e1129]: ★
+            - generic [ref=e1130] [cursor=pointer]:
+              - generic [ref=e1131]: 대구이현초등학교
+              - generic [ref=e1132]: 초등학교
+              - button "즐겨찾기" [ref=e1133]: ★
+            - generic [ref=e1134] [cursor=pointer]:
+              - generic [ref=e1135]: 대구인지초등학교
+              - generic [ref=e1136]: 초등학교
+              - button "즐겨찾기" [ref=e1137]: ★
+            - generic [ref=e1138] [cursor=pointer]:
+              - generic [ref=e1139]: 대구일과학고등학교
+              - generic [ref=e1140]: 고등학교
+              - button "즐겨찾기" [ref=e1141]: ★
+            - generic [ref=e1142] [cursor=pointer]:
+              - generic [ref=e1143]: 대구일마이스터고등학교
+              - generic [ref=e1144]: 고등학교
+              - button "즐겨찾기" [ref=e1145]: ★
+            - generic [ref=e1146] [cursor=pointer]:
+              - generic [ref=e1147]: 대구일중학교
+              - generic [ref=e1148]: 중학교
+              - button "즐겨찾기" [ref=e1149]: ★
+            - generic [ref=e1150] [cursor=pointer]:
+              - generic [ref=e1151]: 대구입석초등학교
+              - generic [ref=e1152]: 초등학교
+              - button "즐겨찾기" [ref=e1153]: ★
+            - generic [ref=e1154] [cursor=pointer]:
+              - generic [ref=e1155]: 대구장기초등학교
+              - generic [ref=e1156]: 초등학교
+              - button "즐겨찾기" [ref=e1157]: ★
+            - generic [ref=e1158] [cursor=pointer]:
+              - generic [ref=e1159]: 대구장동초등학교
+              - generic [ref=e1160]: 초등학교
+              - button "즐겨찾기" [ref=e1161]: ★
+            - generic [ref=e1162] [cursor=pointer]:
+              - generic [ref=e1163]: 대구장산초등학교
+              - generic [ref=e1164]: 초등학교
+              - button "즐겨찾기" [ref=e1165]: ★
+            - generic [ref=e1166] [cursor=pointer]:
+              - generic [ref=e1167]: 대구장성초등학교
+              - generic [ref=e1168]: 초등학교
+              - button "즐겨찾기" [ref=e1169]: ★
+            - generic [ref=e1170] [cursor=pointer]:
+              - generic [ref=e1171]: 대구제일고등학교
+              - generic [ref=e1172]: 고등학교
+              - button "즐겨찾기" [ref=e1173]: ★
+            - generic [ref=e1174] [cursor=pointer]:
+              - generic [ref=e1175]: 대구제일여자상업고등학교
+              - generic [ref=e1176]: 고등학교
+              - button "즐겨찾기" [ref=e1177]: ★
+            - generic [ref=e1178] [cursor=pointer]:
+              - generic [ref=e1179]: 대구제일중학교
+              - generic [ref=e1180]: 중학교
+              - button "즐겨찾기" [ref=e1181]: ★
+            - generic [ref=e1182] [cursor=pointer]:
+              - generic [ref=e1183]: 대구조암초등학교
+              - generic [ref=e1184]: 초등학교
+              - button "즐겨찾기" [ref=e1185]: ★
+            - generic [ref=e1186] [cursor=pointer]:
+              - generic [ref=e1187]: 대구종로초등학교
+              - generic [ref=e1188]: 초등학교
+              - button "즐겨찾기" [ref=e1189]: ★
+            - generic [ref=e1190] [cursor=pointer]:
+              - generic [ref=e1191]: 대구죽곡초등학교
+              - generic [ref=e1192]: 초등학교
+              - button "즐겨찾기" [ref=e1193]: ★
+            - generic [ref=e1194] [cursor=pointer]:
+              - generic [ref=e1195]: 대구죽전초등학교
+              - generic [ref=e1196]: 초등학교
+              - button "즐겨찾기" [ref=e1197]: ★
+            - generic [ref=e1198] [cursor=pointer]:
+              - generic [ref=e1199]: 대구중리초등학교
+              - generic [ref=e1200]: 초등학교
+              - button "즐겨찾기" [ref=e1201]: ★
+            - generic [ref=e1202] [cursor=pointer]:
+              - generic [ref=e1203]: 대구중앙고등학교
+              - generic [ref=e1204]: 고등학교
+              - button "즐겨찾기" [ref=e1205]: ★
+            - generic [ref=e1206] [cursor=pointer]:
+              - generic [ref=e1207]: 대구중앙중학교
+              - generic [ref=e1208]: 중학교
+              - button "즐겨찾기" [ref=e1209]: ★
+            - generic [ref=e1210] [cursor=pointer]:
+              - generic [ref=e1211]: 대구중앙초등학교
+              - generic [ref=e1212]: 초등학교
+              - button "즐겨찾기" [ref=e1213]: ★
+            - generic [ref=e1214] [cursor=pointer]:
+              - generic [ref=e1215]: 대구중학교
+              - generic [ref=e1216]: 중학교
+              - button "즐겨찾기" [ref=e1217]: ★
+            - generic [ref=e1218] [cursor=pointer]:
+              - generic [ref=e1219]: 대구지묘초등학교
+              - generic [ref=e1220]: 초등학교
+              - button "즐겨찾기" [ref=e1221]: ★
+            - generic [ref=e1222] [cursor=pointer]:
+              - generic [ref=e1223]: 대구지봉초등학교
+              - generic [ref=e1224]: 초등학교
+              - button "즐겨찾기" [ref=e1225]: ★
+            - generic [ref=e1226] [cursor=pointer]:
+              - generic [ref=e1227]: 대구지산초등학교
+              - generic [ref=e1228]: 초등학교
+              - button "즐겨찾기" [ref=e1229]: ★
+            - generic [ref=e1230] [cursor=pointer]:
+              - generic [ref=e1231]: 대구진월초등학교
+              - generic [ref=e1232]: 초등학교
+              - button "즐겨찾기" [ref=e1233]: ★
+            - generic [ref=e1234] [cursor=pointer]:
+              - generic [ref=e1235]: 대구진천초등학교
+              - generic [ref=e1236]: 초등학교
+              - button "즐겨찾기" [ref=e1237]: ★
+            - generic [ref=e1238] [cursor=pointer]:
+              - generic [ref=e1239]: 대구천내초등학교
+              - generic [ref=e1240]: 초등학교
+              - button "즐겨찾기" [ref=e1241]: ★
+            - generic [ref=e1242] [cursor=pointer]:
+              - generic [ref=e1243]: 대구청라중학교
+              - generic [ref=e1244]: 중학교
+              - button "즐겨찾기" [ref=e1245]: ★
+            - generic [ref=e1246] [cursor=pointer]:
+              - generic [ref=e1247]: 대구청림초등학교
+              - generic [ref=e1248]: 초등학교
+              - button "즐겨찾기" [ref=e1249]: ★
+            - generic [ref=e1250] [cursor=pointer]:
+              - generic [ref=e1251]: 대구체육고등학교
+              - generic [ref=e1252]: 고등학교
+              - button "즐겨찾기" [ref=e1253]: ★
+            - generic [ref=e1254] [cursor=pointer]:
+              - generic [ref=e1255]: 대구체육중학교
+              - generic [ref=e1256]: 중학교
+              - button "즐겨찾기" [ref=e1257]: ★
+            - generic [ref=e1258] [cursor=pointer]:
+              - generic [ref=e1259]: 대구초등학교
+              - generic [ref=e1260]: 초등학교
+              - button "즐겨찾기" [ref=e1261]: ★
+            - generic [ref=e1262] [cursor=pointer]:
+              - generic [ref=e1263]: 대구칠곡초등학교
+              - generic [ref=e1264]: 초등학교
+              - button "즐겨찾기" [ref=e1265]: ★
+            - generic [ref=e1266] [cursor=pointer]:
+              - generic [ref=e1267]: 대구칠성초등학교
+              - generic [ref=e1268]: 초등학교
+              - button "즐겨찾기" [ref=e1269]: ★
+            - generic [ref=e1270] [cursor=pointer]:
+              - generic [ref=e1271]: 대구침산초등학교
+              - generic [ref=e1272]: 초등학교
+              - button "즐겨찾기" [ref=e1273]: ★
+            - generic [ref=e1274] [cursor=pointer]:
+              - generic [ref=e1275]: 대구태암초등학교
+              - generic [ref=e1276]: 초등학교
+              - button "즐겨찾기" [ref=e1277]: ★
+            - generic [ref=e1278] [cursor=pointer]:
+              - generic [ref=e1279]: 대구태전초등학교
+              - generic [ref=e1280]: 초등학교
+              - button "즐겨찾기" [ref=e1281]: ★
+            - generic [ref=e1282] [cursor=pointer]:
+              - generic [ref=e1283]: 대구태현초등학교
+              - generic [ref=e1284]: 초등학교
+              - button "즐겨찾기" [ref=e1285]: ★
+            - generic [ref=e1286] [cursor=pointer]:
+              - generic [ref=e1287]: 대구테크노초등학교
+              - generic [ref=e1288]: 초등학교
+              - button "즐겨찾기" [ref=e1289]: ★
+            - generic [ref=e1290] [cursor=pointer]:
+              - generic [ref=e1291]: 대구파동초등학교
+              - generic [ref=e1292]: 초등학교
+              - button "즐겨찾기" [ref=e1293]: ★
+            - generic [ref=e1294] [cursor=pointer]:
+              - generic [ref=e1295]: 대구팔공중학교
+              - generic [ref=e1296]: 중학교
+              - button "즐겨찾기" [ref=e1297]: ★
+            - generic [ref=e1298] [cursor=pointer]:
+              - generic [ref=e1299]: 대구팔공초등학교
+              - generic [ref=e1300]: 초등학교
+              - button "즐겨찾기" [ref=e1301]: ★
+            - generic [ref=e1302] [cursor=pointer]:
+              - generic [ref=e1303]: 대구팔달초등학교
+              - generic [ref=e1304]: 초등학교
+              - button "즐겨찾기" [ref=e1305]: ★
+            - generic [ref=e1306] [cursor=pointer]:
+              - generic [ref=e1307]: 대구평리초등학교
+              - generic [ref=e1308]: 초등학교
+              - button "즐겨찾기" [ref=e1309]: ★
+            - generic [ref=e1310] [cursor=pointer]:
+              - generic [ref=e1311]: 대구포산초등학교
+              - generic [ref=e1312]: 초등학교
+              - button "즐겨찾기" [ref=e1313]: ★
+            - generic [ref=e1314] [cursor=pointer]:
+              - generic [ref=e1315]: 대구하빈초등학교
+              - generic [ref=e1316]: 초등학교
+              - button "즐겨찾기" [ref=e1317]: ★
+            - generic [ref=e1318] [cursor=pointer]:
+              - generic [ref=e1319]: 대구하이텍고등학교
+              - generic [ref=e1320]: 고등학교
+              - button "즐겨찾기" [ref=e1321]: ★
+            - generic [ref=e1322] [cursor=pointer]:
+              - generic [ref=e1323]: 대구학남초등학교
+              - generic [ref=e1324]: 초등학교
+              - button "즐겨찾기" [ref=e1325]: ★
+            - generic [ref=e1326] [cursor=pointer]:
+              - generic [ref=e1327]: 대구학산초등학교
+              - generic [ref=e1328]: 초등학교
+              - button "즐겨찾기" [ref=e1329]: ★
+            - generic [ref=e1330] [cursor=pointer]:
+              - generic [ref=e1331]: 대구학정초등학교
+              - generic [ref=e1332]: 초등학교
+              - button "즐겨찾기" [ref=e1333]: ★
+            - generic [ref=e1334] [cursor=pointer]:
+              - generic [ref=e1335]: 대구한샘초등학교
+              - generic [ref=e1336]: 초등학교
+              - button "즐겨찾기" [ref=e1337]: ★
+            - generic [ref=e1338] [cursor=pointer]:
+              - generic [ref=e1339]: 대구한솔초등학교
+              - generic [ref=e1340]: 초등학교
+              - button "즐겨찾기" [ref=e1341]: ★
+            - generic [ref=e1342] [cursor=pointer]:
+              - generic [ref=e1343]: 대구한실초등학교
+              - generic [ref=e1344]: 초등학교
+              - button "즐겨찾기" [ref=e1345]: ★
+            - generic [ref=e1346] [cursor=pointer]:
+              - generic [ref=e1347]: 대구함지초등학교
+              - generic [ref=e1348]: 초등학교
+              - button "즐겨찾기" [ref=e1349]: ★
+            - generic [ref=e1350] [cursor=pointer]:
+              - generic [ref=e1351]: 대구해서초등학교
+              - generic [ref=e1352]: 초등학교
+              - button "즐겨찾기" [ref=e1353]: ★
+            - generic [ref=e1354] [cursor=pointer]:
+              - generic [ref=e1355]: 대구해안초등학교
+              - generic [ref=e1356]: 초등학교
+              - button "즐겨찾기" [ref=e1357]: ★
+            - generic [ref=e1358] [cursor=pointer]:
+              - generic [ref=e1359]: 대구해올고등학교
+              - generic [ref=e1360]: 특수학교
+              - button "즐겨찾기" [ref=e1361]: ★
+            - generic [ref=e1362] [cursor=pointer]:
+              - generic [ref=e1363]: 대구현풍초등학교
+              - generic [ref=e1364]: 초등학교
+              - button "즐겨찾기" [ref=e1365]: ★
+            - generic [ref=e1366] [cursor=pointer]:
+              - generic [ref=e1367]: 대구혜화여자고등학교
+              - generic [ref=e1368]: 고등학교
+              - button "즐겨찾기" [ref=e1369]: ★
+            - generic [ref=e1370] [cursor=pointer]:
+              - generic [ref=e1371]: 대구호산초등학교
+              - generic [ref=e1372]: 초등학교
+              - button "즐겨찾기" [ref=e1373]: ★
+            - generic [ref=e1374] [cursor=pointer]:
+              - generic [ref=e1375]: 대구화남초등학교
+              - generic [ref=e1376]: 초등학교
+              - button "즐겨찾기" [ref=e1377]: ★
+            - generic [ref=e1378] [cursor=pointer]:
+              - generic [ref=e1379]: 대구화동초등학교
+              - generic [ref=e1380]: 초등학교
+              - button "즐겨찾기" [ref=e1381]: ★
+            - generic [ref=e1382] [cursor=pointer]:
+              - generic [ref=e1383]: 대구화원초등학교
+              - generic [ref=e1384]: 초등학교
+              - button "즐겨찾기" [ref=e1385]: ★
+            - generic [ref=e1386] [cursor=pointer]:
+              - generic [ref=e1387]: 대구황금초등학교
+              - generic [ref=e1388]: 초등학교
+              - button "즐겨찾기" [ref=e1389]: ★
+            - generic [ref=e1390] [cursor=pointer]:
+              - generic [ref=e1391]: 대구효동초등학교
+              - generic [ref=e1392]: 초등학교
+              - button "즐겨찾기" [ref=e1393]: ★
+            - generic [ref=e1394] [cursor=pointer]:
+              - generic [ref=e1395]: 대구효명초등학교
+              - generic [ref=e1396]: 초등학교
+              - button "즐겨찾기" [ref=e1397]: ★
+            - generic [ref=e1398] [cursor=pointer]:
+              - generic [ref=e1399]: 대구효목초등학교
+              - generic [ref=e1400]: 초등학교
+              - button "즐겨찾기" [ref=e1401]: ★
+            - generic [ref=e1402] [cursor=pointer]:
+              - generic [ref=e1403]: 대구효신초등학교
+              - generic [ref=e1404]: 초등학교
+              - button "즐겨찾기" [ref=e1405]: ★
+            - generic [ref=e1406] [cursor=pointer]:
+              - generic [ref=e1407]: 대륜고등학교
+              - generic [ref=e1408]: 고등학교
+              - button "즐겨찾기" [ref=e1409]: ★
+            - generic [ref=e1410] [cursor=pointer]:
+              - generic [ref=e1411]: 대륜중학교
+              - generic [ref=e1412]: 중학교
+              - button "즐겨찾기" [ref=e1413]: ★
+            - generic [ref=e1414] [cursor=pointer]:
+              - generic [ref=e1415]: 대명고등학교
+              - generic [ref=e1416]: 고등학교
+              - button "즐겨찾기" [ref=e1417]: ★
+            - generic [ref=e1418] [cursor=pointer]:
+              - generic [ref=e1419]: 대명중학교
+              - generic [ref=e1420]: 중학교
+              - button "즐겨찾기" [ref=e1421]: ★
+            - generic [ref=e1422] [cursor=pointer]:
+              - generic [ref=e1423]: 대서중학교
+              - generic [ref=e1424]: 중학교
+              - button "즐겨찾기" [ref=e1425]: ★
+            - generic [ref=e1426] [cursor=pointer]:
+              - generic [ref=e1427]: 대원고등학교
+              - generic [ref=e1428]: 고등학교
+              - button "즐겨찾기" [ref=e1429]: ★
+            - generic [ref=e1430] [cursor=pointer]:
+              - generic [ref=e1431]: 대진고등학교
+              - generic [ref=e1432]: 고등학교
+              - button "즐겨찾기" [ref=e1433]: ★
+            - generic [ref=e1434] [cursor=pointer]:
+              - generic [ref=e1435]: 대진중학교
+              - generic [ref=e1436]: 중학교
+              - button "즐겨찾기" [ref=e1437]: ★
+            - generic [ref=e1438] [cursor=pointer]:
+              - generic [ref=e1439]: 대평중학교
+              - generic [ref=e1440]: 중학교
+              - button "즐겨찾기" [ref=e1441]: ★
+            - generic [ref=e1442] [cursor=pointer]:
+              - generic [ref=e1443]: 덕원고등학교
+              - generic [ref=e1444]: 고등학교
+              - button "즐겨찾기" [ref=e1445]: ★
+            - generic [ref=e1446] [cursor=pointer]:
+              - generic [ref=e1447]: 덕원중학교
+              - generic [ref=e1448]: 중학교
+              - button "즐겨찾기" [ref=e1449]: ★
+            - generic [ref=e1450] [cursor=pointer]:
+              - generic [ref=e1451]: 덕화중학교
+              - generic [ref=e1452]: 중학교
+              - button "즐겨찾기" [ref=e1453]: ★
+            - generic [ref=e1454] [cursor=pointer]:
+              - generic [ref=e1455]: 도원고등학교
+              - generic [ref=e1456]: 고등학교
+              - button "즐겨찾기" [ref=e1457]: ★
+            - generic [ref=e1458] [cursor=pointer]:
+              - generic [ref=e1459]: 도원중학교
+              - generic [ref=e1460]: 중학교
+              - button "즐겨찾기" [ref=e1461]: ★
+            - generic [ref=e1462] [cursor=pointer]:
+              - generic [ref=e1463]: 동대구초등학교
+              - generic [ref=e1464]: 초등학교
+              - button "즐겨찾기" [ref=e1465]: ★
+            - generic [ref=e1466] [cursor=pointer]:
+              - generic [ref=e1467]: 동도중학교
+              - generic [ref=e1468]: 중학교
+              - button "즐겨찾기" [ref=e1469]: ★
+            - generic [ref=e1470] [cursor=pointer]:
+              - generic [ref=e1471]: 동문고등학교
+              - generic [ref=e1472]: 고등학교
+              - button "즐겨찾기" [ref=e1473]: ★
+            - generic [ref=e1474] [cursor=pointer]:
+              - generic [ref=e1475]: 동변중학교
+              - generic [ref=e1476]: 중학교
+              - button "즐겨찾기" [ref=e1477]: ★
+            - generic [ref=e1478] [cursor=pointer]:
+              - generic [ref=e1479]: 동원중학교
+              - generic [ref=e1480]: 중학교
+              - button "즐겨찾기" [ref=e1481]: ★
+            - generic [ref=e1482] [cursor=pointer]:
+              - generic [ref=e1483]: 동촌중학교
+              - generic [ref=e1484]: 중학교
+              - button "즐겨찾기" [ref=e1485]: ★
+            - generic [ref=e1486] [cursor=pointer]:
+              - generic [ref=e1487]: 동평중학교
+              - generic [ref=e1488]: 중학교
+              - button "즐겨찾기" [ref=e1489]: ★
+            - generic [ref=e1490] [cursor=pointer]:
+              - generic [ref=e1491]: 매천고등학교
+              - generic [ref=e1492]: 고등학교
+              - button "즐겨찾기" [ref=e1493]: ★
+            - generic [ref=e1494] [cursor=pointer]:
+              - generic [ref=e1495]: 매천중학교
+              - generic [ref=e1496]: 중학교
+              - button "즐겨찾기" [ref=e1497]: ★
+            - generic [ref=e1498] [cursor=pointer]:
+              - generic [ref=e1499]: 매호중학교
+              - generic [ref=e1500]: 중학교
+              - button "즐겨찾기" [ref=e1501]: ★
+            - generic [ref=e1502] [cursor=pointer]:
+              - generic [ref=e1503]: 범물중학교
+              - generic [ref=e1504]: 중학교
+              - button "즐겨찾기" [ref=e1505]: ★
+            - generic [ref=e1506] [cursor=pointer]:
+              - generic [ref=e1507]: 범일중학교
+              - generic [ref=e1508]: 중학교
+              - button "즐겨찾기" [ref=e1509]: ★
+            - generic [ref=e1510] [cursor=pointer]:
+              - generic [ref=e1511]: 복현중학교
+              - generic [ref=e1512]: 중학교
+              - button "즐겨찾기" [ref=e1513]: ★
+            - generic [ref=e1514] [cursor=pointer]:
+              - generic [ref=e1515]: 부계중학교
+              - generic [ref=e1516]: 중학교
+              - button "즐겨찾기" [ref=e1517]: ★
+            - generic [ref=e1518] [cursor=pointer]:
+              - generic [ref=e1519]: 부계중학교효령캠퍼스
+              - generic [ref=e1520]: 중학교
+              - button "즐겨찾기" [ref=e1521]: ★
+            - generic [ref=e1522] [cursor=pointer]:
+              - generic [ref=e1523]: 북대구초등학교
+              - generic [ref=e1524]: 초등학교
+              - button "즐겨찾기" [ref=e1525]: ★
+            - generic [ref=e1526] [cursor=pointer]:
+              - generic [ref=e1527]: 북동중학교
+              - generic [ref=e1528]: 중학교
+              - button "즐겨찾기" [ref=e1529]: ★
+            - generic [ref=e1530] [cursor=pointer]:
+              - generic [ref=e1531]: 불로중학교
+              - generic [ref=e1532]: 중학교
+              - button "즐겨찾기" [ref=e1533]: ★
+            - generic [ref=e1534] [cursor=pointer]:
+              - generic [ref=e1535]: 비슬고등학교
+              - generic [ref=e1536]: 고등학교
+              - button "즐겨찾기" [ref=e1537]: ★
+            - generic [ref=e1538] [cursor=pointer]:
+              - generic [ref=e1539]: 사수중학교
+              - generic [ref=e1540]: 중학교
+              - button "즐겨찾기" [ref=e1541]: ★
+            - generic [ref=e1542] [cursor=pointer]:
+              - generic [ref=e1543]: 산격중학교
+              - generic [ref=e1544]: 중학교
+              - button "즐겨찾기" [ref=e1545]: ★
+            - generic [ref=e1546] [cursor=pointer]:
+              - generic [ref=e1547]: 상서고등학교
+              - generic [ref=e1548]: 고등학교
+              - button "즐겨찾기" [ref=e1549]: ★
+            - generic [ref=e1550] [cursor=pointer]:
+              - generic [ref=e1551]: 상서중학교
+              - generic [ref=e1552]: 중학교
+              - button "즐겨찾기" [ref=e1553]: ★
+            - generic [ref=e1554] [cursor=pointer]:
+              - generic [ref=e1555]: 상원중학교
+              - generic [ref=e1556]: 중학교
+              - button "즐겨찾기" [ref=e1557]: ★
+            - generic [ref=e1558] [cursor=pointer]:
+              - generic [ref=e1559]: 상인고등학교
+              - generic [ref=e1560]: 고등학교
+              - button "즐겨찾기" [ref=e1561]: ★
+            - generic [ref=e1562] [cursor=pointer]:
+              - generic [ref=e1563]: 상인중학교
+              - generic [ref=e1564]: 중학교
+              - button "즐겨찾기" [ref=e1565]: ★
+            - generic [ref=e1566] [cursor=pointer]:
+              - generic [ref=e1567]: 새론중학교
+              - generic [ref=e1568]: 중학교
+              - button "즐겨찾기" [ref=e1569]: ★
+            - generic [ref=e1570] [cursor=pointer]:
+              - generic [ref=e1571]: 새본리중학교
+              - generic [ref=e1572]: 중학교
+              - button "즐겨찾기" [ref=e1573]: ★
+            - generic [ref=e1574] [cursor=pointer]:
+              - generic [ref=e1575]: 서남중학교
+              - generic [ref=e1576]: 중학교
+              - button "즐겨찾기" [ref=e1577]: ★
+            - generic [ref=e1578] [cursor=pointer]:
+              - generic [ref=e1579]: 서대구중학교
+              - generic [ref=e1580]: 중학교
+              - button "즐겨찾기" [ref=e1581]: ★
+            - generic [ref=e1582] [cursor=pointer]:
+              - generic [ref=e1583]: 서대구초등학교
+              - generic [ref=e1584]: 초등학교
+              - button "즐겨찾기" [ref=e1585]: ★
+            - generic [ref=e1586] [cursor=pointer]:
+              - generic [ref=e1587]: 서동중학교
+              - generic [ref=e1588]: 중학교
+              - button "즐겨찾기" [ref=e1589]: ★
+            - generic [ref=e1590] [cursor=pointer]:
+              - generic [ref=e1591]: 서변중학교
+              - generic [ref=e1592]: 중학교
+              - button "즐겨찾기" [ref=e1593]: ★
+            - generic [ref=e1594] [cursor=pointer]:
+              - generic [ref=e1595]: 서재중학교
+              - generic [ref=e1596]: 중학교
+              - button "즐겨찾기" [ref=e1597]: ★
+            - generic [ref=e1598] [cursor=pointer]:
+              - generic [ref=e1599]: 성곡중학교
+              - generic [ref=e1600]: 중학교
+              - button "즐겨찾기" [ref=e1601]: ★
+            - generic [ref=e1602] [cursor=pointer]:
+              - generic [ref=e1603]: 성광고등학교
+              - generic [ref=e1604]: 고등학교
+              - button "즐겨찾기" [ref=e1605]: ★
+            - generic [ref=e1606] [cursor=pointer]:
+              - generic [ref=e1607]: 성광중학교
+              - generic [ref=e1608]: 중학교
+              - button "즐겨찾기" [ref=e1609]: ★
+            - generic [ref=e1610] [cursor=pointer]:
+              - generic [ref=e1611]: 성당중학교
+              - generic [ref=e1612]: 중학교
+              - button "즐겨찾기" [ref=e1613]: ★
+            - generic [ref=e1614] [cursor=pointer]:
+              - generic [ref=e1615]: 성명여자중학교
+              - generic [ref=e1616]: 중학교
+              - button "즐겨찾기" [ref=e1617]: ★
+            - generic [ref=e1618] [cursor=pointer]:
+              - generic [ref=e1619]: 성산고등학교
+              - generic [ref=e1620]: 고등학교
+              - button "즐겨찾기" [ref=e1621]: ★
+            - generic [ref=e1622] [cursor=pointer]:
+              - generic [ref=e1623]: 성산중학교
+              - generic [ref=e1624]: 중학교
+              - button "즐겨찾기" [ref=e1625]: ★
+            - generic [ref=e1626] [cursor=pointer]:
+              - generic [ref=e1627]: 성서고등학교
+              - generic [ref=e1628]: 고등학교
+              - button "즐겨찾기" [ref=e1629]: ★
+            - generic [ref=e1630] [cursor=pointer]:
+              - generic [ref=e1631]: 성서중학교
+              - generic [ref=e1632]: 중학교
+              - button "즐겨찾기" [ref=e1633]: ★
+            - generic [ref=e1634] [cursor=pointer]:
+              - generic [ref=e1635]: 성지중학교
+              - generic [ref=e1636]: 중학교
+              - button "즐겨찾기" [ref=e1637]: ★
+            - generic [ref=e1638] [cursor=pointer]:
+              - generic [ref=e1639]: 성화여자고등학교
+              - generic [ref=e1640]: 고등학교
+              - button "즐겨찾기" [ref=e1641]: ★
+            - generic [ref=e1642] [cursor=pointer]:
+              - generic [ref=e1643]: 성화중학교
+              - generic [ref=e1644]: 중학교
+              - button "즐겨찾기" [ref=e1645]: ★
+            - generic [ref=e1646] [cursor=pointer]:
+              - generic [ref=e1647]: 소선여자중학교
+              - generic [ref=e1648]: 중학교
+              - button "즐겨찾기" [ref=e1649]: ★
+            - generic [ref=e1650] [cursor=pointer]:
+              - generic [ref=e1651]: 송현여자고등학교
+              - generic [ref=e1652]: 고등학교
+              - button "즐겨찾기" [ref=e1653]: ★
+            - generic [ref=e1654] [cursor=pointer]:
+              - generic [ref=e1655]: 송현여자중학교
+              - generic [ref=e1656]: 중학교
+              - button "즐겨찾기" [ref=e1657]: ★
+            - generic [ref=e1658] [cursor=pointer]:
+              - generic [ref=e1659]: 수성고등학교
+              - generic [ref=e1660]: 고등학교
+              - button "즐겨찾기" [ref=e1661]: ★
+            - generic [ref=e1662] [cursor=pointer]:
+              - generic [ref=e1663]: 수성중학교
+              - generic [ref=e1664]: 중학교
+              - button "즐겨찾기" [ref=e1665]: ★
+            - generic [ref=e1666] [cursor=pointer]:
+              - generic [ref=e1667]: 시지고등학교
+              - generic [ref=e1668]: 고등학교
+              - button "즐겨찾기" [ref=e1669]: ★
+            - generic [ref=e1670] [cursor=pointer]:
+              - generic [ref=e1671]: 시지중학교
+              - generic [ref=e1672]: 중학교
+              - button "즐겨찾기" [ref=e1673]: ★
+            - generic [ref=e1674] [cursor=pointer]:
+              - generic [ref=e1675]: 신기중학교
+              - generic [ref=e1676]: 중학교
+              - button "즐겨찾기" [ref=e1677]: ★
+            - generic [ref=e1678] [cursor=pointer]:
+              - generic [ref=e1679]: 신명고등학교
+              - generic [ref=e1680]: 고등학교
+              - button "즐겨찾기" [ref=e1681]: ★
+            - generic [ref=e1682] [cursor=pointer]:
+              - generic [ref=e1683]: 신명여자중학교
+              - generic [ref=e1684]: 중학교
+              - button "즐겨찾기" [ref=e1685]: ★
+            - generic [ref=e1686] [cursor=pointer]:
+              - generic [ref=e1687]: 신아중학교
+              - generic [ref=e1688]: 중학교
+              - button "즐겨찾기" [ref=e1689]: ★
+            - generic [ref=e1690] [cursor=pointer]:
+              - generic [ref=e1691]: 심인고등학교
+              - generic [ref=e1692]: 고등학교
+              - button "즐겨찾기" [ref=e1693]: ★
+            - generic [ref=e1694] [cursor=pointer]:
+              - generic [ref=e1695]: 심인중학교
+              - generic [ref=e1696]: 중학교
+              - button "즐겨찾기" [ref=e1697]: ★
+            - generic [ref=e1698] [cursor=pointer]:
+              - generic [ref=e1699]: 안심중학교
+              - generic [ref=e1700]: 중학교
+              - button "즐겨찾기" [ref=e1701]: ★
+            - generic [ref=e1702] [cursor=pointer]:
+              - generic [ref=e1703]: 영남고등학교
+              - generic [ref=e1704]: 고등학교
+              - button "즐겨찾기" [ref=e1705]: ★
+            - generic [ref=e1706] [cursor=pointer]:
+              - generic [ref=e1707]: 영남공업고등학교
+              - generic [ref=e1708]: 고등학교
+              - button "즐겨찾기" [ref=e1709]: ★
+            - generic [ref=e1710] [cursor=pointer]:
+              - generic [ref=e1711]: 영남중학교
+              - generic [ref=e1712]: 중학교
+              - button "즐겨찾기" [ref=e1713]: ★
+            - generic [ref=e1714] [cursor=pointer]:
+              - generic [ref=e1715]: 영송여자고등학교
+              - generic [ref=e1716]: 고등학교
+              - button "즐겨찾기" [ref=e1717]: ★
+            - generic [ref=e1718] [cursor=pointer]:
+              - generic [ref=e1719]: 영신고등학교
+              - generic [ref=e1720]: 고등학교
+              - button "즐겨찾기" [ref=e1721]: ★
+            - generic [ref=e1722] [cursor=pointer]:
+              - generic [ref=e1723]: 영신중학교
+              - generic [ref=e1724]: 중학교
+              - button "즐겨찾기" [ref=e1725]: ★
+            - generic [ref=e1726] [cursor=pointer]:
+              - generic [ref=e1727]: 영신초등학교
+              - generic [ref=e1728]: 초등학교
+              - button "즐겨찾기" [ref=e1729]: ★
+            - generic [ref=e1730] [cursor=pointer]:
+              - generic [ref=e1731]: 영진고등학교
+              - generic [ref=e1732]: 고등학교
+              - button "즐겨찾기" [ref=e1733]: ★
+            - generic [ref=e1734] [cursor=pointer]:
+              - generic [ref=e1735]: 오성고등학교
+              - generic [ref=e1736]: 고등학교
+              - button "즐겨찾기" [ref=e1737]: ★
+            - generic [ref=e1738] [cursor=pointer]:
+              - generic [ref=e1739]: 오성중학교
+              - generic [ref=e1740]: 중학교
+              - button "즐겨찾기" [ref=e1741]: ★
+            - generic [ref=e1742] [cursor=pointer]:
+              - generic [ref=e1743]: 와룡고등학교
+              - generic [ref=e1744]: 고등학교
+              - button "즐겨찾기" [ref=e1745]: ★
+            - generic [ref=e1746] [cursor=pointer]:
+              - generic [ref=e1747]: 와룡중학교
+              - generic [ref=e1748]: 중학교
+              - button "즐겨찾기" [ref=e1749]: ★
+            - generic [ref=e1750] [cursor=pointer]:
+              - generic [ref=e1751]: 왕선중학교
+              - generic [ref=e1752]: 중학교
+              - button "즐겨찾기" [ref=e1753]: ★
+              - text: ✓
+            - generic [ref=e1754] [cursor=pointer]:
+              - generic [ref=e1755]: 용산중학교
+              - generic [ref=e1756]: 중학교
+              - button "즐겨찾기" [ref=e1757]: ★
+            - generic [ref=e1758] [cursor=pointer]:
+              - generic [ref=e1759]: 운암고등학교
+              - generic [ref=e1760]: 고등학교
+              - button "즐겨찾기" [ref=e1761]: ★
+            - generic [ref=e1762] [cursor=pointer]:
+              - generic [ref=e1763]: 운암중학교
+              - generic [ref=e1764]: 중학교
+              - button "즐겨찾기" [ref=e1765]: ★
+            - generic [ref=e1766] [cursor=pointer]:
+              - generic [ref=e1767]: 원화여자고등학교
+              - generic [ref=e1768]: 고등학교
+              - button "즐겨찾기" [ref=e1769]: ★
+            - generic [ref=e1770] [cursor=pointer]:
+              - generic [ref=e1771]: 원화중학교
+              - generic [ref=e1772]: 중학교
+              - button "즐겨찾기" [ref=e1773]: ★
+            - generic [ref=e1774] [cursor=pointer]:
+              - generic [ref=e1775]: 월배중학교
+              - generic [ref=e1776]: 중학교
+              - button "즐겨찾기" [ref=e1777]: ★
+            - generic [ref=e1778] [cursor=pointer]:
+              - generic [ref=e1779]: 월서중학교
+              - generic [ref=e1780]: 중학교
+              - button "즐겨찾기" [ref=e1781]: ★
+            - generic [ref=e1782] [cursor=pointer]:
+              - generic [ref=e1783]: 월암중학교
+              - generic [ref=e1784]: 중학교
+              - button "즐겨찾기" [ref=e1785]: ★
+            - generic [ref=e1786] [cursor=pointer]:
+              - generic [ref=e1787]: 유가중학교
+              - generic [ref=e1788]: 중학교
+              - button "즐겨찾기" [ref=e1789]: ★
+            - generic [ref=e1790] [cursor=pointer]:
+              - generic [ref=e1791]: 율원중학교
+              - generic [ref=e1792]: 중학교
+              - button "즐겨찾기" [ref=e1793]: ★
+            - generic [ref=e1794] [cursor=pointer]:
+              - generic [ref=e1795]: 의흥중학교
+              - generic [ref=e1796]: 중학교
+              - button "즐겨찾기" [ref=e1797]: ★
+            - generic [ref=e1798] [cursor=pointer]:
+              - generic [ref=e1799]: 이곡중학교
+              - generic [ref=e1800]: 중학교
+              - button "즐겨찾기" [ref=e1801]: ★
+            - generic [ref=e1802] [cursor=pointer]:
+              - generic [ref=e1803]: 입석중학교
+              - generic [ref=e1804]: 중학교
+              - button "즐겨찾기" [ref=e1805]: ★
+            - generic [ref=e1806] [cursor=pointer]:
+              - generic [ref=e1807]: 정동고등학교
+              - generic [ref=e1808]: 고등학교
+              - button "즐겨찾기" [ref=e1809]: ★
+            - generic [ref=e1810] [cursor=pointer]:
+              - generic [ref=e1811]: 정화여자고등학교
+              - generic [ref=e1812]: 고등학교
+              - button "즐겨찾기" [ref=e1813]: ★
+            - generic [ref=e1814] [cursor=pointer]:
+              - generic [ref=e1815]: 정화중학교
+              - generic [ref=e1816]: 중학교
+              - button "즐겨찾기" [ref=e1817]: ★
+            - generic [ref=e1818] [cursor=pointer]:
+              - generic [ref=e1819]: 조암중학교
+              - generic [ref=e1820]: 중학교
+              - button "즐겨찾기" [ref=e1821]: ★
+            - generic [ref=e1822] [cursor=pointer]:
+              - generic [ref=e1823]: 조일고등학교
+              - generic [ref=e1824]: 고등학교
+              - button "즐겨찾기" [ref=e1825]: ★
+            - generic [ref=e1826] [cursor=pointer]:
+              - generic [ref=e1827]: 중리중학교
+              - generic [ref=e1828]: 중학교
+              - button "즐겨찾기" [ref=e1829]: ★
+            - generic [ref=e1830] [cursor=pointer]:
+              - generic [ref=e1831]: 지산중학교
+              - generic [ref=e1832]: 중학교
+              - button "즐겨찾기" [ref=e1833]: ★
+            - generic [ref=e1834] [cursor=pointer]:
+              - generic [ref=e1835]: 천내중학교
+              - generic [ref=e1836]: 중학교
+              - button "즐겨찾기" [ref=e1837]: ★
+            - generic [ref=e1838] [cursor=pointer]:
+              - generic [ref=e1839]: 청구고등학교
+              - generic [ref=e1840]: 고등학교
+              - button "즐겨찾기" [ref=e1841]: ★
+            - generic [ref=e1842] [cursor=pointer]:
+              - generic [ref=e1843]: 청구중학교
+              - generic [ref=e1844]: 중학교
+              - button "즐겨찾기" [ref=e1845]: ★
+            - generic [ref=e1846] [cursor=pointer]:
+              - generic [ref=e1847]: 칠곡중학교
+              - generic [ref=e1848]: 중학교
+              - button "즐겨찾기" [ref=e1849]: ★
+            - generic [ref=e1850] [cursor=pointer]:
+              - generic [ref=e1851]: 칠성고등학교
+              - generic [ref=e1852]: 고등학교
+              - button "즐겨찾기" [ref=e1853]: ★
+            - generic [ref=e1854] [cursor=pointer]:
+              - generic [ref=e1855]: 침산중학교
+              - generic [ref=e1856]: 중학교
+              - button "즐겨찾기" [ref=e1857]: ★
+            - generic [ref=e1858] [cursor=pointer]:
+              - generic [ref=e1859]: 팔달중학교
+              - generic [ref=e1860]: 중학교
+              - button "즐겨찾기" [ref=e1861]: ★
+            - generic [ref=e1862] [cursor=pointer]:
+              - generic [ref=e1863]: 평리중학교
+              - generic [ref=e1864]: 중학교
+              - button "즐겨찾기" [ref=e1865]: ★
+            - generic [ref=e1866] [cursor=pointer]:
+              - generic [ref=e1867]: 포산고등학교
+              - generic [ref=e1868]: 고등학교
+              - button "즐겨찾기" [ref=e1869]: ★
+            - generic [ref=e1870] [cursor=pointer]:
+              - generic [ref=e1871]: 포산중학교
+              - generic [ref=e1872]: 중학교
+              - button "즐겨찾기" [ref=e1873]: ★
+            - generic [ref=e1874] [cursor=pointer]:
+              - generic [ref=e1875]: 학남고등학교
+              - generic [ref=e1876]: 고등학교
+              - button "즐겨찾기" [ref=e1877]: ★
+            - generic [ref=e1878] [cursor=pointer]:
+              - generic [ref=e1879]: 학남중학교
+              - generic [ref=e1880]: 중학교
+              - button "즐겨찾기" [ref=e1881]: ★
+            - generic [ref=e1882] [cursor=pointer]:
+              - generic [ref=e1883]: 학력인정한남중미용정보고등학교
+              - generic [ref=e1884]: 평생학교(고)-2년6학기
+              - button "즐겨찾기" [ref=e1885]: ★
+            - generic [ref=e1886] [cursor=pointer]:
+              - generic [ref=e1887]: 학력인정한남중학교
+              - generic [ref=e1888]: 평생학교(중)-2년6학기
+              - button "즐겨찾기" [ref=e1889]: ★
+            - generic [ref=e1890] [cursor=pointer]:
+              - generic [ref=e1891]: 학산중학교
+              - generic [ref=e1892]: 중학교
+              - button "즐겨찾기" [ref=e1893]: ★
+            - generic [ref=e1894] [cursor=pointer]:
+              - generic [ref=e1895]: 한국대구화교중고등학교
+              - generic [ref=e1896]: 각종학교(외국인학교)
+              - button "즐겨찾기" [ref=e1897]: ★
+            - generic [ref=e1898] [cursor=pointer]:
+              - generic [ref=e1899]: 한국대구화교초등학교
+              - generic [ref=e1900]: 각종학교(외국인학교)
+              - button "즐겨찾기" [ref=e1901]: ★
+            - generic [ref=e1902] [cursor=pointer]:
+              - generic [ref=e1903]: 한남중미용정보고등학교
+              - generic [ref=e1904]: 평생학교(고)-3년6학기
+              - button "즐겨찾기" [ref=e1905]: ★
+            - generic [ref=e1906] [cursor=pointer]:
+              - generic [ref=e1907]: 한울안중학교
+              - generic [ref=e1908]: 중학교
+              - button "즐겨찾기" [ref=e1909]: ★
+            - generic [ref=e1910] [cursor=pointer]:
+              - generic [ref=e1911]: 함지고등학교
+              - generic [ref=e1912]: 고등학교
+              - button "즐겨찾기" [ref=e1913]: ★
+            - generic [ref=e1914] [cursor=pointer]:
+              - generic [ref=e1915]: 현풍고등학교
+              - generic [ref=e1916]: 고등학교
+              - button "즐겨찾기" [ref=e1917]: ★
+            - generic [ref=e1918] [cursor=pointer]:
+              - generic [ref=e1919]: 현풍중학교
+              - generic [ref=e1920]: 중학교
+              - button "즐겨찾기" [ref=e1921]: ★
+            - generic [ref=e1922] [cursor=pointer]:
+              - generic [ref=e1923]: 협성경복중학교
+              - generic [ref=e1924]: 중학교
+              - button "즐겨찾기" [ref=e1925]: ★
+            - generic [ref=e1926] [cursor=pointer]:
+              - generic [ref=e1927]: 협성고등학교
+              - generic [ref=e1928]: 고등학교
+              - button "즐겨찾기" [ref=e1929]: ★
+            - generic [ref=e1930] [cursor=pointer]:
+              - generic [ref=e1931]: 호산고등학교
+              - generic [ref=e1932]: 고등학교
+              - button "즐겨찾기" [ref=e1933]: ★
+            - generic [ref=e1934] [cursor=pointer]:
+              - generic [ref=e1935]: 화원고등학교
+              - generic [ref=e1936]: 고등학교
+              - button "즐겨찾기" [ref=e1937]: ★
+            - generic [ref=e1938] [cursor=pointer]:
+              - generic [ref=e1939]: 화원중학교
+              - generic [ref=e1940]: 중학교
+              - button "즐겨찾기" [ref=e1941]: ★
+            - generic [ref=e1942] [cursor=pointer]:
+              - generic [ref=e1943]: 황금중학교
+              - generic [ref=e1944]: 중학교
+              - button "즐겨찾기" [ref=e1945]: ★
+            - generic [ref=e1946] [cursor=pointer]:
+              - generic [ref=e1947]: 효령고등학교
+              - generic [ref=e1948]: 고등학교
+              - button "즐겨찾기" [ref=e1949]: ★
+            - generic [ref=e1950] [cursor=pointer]:
+              - generic [ref=e1951]: 효성여자고등학교
+              - generic [ref=e1952]: 고등학교
+              - button "즐겨찾기" [ref=e1953]: ★
+            - generic [ref=e1954] [cursor=pointer]:
+              - generic [ref=e1955]: 효성중학교
+              - generic [ref=e1956]: 중학교
+              - button "즐겨찾기" [ref=e1957]: ★
+            - generic [ref=e1958] [cursor=pointer]:
+              - generic [ref=e1959]: 효성초등학교
+              - generic [ref=e1960]: 초등학교
+              - button "즐겨찾기" [ref=e1961]: ★
+      - generic [ref=e1962]:
+        - generic [ref=e1963]:
+          - generic [ref=e1964]: "3"
+          - heading "날짜 선택" [level=2] [ref=e1965]
+        - generic [ref=e1966]:
+          - generic [ref=e1967]:
+            - button "📅 일간" [ref=e1968] [cursor=pointer]
+            - button "📆 주간" [ref=e1969] [cursor=pointer]
+          - generic [ref=e1970]:
+            - button "이전 날짜" [ref=e1971] [cursor=pointer]: ‹
+            - textbox [ref=e1972]: 2026-05-21
+            - button "다음 날짜" [ref=e1973] [cursor=pointer]: ›
+            - button "🔍 급식 조회" [ref=e1974] [cursor=pointer]:
+              - generic [ref=e1975]: 🔍
+              - text: 급식 조회
+          - generic [ref=e1976]:
+            - text: 💡
+            - generic [ref=e1977]: Enter
+            - text: 로 빠르게 조회 ·
+            - generic [ref=e1978]: ←
+            - text: /
+            - generic [ref=e1979]: →
+            - text: 로 날짜 이동
+    - generic [ref=e1980]:
+      - generic [ref=e1981]: 📍 대구
+      - text: ›
+      - generic [ref=e1982]: 🏫 왕선중학교
+      - text: ›
+      - generic [ref=e1983]: 📅 2026-05-21
+    - generic [ref=e1984]:
+      - generic [ref=e1985]:
+        - heading "🏫 왕선중학교 · 2026년 05월 21일 (목)" [level=2] [ref=e1986]
+        - generic [ref=e1987]:
+          - button "🖨️" [ref=e1988] [cursor=pointer]
+          - button "🔗" [ref=e1989] [cursor=pointer]
+      - generic [ref=e1991]:
+        - generic [ref=e1992]:
+          - generic [ref=e1993]: 🍚
+          - heading "중식" [level=3] [ref=e1994]
+          - generic [ref=e1995]: 👥 967명
+        - generic [ref=e1996]:
+          - list [ref=e1997]:
+            - listitem [ref=e1998]: 미소된장국 (5.6)
+            - listitem [ref=e1999]: 하트단무지
+            - listitem [ref=e2000]: 미나리무생채 (13)
+            - listitem [ref=e2001]: 불향주꾸미덮밥 (5.6.13)
+            - listitem [ref=e2002]: 수제고르곤졸라또띠아1/2 (2.5.6.12.13)
+            - listitem [ref=e2003]: 저당골드키위주스 (13)
+          - generic [ref=e2005]:
+            - generic [ref=e2006]:
+              - text: 🔥
+              - strong [ref=e2007]: 704.6 Kcal
+            - generic [ref=e2008]:
+              - text: 1일 권장 2400kcal 대비
+              - strong [ref=e2009]: 29%
+          - generic [ref=e2012]:
+            - generic [ref=e2013]:
+              - strong [ref=e2014]: 영양
+              - text: "탄수화물(g) : 117.0 · 단백질(g) : 35.2 · 지방(g) : 14.1 · 비타민A(R.E) : 140.5 · 티아민(mg) : 0.4 · 리보플라빈(mg) : 0.7 · 비타민C(mg) : 81.1 · 칼슘(mg) : 276.3 · 철분(mg) : 4.3"
+            - generic [ref=e2015]:
+              - strong [ref=e2016]: 원산지
+              - text: "쇠고기(종류) : 국내산(한우) · 쇠고기 식육가공품 : 국내산 · 돼지고기 : 국내산 · 돼지고기 식육가공품 : 국내산 · 닭고기 : 국내산 · 닭고기 식육가공품 : 국내산 · 오리고기 : 국내산 · 오리고기 가공품 : 국내산 · 쌀 : 국내산 · 배추 : 국내산 · 고춧가루 : 국내산 · 콩 : 국내산 · 낙지 : 국내산 · 고등어 : 국내산 · 갈치 : 국내산 · 오징어 : 국내산 · 꽃게 : 국내산 · 참조기 : 국내산 · 비고 :"
+      - group [ref=e2017]:
+        - generic "▶ 🥚 알레르기 정보 범례 보기" [ref=e2018] [cursor=pointer]
+  - contentinfo [ref=e15]:
+    - paragraph [ref=e16]: "NEIS Open API · 데이터 출처: 나이스 교육정보 개방 포털"

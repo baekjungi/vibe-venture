@@ -1,0 +1,10 @@
+- generic [active] [ref=e1]:
+  - heading "학교 급식 정보 조회" [level=1] [ref=e2]
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - text: "교육청 코드:"
+      - textbox "교육청 코드:" [ref=e5]
+    - generic [ref=e6]:
+      - text: "학교 코드:"
+      - textbox "학교 코드:" [ref=e7]
+    - button "조회" [ref=e8]

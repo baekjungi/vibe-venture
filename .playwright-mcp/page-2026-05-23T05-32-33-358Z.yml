@@ -1,0 +1,57 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - heading "🍱 학교 급식 정보" [level=1] [ref=e4]
+    - paragraph [ref=e5]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]: "1"
+        - heading "지역 선택" [level=2] [ref=e10]
+      - combobox [ref=e12]:
+        - option "-- 시·도 교육청을 선택하세요 --"
+        - option "서울"
+        - option "부산"
+        - option "대구" [selected]
+        - option "인천"
+        - option "광주"
+        - option "대전"
+        - option "울산"
+        - option "세종"
+        - option "경기"
+        - option "강원"
+        - option "충북"
+        - option "충남"
+        - option "전북"
+        - option "전남"
+        - option "경북"
+        - option "경남"
+        - option "제주"
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e21]: "2"
+        - heading "학교 선택" [level=2] [ref=e22]
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - text: 🔍
+          - textbox "학교 이름으로 검색..." [ref=e25]: 왕선중
+        - generic [ref=e1479] [cursor=pointer]:
+          - generic [ref=e1480]: 왕선중학교
+          - generic [ref=e1481]: 중학교
+    - generic [ref=e1482]:
+      - generic [ref=e1483]:
+        - generic [ref=e1484]: "3"
+        - heading "날짜 선택" [level=2] [ref=e1485]
+      - generic [ref=e1486]:
+        - generic [ref=e1487]:
+          - button "📅 일간" [ref=e1488] [cursor=pointer]
+          - button "📆 주간" [active] [ref=e1489] [cursor=pointer]
+        - generic [ref=e1490]:
+          - textbox [ref=e1491]: 2026-05-23
+          - button "급식 조회" [ref=e1492] [cursor=pointer]
+        - generic [ref=e1496]: 2026년 5월 18일 (월) ~ 5월 22일 (금)
+  - generic [ref=e13]:
+    - generic [ref=e1493]: 📍 대구
+    - text: ›
+    - generic [ref=e1494]: 🏫 왕선중학교
+    - text: ›
+    - generic [ref=e1495]: 📅 2026-05-23

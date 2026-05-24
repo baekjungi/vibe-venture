@@ -17,6 +17,86 @@ const ALLERGY_MAP = {
   17: "오징어", 18: "조개류",
 };
 
+// 한국 음식명 → Unsplash 검색 키워드 (대표 이미지용)
+const FOOD_IMAGE_KEYWORDS = {
+  "김치찌개":"kimchi stew korean food",
+  "된장찌개":"doenjang jjigae miso soup korean",
+  "순두부찌개":"sundubu jjigae soft tofu stew",
+  "부대찌개":"budae jjigae army stew korean",
+  "비빔밥":"bibimbap korean rice bowl",
+  "볶음밥":"fried rice korean",
+  "잡채":"japchae glass noodles korean",
+  "떡볶이":"tteokbokki spicy rice cake korean",
+  "김밥":"gimbap korean rice roll",
+  "라면":"ramen noodle soup",
+  "우동":"udon noodle soup",
+  "냉면":"naengmyeon cold noodles korean",
+  "짜장면":"jajangmyeon black bean noodles",
+  "스파게티":"spaghetti pasta",
+  "카레":"curry rice korean",
+  "돈가스":"tonkatsu pork cutlet",
+  "치킨":"fried chicken",
+  "닭갈비":"dakgalbi spicy chicken korean",
+  "불고기":"bulgogi korean beef",
+  "제육볶음":"spicy pork stir fry korean",
+  "삼겹살":"samgyeopsal pork belly korean",
+  "갈비탕":"galbitang beef rib soup korean",
+  "육개장":"yukgaejang spicy beef soup",
+  "미역국":"miyeok guk seaweed soup korean",
+  "된장국":"miso soup korean",
+  "북엇국":"dried pollack soup korean",
+  "콩나물국":"bean sprout soup korean",
+  "김치":"kimchi",
+  "깍두기":"kkakdugi radish kimchi",
+  "배추김치":"baechu kimchi",
+  "나물":"korean namul vegetables",
+  "시금치나물":"spinach namul korean",
+  "콩나물":"bean sprout",
+  "멸치볶음":"dried anchovy stir fry korean",
+  "계란말이":"gyeran mari egg roll korean",
+  "계란후라이":"fried egg",
+  "두부조림":"braised tofu korean",
+  "두부":"tofu",
+  "어묵":"fish cake korean",
+  "감자조림":"braised potato korean",
+  "고구마":"sweet potato",
+  "브로콜리":"broccoli",
+  "샐러드":"salad",
+  "고등어":"grilled mackerel",
+  "삼치":"grilled spanish mackerel",
+  "동태":"pollock fish korean",
+  "오징어":"squid stir fry",
+  "새우":"shrimp",
+  "만두":"mandu dumpling korean",
+  "오므라이스":"omurice egg rice",
+  "소시지":"sausage",
+  "핫도그":"hot dog",
+  "햄버거":"hamburger",
+  "피자":"pizza",
+  "빵":"bread",
+  "케이크":"cake dessert",
+  "아이스크림":"ice cream",
+  "요구르트":"yogurt",
+  "우유":"milk glass",
+  "과일":"fruit bowl",
+  "흰쌀밥":"steamed white rice bowl",
+  "쌀밥":"steamed rice bowl",
+  "잡곡밥":"multigrain rice korean",
+};
+
+// 음식명에서 키워드 찾기 (부분 매칭)
+function getFoodImageKeyword(name) {
+  const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
+  // 정확 매칭
+  if (FOOD_IMAGE_KEYWORDS[clean]) return FOOD_IMAGE_KEYWORDS[clean];
+  // 부분 매칭
+  for (const [key, val] of Object.entries(FOOD_IMAGE_KEYWORDS)) {
+    if (clean.includes(key)) return val;
+  }
+  // 폴백: 한국 음식 일반
+  return "korean food traditional";
+}
+
 // 청소년 권장 칼로리 (참고용)
 const RECOMMENDED_CALORIES = 2400;
 
@@ -356,8 +436,61 @@ function shiftDate(days) {
   dateInput.dispatchEvent(new Event("change"));
 }
 
+// ── 음식 이미지 모달 ─────────────────────────────────────────
+const foodModal      = $("food-modal");
+const foodModalImg   = $("food-modal-img");
+const foodModalTitle = $("food-modal-title");
+const foodModalSpinner = $("food-modal-spinner");
+
+function openFoodModal(dishName) {
+  const keyword = getFoodImageKeyword(dishName);
+  const imgUrl = `https://source.unsplash.com/400x300/?${encodeURIComponent(keyword)}`;
+
+  foodModalTitle.textContent = dishName;
+  foodModalImg.src = "";
+  foodModalImg.classList.add("loading");
+  foodModalSpinner.classList.remove("hidden");
+  foodModal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+
+  const img = new Image();
+  img.onload = () => {
+    foodModalImg.src = imgUrl;
+    foodModalImg.alt = dishName;
+    foodModalImg.classList.remove("loading");
+    foodModalSpinner.classList.add("hidden");
+  };
+  img.onerror = () => {
+    // 폴백: 일반 한국 음식 이미지
+    foodModalImg.src = `https://source.unsplash.com/400x300/?korean+food`;
+    foodModalImg.alt = dishName;
+    foodModalImg.classList.remove("loading");
+    foodModalSpinner.classList.add("hidden");
+  };
+  img.src = imgUrl;
+}
+
+function closeFoodModal() {
+  foodModal.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+$("food-modal-close").addEventListener("click", closeFoodModal);
+foodModal.querySelector(".food-modal-backdrop").addEventListener("click", closeFoodModal);
+
+// meal-cards 클릭 이벤트 위임 (동적으로 생성된 dish-tag 처리)
+$("meal-cards").addEventListener("click", (e) => {
+  const tag = e.target.closest(".dish-tag.clickable");
+  if (tag) openFoodModal(tag.dataset.dish);
+});
+
 // ── 키보드 단축키 ─────────────────────────────────────────────
 document.addEventListener("keydown", (e) => {
+  // 모달 열려있으면 Escape로 닫기
+  if (!foodModal.classList.contains("hidden")) {
+    if (e.key === "Escape") closeFoodModal();
+    return;
+  }
   // 입력 필드 포커스 중이면 화살표는 무시 (Enter 제외)
   const inField = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName);
 
@@ -484,7 +617,7 @@ function renderMeals(meals, schoolName, dateStr) {
         const allergy = m && m[2]
           ? `<span class="allergy" title="${escHtml(allergyTooltip(m[2]))}">${escHtml(m[2])}</span>`
           : "";
-        return `<li class="dish-tag">${escHtml(name)}${allergy}</li>`;
+        return `<li class="dish-tag clickable" data-dish="${escHtml(name)}">${escHtml(name)}<span class="dish-camera">📷</span>${allergy}</li>`;
       }).join("");
 
     // 칼로리 막대
