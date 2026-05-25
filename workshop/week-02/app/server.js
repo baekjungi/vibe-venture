@@ -189,7 +189,7 @@ app.use((_req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "script-src 'self'; " +
-    "img-src 'self' data: https://image.pollinations.ai https://www.themealdb.com https://*.themealdb.com; " +
+    "img-src 'self' data: https: blob:; " +
     "connect-src 'self'; " +
     "frame-ancestors 'none';"
   );
@@ -362,7 +362,37 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
   const { name = "" } = req.query;
   const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
 
-  // 한국 음식명 → 영어 프롬프트 (긴 키워드 우선 매칭)
+  // 네이버 이미지 검색 API (키가 설정된 경우)
+  const naverClientId = process.env.NAVER_CLIENT_ID;
+  const naverClientSecret = process.env.NAVER_CLIENT_SECRET;
+
+  if (naverClientId && naverClientSecret) {
+    try {
+      const query = encodeURIComponent(`${clean} 음식`);
+      const naverRes = await fetch(
+        `https://openapi.naver.com/v1/search/image?query=${query}&display=5&sort=sim`,
+        {
+          headers: {
+            "X-Naver-Client-Id": naverClientId,
+            "X-Naver-Client-Secret": naverClientSecret,
+          },
+        }
+      );
+      if (naverRes.ok) {
+        const data = await naverRes.json();
+        const items = (data.items || []).filter(
+          (item) => item.link && /\.(jpg|jpeg|png|webp)/i.test(item.link)
+        );
+        if (items.length > 0) {
+          return res.json({ imageUrl: items[0].link, source: "naver", alt: clean });
+        }
+      }
+    } catch (err) {
+      console.warn("네이버 이미지 검색 실패:", err.message);
+    }
+  }
+
+  // 폴백: Pollinations.ai AI 이미지
   let searchTerm = "";
   const sortedKeys = Object.keys(KOREAN_TO_SEARCH).sort((a, b) => b.length - a.length);
   for (const ko of sortedKeys) {
@@ -370,13 +400,11 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
   }
   if (!searchTerm) searchTerm = "korean food dish";
 
-  // Pollinations.ai AI 이미지 생성 URL
-  // 서버에서 URL만 생성해 반환 (클라이언트가 직접 로드)
   const prompt = encodeURIComponent(`${searchTerm}, korean food, delicious, top view, food photography, realistic, high quality`);
-  const seed = Math.floor(Date.now() / 86400000); // 하루 단위 시드 (매일 새 이미지)
+  const seed = Math.floor(Date.now() / 86400000);
   const imageUrl = `https://image.pollinations.ai/prompt/${prompt}?width=400&height=300&seed=${seed}&nologo=true`;
 
-  return res.json({ imageUrl, source: "ai-generated" });
+  return res.json({ imageUrl, source: "ai-generated", alt: clean });
 });
 
 // ── 서버 시작 (로컬/Render) 또는 서버리스 export (Vercel) ────────────────────
