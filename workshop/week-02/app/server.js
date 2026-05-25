@@ -189,7 +189,7 @@ app.use((_req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "script-src 'self'; " +
-    "img-src 'self' data: https://images.unsplash.com https://source.unsplash.com; " +
+    "img-src 'self' data: https://loremflickr.com https://*.staticflickr.com https://live.staticflickr.com https://*.flickr.com; " +
     "connect-src 'self'; " +
     "frame-ancestors 'none';"
   );

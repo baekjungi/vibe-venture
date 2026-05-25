@@ -19,82 +19,79 @@ const ALLERGY_MAP = {
 
 // 한국 음식명 → Unsplash 검색 키워드 (대표 이미지용)
 const FOOD_IMAGE_KEYWORDS = {
-  "김치찌개":"kimchi stew korean food",
-  "된장찌개":"doenjang jjigae miso soup korean",
-  "순두부찌개":"sundubu jjigae soft tofu stew",
-  "부대찌개":"budae jjigae army stew korean",
-  "비빔밥":"bibimbap korean rice bowl",
-  "볶음밥":"fried rice korean",
-  "잡채":"japchae glass noodles korean",
-  "떡볶이":"tteokbokki spicy rice cake korean",
-  "김밥":"gimbap korean rice roll",
-  "라면":"ramen noodle soup",
-  "우동":"udon noodle soup",
-  "냉면":"naengmyeon cold noodles korean",
-  "짜장면":"jajangmyeon black bean noodles",
-  "스파게티":"spaghetti pasta",
-  "카레":"curry rice korean",
-  "돈가스":"tonkatsu pork cutlet",
-  "치킨":"fried chicken",
-  "닭갈비":"dakgalbi spicy chicken korean",
-  "불고기":"bulgogi korean beef",
-  "제육볶음":"spicy pork stir fry korean",
-  "삼겹살":"samgyeopsal pork belly korean",
-  "갈비탕":"galbitang beef rib soup korean",
-  "육개장":"yukgaejang spicy beef soup",
-  "미역국":"miyeok guk seaweed soup korean",
-  "된장국":"miso soup korean",
-  "북엇국":"dried pollack soup korean",
-  "콩나물국":"bean sprout soup korean",
+  "김치찌개":"kimchi,stew",
+  "된장찌개":"miso,soup",
+  "순두부찌개":"tofu,soup",
+  "부대찌개":"stew,korean",
+  "비빔밥":"bibimbap,rice",
+  "볶음밥":"friedrice,korean",
+  "잡채":"noodles,korean",
+  "떡볶이":"tteokbokki,spicy",
+  "김밥":"gimbap,korean",
+  "라면":"ramen,noodle",
+  "우동":"udon,noodle",
+  "냉면":"noodles,cold",
+  "짜장면":"noodles,sauce",
+  "스파게티":"spaghetti,pasta",
+  "카레":"curry,rice",
+  "돈가스":"pork,cutlet",
+  "치킨":"fried,chicken",
+  "닭갈비":"chicken,spicy",
+  "불고기":"bulgogi,beef",
+  "제육볶음":"pork,stirfry",
+  "삼겹살":"pork,grill",
+  "갈비탕":"beef,soup",
+  "육개장":"beef,spicy,soup",
+  "미역국":"seaweed,soup",
+  "된장국":"miso,soup",
+  "북엇국":"fish,soup",
+  "콩나물국":"sprout,soup",
   "김치":"kimchi",
-  "깍두기":"kkakdugi radish kimchi",
-  "배추김치":"baechu kimchi",
-  "나물":"korean namul vegetables",
-  "시금치나물":"spinach namul korean",
-  "콩나물":"bean sprout",
-  "멸치볶음":"dried anchovy stir fry korean",
-  "계란말이":"gyeran mari egg roll korean",
-  "계란후라이":"fried egg",
-  "두부조림":"braised tofu korean",
+  "깍두기":"kimchi,radish",
+  "배추김치":"kimchi,cabbage",
+  "나물":"vegetables,korean",
+  "시금치나물":"spinach,korean",
+  "콩나물":"beansprout",
+  "멸치볶음":"anchovy,stirfry",
+  "계란말이":"egg,roll",
+  "계란후라이":"fried,egg",
+  "두부조림":"tofu,braised",
   "두부":"tofu",
-  "어묵":"fish cake korean",
-  "감자조림":"braised potato korean",
-  "고구마":"sweet potato",
+  "어묵":"fishcake,korean",
+  "감자조림":"potato,braised",
+  "고구마":"sweet,potato",
   "브로콜리":"broccoli",
   "샐러드":"salad",
-  "고등어":"grilled mackerel",
-  "삼치":"grilled spanish mackerel",
-  "동태":"pollock fish korean",
-  "오징어":"squid stir fry",
+  "고등어":"mackerel,grilled",
+  "삼치":"fish,grilled",
+  "동태":"fish,soup",
+  "오징어":"squid",
   "새우":"shrimp",
-  "만두":"mandu dumpling korean",
-  "오므라이스":"omurice egg rice",
+  "만두":"dumpling,korean",
+  "오므라이스":"omurice,egg",
   "소시지":"sausage",
-  "핫도그":"hot dog",
+  "핫도그":"hotdog",
   "햄버거":"hamburger",
   "피자":"pizza",
-  "빵":"bread",
-  "케이크":"cake dessert",
-  "아이스크림":"ice cream",
+  "빵":"bread,bakery",
+  "케이크":"cake,dessert",
+  "아이스크림":"icecream",
   "요구르트":"yogurt",
-  "우유":"milk glass",
-  "과일":"fruit bowl",
-  "흰쌀밥":"steamed white rice bowl",
-  "쌀밥":"steamed rice bowl",
-  "잡곡밥":"multigrain rice korean",
+  "우유":"milk",
+  "과일":"fruit",
+  "흰쌀밥":"rice,bowl",
+  "쌀밥":"rice,bowl",
+  "잡곡밥":"grain,rice",
 };
 
-// 음식명에서 키워드 찾기 (부분 매칭)
+// 음식명에서 키워드 찾기 (부분 매칭) → loremflickr 쉼표 형식
 function getFoodImageKeyword(name) {
   const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
-  // 정확 매칭
   if (FOOD_IMAGE_KEYWORDS[clean]) return FOOD_IMAGE_KEYWORDS[clean];
-  // 부분 매칭
   for (const [key, val] of Object.entries(FOOD_IMAGE_KEYWORDS)) {
     if (clean.includes(key)) return val;
   }
-  // 폴백: 한국 음식 일반
-  return "korean food traditional";
+  return "korean,food";
 }
 
 // 청소년 권장 칼로리 (참고용)
@@ -444,7 +441,7 @@ const foodModalSpinner = $("food-modal-spinner");
 
 function openFoodModal(dishName) {
   const keyword = getFoodImageKeyword(dishName);
-  const imgUrl = `https://source.unsplash.com/400x300/?${encodeURIComponent(keyword)}`;
+  const imgUrl = `https://loremflickr.com/400/300/${keyword}?random=${Date.now()}`;
 
   foodModalTitle.textContent = dishName;
   foodModalImg.src = "";
@@ -462,7 +459,7 @@ function openFoodModal(dishName) {
   };
   img.onerror = () => {
     // 폴백: 일반 한국 음식 이미지
-    foodModalImg.src = `https://source.unsplash.com/400x300/?korean+food`;
+    foodModalImg.src = `https://loremflickr.com/400/300/korean,food?random=${Date.now()}`;
     foodModalImg.alt = dishName;
     foodModalImg.classList.remove("loading");
     foodModalSpinner.classList.add("hidden");
