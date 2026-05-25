@@ -440,31 +440,36 @@ const foodModalTitle = $("food-modal-title");
 const foodModalSpinner = $("food-modal-spinner");
 
 function openFoodModal(dishName) {
-  const keyword = getFoodImageKeyword(dishName);
-  const imgUrl = `https://loremflickr.com/400/300/${keyword}?random=${Date.now()}`;
-
-  foodModalTitle.textContent = dishName;
+  foodModalTitle.textContent = dishName.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
   foodModalImg.src = "";
   foodModalImg.classList.add("loading");
   foodModalSpinner.classList.remove("hidden");
   foodModal.classList.remove("hidden");
   document.body.style.overflow = "hidden";
 
-  const img = new Image();
-  img.onload = () => {
-    foodModalImg.src = imgUrl;
-    foodModalImg.alt = dishName;
-    foodModalImg.classList.remove("loading");
-    foodModalSpinner.classList.add("hidden");
-  };
-  img.onerror = () => {
-    // 폴백: 일반 한국 음식 이미지
-    foodModalImg.src = `https://loremflickr.com/400/300/korean,food?random=${Date.now()}`;
-    foodModalImg.alt = dishName;
-    foodModalImg.classList.remove("loading");
-    foodModalSpinner.classList.add("hidden");
-  };
-  img.src = imgUrl;
+  // 서버 API로 음식 이미지 요청 (TheMealDB 프록시)
+  apiFetch(`/api/food-image?name=${encodeURIComponent(dishName)}`)
+    .then(data => {
+      const img = new Image();
+      img.onload = () => {
+        foodModalImg.src = data.imageUrl;
+        foodModalImg.alt = dishName;
+        foodModalImg.classList.remove("loading");
+        foodModalSpinner.classList.add("hidden");
+      };
+      img.onerror = () => {
+        foodModalImg.src = "";
+        foodModalImg.classList.remove("loading");
+        foodModalSpinner.classList.add("hidden");
+        foodModalSpinner.textContent = "🍽️";
+        foodModalSpinner.classList.remove("hidden");
+      };
+      img.src = data.imageUrl;
+    })
+    .catch(() => {
+      foodModalImg.classList.remove("loading");
+      foodModalSpinner.classList.add("hidden");
+    });
 }
 
 function closeFoodModal() {

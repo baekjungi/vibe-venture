@@ -189,7 +189,7 @@ app.use((_req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "script-src 'self'; " +
-    "img-src 'self' data: https://loremflickr.com https://*.staticflickr.com https://live.staticflickr.com https://*.flickr.com; " +
+    "img-src 'self' data: https://www.themealdb.com https://*.themealdb.com; " +
     "connect-src 'self'; " +
     "frame-ancestors 'none';"
   );
@@ -298,6 +298,109 @@ app.get("/api/meal", rateLimiter(RATE_LIMIT_MEAL), async (req, res) => {
       : "급식 정보를 가져오는 중 오류가 발생했습니다.";
     return res.status(500).json({ error: safe });
   }
+});
+
+// ── 음식 이미지 검색 (TheMealDB 프록시) ─────────────────────────────────────
+// 한국 음식명 → TheMealDB 검색어 매핑
+const MEAL_DB_KEYWORDS = {
+  "rice": "rice", "beef": "beef", "pork": "pork", "chicken": "chicken",
+  "soup": "soup", "noodle": "noodle", "tofu": "tofu", "fish": "fish",
+  "egg": "egg", "shrimp": "shrimp", "dumpling": "dumpling",
+  "curry": "curry", "pizza": "pizza", "pasta": "pasta", "salad": "salad",
+  "stew": "stew", "bread": "bread", "cake": "cake", "icecream": "ice cream",
+};
+const KOREAN_TO_SEARCH = {
+  "김치":"kimchi", "김치찌개":"pork kimchi", "된장":"tofu miso",
+  "된장찌개":"tofu miso", "순두부":"tofu", "부대찌개":"sausage pork",
+  "비빔밥":"rice beef", "볶음밥":"fried rice", "잡채":"noodle beef",
+  "떡볶이":"rice cake spicy", "김밥":"rice roll", "라면":"ramen noodle",
+  "우동":"udon noodle", "냉면":"cold noodle", "짜장면":"noodle sauce",
+  "스파게티":"spaghetti", "카레":"curry rice", "돈가스":"tonkatsu pork",
+  "치킨":"chicken", "닭갈비":"chicken spicy", "불고기":"beef bulgogi",
+  "제육볶음":"pork stirfry", "삼겹살":"pork belly", "갈비탕":"beef soup",
+  "육개장":"beef spicy", "미역국":"seaweed soup", "된장국":"miso soup",
+  "북엇국":"fish soup", "콩나물국":"bean sprout soup",
+  "배추김치":"kimchi cabbage", "깍두기":"kimchi radish",
+  "나물":"vegetables", "시금치":"spinach", "콩나물":"bean sprout",
+  "멸치":"anchovy", "계란":"egg", "두부":"tofu", "어묵":"fish cake",
+  "감자":"potato", "고구마":"sweet potato", "브로콜리":"broccoli",
+  "고등어":"mackerel fish", "삼치":"fish grilled", "동태":"fish soup",
+  "오징어":"squid seafood", "새우":"shrimp", "만두":"dumpling",
+  "오므라이스":"omurice egg rice", "소시지":"sausage",
+  "핫도그":"hot dog", "햄버거":"hamburger beef", "피자":"pizza",
+  "빵":"bread", "케이크":"cake dessert", "아이스크림":"ice cream",
+  "과일":"fruit", "쌀밥":"steamed rice", "잡곡밥":"grain rice",
+};
+
+// 카테고리별 TheMealDB 이미지 (안정적 폴백)
+const CATEGORY_IMAGES = {
+  "beef": "https://www.themealdb.com/images/category/beef.png",
+  "chicken": "https://www.themealdb.com/images/category/chicken.png",
+  "pork": "https://www.themealdb.com/images/category/pork.png",
+  "seafood": "https://www.themealdb.com/images/category/seafood.png",
+  "pasta": "https://www.themealdb.com/images/category/pasta.png",
+  "vegetarian": "https://www.themealdb.com/images/category/vegetarian.png",
+  "dessert": "https://www.themealdb.com/images/category/dessert.png",
+  "side": "https://www.themealdb.com/images/category/side.png",
+  "starter": "https://www.themealdb.com/images/category/starter.png",
+  "miscellaneous": "https://www.themealdb.com/images/category/miscellaneous.png",
+};
+
+function getCategoryFallback(korName) {
+  if (/소고기|쇠고기|불고기|갈비|육/.test(korName)) return CATEGORY_IMAGES.beef;
+  if (/닭|치킨/.test(korName)) return CATEGORY_IMAGES.chicken;
+  if (/돼지|삼겹|제육|돈|베이컨/.test(korName)) return CATEGORY_IMAGES.pork;
+  if (/김치찌개|돼지찌개|부대찌개/.test(korName)) return CATEGORY_IMAGES.pork;
+  if (/생선|고등어|삼치|동태|오징어|새우|어묵|해물|조개/.test(korName)) return CATEGORY_IMAGES.seafood;
+  if (/라면|우동|냉면|국수|파스타|스파게티/.test(korName)) return CATEGORY_IMAGES.pasta;
+  if (/케이크|아이스크림|디저트|과자|빵/.test(korName)) return CATEGORY_IMAGES.dessert;
+  if (/김치|된장|순두부|두부|나물|샐러드|채소|야채|브로콜리|시금치|콩나물/.test(korName)) return CATEGORY_IMAGES.vegetarian;
+  return CATEGORY_IMAGES.side;
+}
+
+app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
+  const { name = "" } = req.query;
+  const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
+
+  // 검색어 결정 (긴 키워드 우선 매칭)
+  let searchTerm = "";
+  const sortedKeys = Object.keys(KOREAN_TO_SEARCH).sort((a, b) => b.length - a.length);
+  for (const ko of sortedKeys) {
+    if (clean.includes(ko)) { searchTerm = KOREAN_TO_SEARCH[ko]; break; }
+  }
+  if (!searchTerm) searchTerm = "beef";
+
+  // TheMealDB에 없는 검색어 → 카테고리 폴백으로 직접 처리
+  const noResultTerms = ["kimchi", "seaweed", "radish", "bean sprout", "anchovy",
+                         "steamed rice", "grain rice", "miso", "omurice"];
+  if (noResultTerms.some(t => searchTerm.startsWith(t))) {
+    return res.json({ imageUrl: getCategoryFallback(clean), source: "category" });
+  }
+
+  try {
+    // TheMealDB 검색
+    const firstWord = searchTerm.split(" ")[0];
+    const mealRes = await new Promise((resolve, reject) => {
+      const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(firstWord)}`;
+      https.get(url, { headers: { "User-Agent": "school-meal-webapp/1.0" } }, (r) => {
+        let data = "";
+        r.on("data", c => data += c);
+        r.on("end", () => {
+          try { resolve(JSON.parse(data)); } catch { resolve({ meals: null }); }
+        });
+      }).on("error", reject);
+    });
+
+    if (mealRes.meals && mealRes.meals.length > 0) {
+      // 음식 관련 이미지 선택 (첫 번째)
+      const imageUrl = mealRes.meals[0].strMealThumb;
+      return res.json({ imageUrl, source: "themealdb" });
+    }
+  } catch (_) { /* 폴백으로 */ }
+
+  // TheMealDB 없을 때 카테고리 이미지 반환
+  const fallback = getCategoryFallback(clean);
+  return res.json({ imageUrl: fallback, source: "category" });
 });
 
 // ── 서버 시작 (로컬/Render) 또는 서버리스 export (Vercel) ────────────────────
