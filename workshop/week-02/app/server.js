@@ -189,7 +189,7 @@ app.use((_req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "script-src 'self'; " +
-    "img-src 'self' data: https: blob:; " +
+    "img-src 'self' data: https: blob: https://search.pstatic.net https://image.pollinations.ai; " +
     "connect-src 'self'; " +
     "frame-ancestors 'none';"
   );
@@ -380,11 +380,10 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
       );
       if (naverRes.ok) {
         const data = await naverRes.json();
-        const items = (data.items || []).filter(
-          (item) => item.link && /\.(jpg|jpeg|png|webp)/i.test(item.link)
-        );
+        const items = (data.items || []).filter(item => item.thumbnail);
         if (items.length > 0) {
-          return res.json({ imageUrl: items[0].link, source: "naver", alt: clean });
+          // thumbnail은 네이버 CDN(search.pstatic.net)에서 제공 → 핫링크 차단 없음
+          return res.json({ imageUrl: items[0].thumbnail, source: "naver", alt: clean });
         }
       }
     } catch (err) {
