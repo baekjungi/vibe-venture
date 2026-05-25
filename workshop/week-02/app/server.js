@@ -189,7 +189,7 @@ app.use((_req, res, next) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "script-src 'self'; " +
-    "img-src 'self' data: https://www.themealdb.com https://*.themealdb.com; " +
+    "img-src 'self' data: https://image.pollinations.ai https://www.themealdb.com https://*.themealdb.com; " +
     "connect-src 'self'; " +
     "frame-ancestors 'none';"
   );
@@ -362,45 +362,21 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
   const { name = "" } = req.query;
   const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
 
-  // 검색어 결정 (긴 키워드 우선 매칭)
+  // 한국 음식명 → 영어 프롬프트 (긴 키워드 우선 매칭)
   let searchTerm = "";
   const sortedKeys = Object.keys(KOREAN_TO_SEARCH).sort((a, b) => b.length - a.length);
   for (const ko of sortedKeys) {
     if (clean.includes(ko)) { searchTerm = KOREAN_TO_SEARCH[ko]; break; }
   }
-  if (!searchTerm) searchTerm = "beef";
+  if (!searchTerm) searchTerm = "korean food dish";
 
-  // TheMealDB에 없는 검색어 → 카테고리 폴백으로 직접 처리
-  const noResultTerms = ["kimchi", "seaweed", "radish", "bean sprout", "anchovy",
-                         "steamed rice", "grain rice", "miso", "omurice"];
-  if (noResultTerms.some(t => searchTerm.startsWith(t))) {
-    return res.json({ imageUrl: getCategoryFallback(clean), source: "category" });
-  }
+  // Pollinations.ai AI 이미지 생성 URL
+  // 서버에서 URL만 생성해 반환 (클라이언트가 직접 로드)
+  const prompt = encodeURIComponent(`${searchTerm}, korean food, delicious, top view, food photography, realistic, high quality`);
+  const seed = Math.floor(Date.now() / 86400000); // 하루 단위 시드 (매일 새 이미지)
+  const imageUrl = `https://image.pollinations.ai/prompt/${prompt}?width=400&height=300&seed=${seed}&nologo=true`;
 
-  try {
-    // TheMealDB 검색
-    const firstWord = searchTerm.split(" ")[0];
-    const mealRes = await new Promise((resolve, reject) => {
-      const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(firstWord)}`;
-      https.get(url, { headers: { "User-Agent": "school-meal-webapp/1.0" } }, (r) => {
-        let data = "";
-        r.on("data", c => data += c);
-        r.on("end", () => {
-          try { resolve(JSON.parse(data)); } catch { resolve({ meals: null }); }
-        });
-      }).on("error", reject);
-    });
-
-    if (mealRes.meals && mealRes.meals.length > 0) {
-      // 음식 관련 이미지 선택 (첫 번째)
-      const imageUrl = mealRes.meals[0].strMealThumb;
-      return res.json({ imageUrl, source: "themealdb" });
-    }
-  } catch (_) { /* 폴백으로 */ }
-
-  // TheMealDB 없을 때 카테고리 이미지 반환
-  const fallback = getCategoryFallback(clean);
-  return res.json({ imageUrl: fallback, source: "category" });
+  return res.json({ imageUrl, source: "ai-generated" });
 });
 
 // ── 서버 시작 (로컬/Render) 또는 서버리스 export (Vercel) ────────────────────

@@ -440,35 +440,49 @@ const foodModalTitle = $("food-modal-title");
 const foodModalSpinner = $("food-modal-spinner");
 
 function openFoodModal(dishName) {
-  foodModalTitle.textContent = dishName.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
+  const cleanName = dishName.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
+  foodModalTitle.textContent = cleanName;
   foodModalImg.src = "";
   foodModalImg.classList.add("loading");
   foodModalSpinner.classList.remove("hidden");
+  foodModalSpinner.textContent = ""; // 스피너 초기화
+  foodModalSpinner.style.animation = "spin 1s linear infinite";
   foodModal.classList.remove("hidden");
   document.body.style.overflow = "hidden";
 
-  // 서버 API로 음식 이미지 요청 (TheMealDB 프록시)
+  // 서버 API → Pollinations.ai AI 이미지 URL 반환
   apiFetch(`/api/food-image?name=${encodeURIComponent(dishName)}`)
     .then(data => {
+      // AI 이미지는 생성 시간이 걸릴 수 있음 → 타임아웃 15초
       const img = new Image();
+      const timeout = setTimeout(() => {
+        // 15초 초과 시 재시도 텍스트 표시
+        foodModalSpinner.textContent = "🍳";
+        foodModalSpinner.style.animation = "none";
+      }, 15000);
+
       img.onload = () => {
+        clearTimeout(timeout);
         foodModalImg.src = data.imageUrl;
-        foodModalImg.alt = dishName;
+        foodModalImg.alt = cleanName;
         foodModalImg.classList.remove("loading");
         foodModalSpinner.classList.add("hidden");
+        // AI 생성 이미지 면책 문구 업데이트
+        const disc = foodModal.querySelector(".food-modal-disclaimer");
+        if (disc) disc.textContent = "🤖 AI가 생성한 이미지로 실제와 다를 수 있습니다";
       };
       img.onerror = () => {
-        foodModalImg.src = "";
+        clearTimeout(timeout);
         foodModalImg.classList.remove("loading");
-        foodModalSpinner.classList.add("hidden");
         foodModalSpinner.textContent = "🍽️";
-        foodModalSpinner.classList.remove("hidden");
+        foodModalSpinner.style.animation = "none";
       };
       img.src = data.imageUrl;
     })
     .catch(() => {
       foodModalImg.classList.remove("loading");
-      foodModalSpinner.classList.add("hidden");
+      foodModalSpinner.textContent = "🍽️";
+      foodModalSpinner.style.animation = "none";
     });
 }
 
