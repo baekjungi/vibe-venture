@@ -832,3 +832,60 @@ function escHtml(str) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 }
+
+// ── 의견수렴 ─────────────────────────────────────────────────
+const FEEDBACK_KEY = "meal_app_feedbacks";
+const TYPE_LABEL = { bug: "🐛 오류", suggestion: "💡 제안", compliment: "⭐ 칭찬", other: "💭 기타" };
+
+function loadFeedbacks() {
+  try { return JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "[]"); } catch { return []; }
+}
+function saveFeedbacks(list) {
+  localStorage.setItem(FEEDBACK_KEY, JSON.stringify(list.slice(0, 50)));
+}
+
+function renderFeedbacks() {
+  const list = loadFeedbacks();
+  const el = document.getElementById("feedback-list");
+  if (!el) return;
+  if (!list.length) { el.innerHTML = ""; return; }
+  el.innerHTML = list.map(f => `
+    <div class="feedback-item">
+      <div class="feedback-item-header">
+        <span class="feedback-badge">${TYPE_LABEL[f.type] || "💭 기타"}</span>
+        <span class="feedback-item-time">${f.time}</span>
+      </div>
+      <div class="feedback-item-text">${escHtml(f.text)}</div>
+    </div>
+  `).join("");
+}
+
+const feedbackForm = document.getElementById("feedback-form");
+const feedbackText = document.getElementById("feedback-text");
+const feedbackChar = document.getElementById("feedback-char-count");
+
+if (feedbackText) {
+  feedbackText.addEventListener("input", () => {
+    feedbackChar.textContent = `${feedbackText.value.length} / 500`;
+  });
+}
+
+if (feedbackForm) {
+  feedbackForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = feedbackText.value.trim();
+    if (!text) { feedbackText.focus(); return; }
+    const type = document.getElementById("feedback-type").value;
+    const now = new Date();
+    const time = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+    const list = loadFeedbacks();
+    list.unshift({ type, text, time });
+    saveFeedbacks(list);
+    feedbackText.value = "";
+    feedbackChar.textContent = "0 / 500";
+    renderFeedbacks();
+    showToast("💬 의견이 저장되었습니다. 감사합니다!");
+  });
+}
+
+renderFeedbacks();

@@ -143,6 +143,30 @@
     </div>
   </div>
 
+  <!-- 의견수렴 -->
+  <div class="container">
+    <section class="feedback-section">
+      <h2 class="feedback-title">💬 의견 남기기</h2>
+      <p class="feedback-desc">급식 앱을 사용해 보셨나요? 불편한 점이나 개선 사항을 알려주세요!</p>
+      <form id="feedback-form" class="feedback-form">
+        <div class="feedback-row">
+          <select id="feedback-type" class="feedback-select">
+            <option value="bug">🐛 오류 신고</option>
+            <option value="suggestion">💡 기능 제안</option>
+            <option value="compliment">⭐ 칭찬</option>
+            <option value="other">💭 기타</option>
+          </select>
+        </div>
+        <textarea id="feedback-text" class="feedback-textarea" placeholder="의견을 자유롭게 작성해 주세요..." maxlength="500" rows="4"></textarea>
+        <div class="feedback-footer">
+          <span id="feedback-char-count" class="feedback-char">0 / 500</span>
+          <button type="submit" id="feedback-submit" class="feedback-btn">전송하기 ✈️</button>
+        </div>
+      </form>
+      <div id="feedback-list" class="feedback-list"></div>
+    </section>
+  </div>
+
   <footer>
     <p>NEIS Open API · 데이터 출처: 나이스 교육정보 개방 포털</p>
   </footer>
