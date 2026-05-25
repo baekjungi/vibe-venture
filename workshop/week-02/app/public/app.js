@@ -642,9 +642,9 @@ function renderMeals(meals, schoolName, dateStr) {
     }
 
     const ntrHtml = meal.nutrition.length
-      ? `<div><strong>영양</strong> ${meal.nutrition.map(escHtml).join(" · ")}</div>` : "";
+      ? `<div class="meal-meta-row"><strong>영양</strong> ${meal.nutrition.map(escHtml).join(" · ")}</div>` : "";
     const orHtml = meal.origin.length
-      ? `<div><strong>원산지</strong> ${meal.origin.map(escHtml).join(" · ")}</div>` : "";
+      ? `<details class="meal-origin-detail"><summary>원산지 정보</summary><div class="meal-origin-text">${meal.origin.map(escHtml).join(" · ")}</div></details>` : "";
     const hcHtml = meal.headcount
       ? `<span class="headcount">👥 ${escHtml(meal.headcount)}명</span>` : "";
 

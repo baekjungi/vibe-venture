@@ -635,14 +635,48 @@ kbd {
 
 .meal-meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: .5rem 1.5rem;
+  flex-direction: column;
+  gap: .5rem;
   font-size: .8rem;
   color: var(--text-soft);
   border-top: 1px solid var(--border);
   padding-top: .75rem;
 }
 .meal-meta strong { color: var(--text); }
+.meal-meta-row { line-height: 1.55; }
+
+/* 원산지 접기/펼치기 */
+.meal-origin-detail {
+  font-size: .78rem;
+  color: var(--text-faint);
+}
+.meal-origin-detail summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-soft);
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  user-select: none;
+  padding: .2rem 0;
+}
+.meal-origin-detail summary::-webkit-details-marker { display: none; }
+.meal-origin-detail summary::before {
+  content: "▶";
+  font-size: .6rem;
+  display: inline-block;
+  transition: transform var(--trans);
+}
+.meal-origin-detail[open] summary::before { transform: rotate(90deg); }
+.meal-origin-text {
+  margin-top: .35rem;
+  line-height: 1.6;
+  padding: .5rem .75rem;
+  background: var(--bg-soft);
+  border-radius: 6px;
+  animation: fadeIn .2s;
+}
 
 .no-meal {
   text-align: center;
@@ -910,111 +944,131 @@ footer {
 
 /* ── Responsive (Mobile) ───────────────────────────────────── */
 @media (max-width: 600px) {
-  body { padding: 1rem .75rem 3rem; }
-  header { margin-bottom: 1.25rem; }
-  header h1 { font-size: 1.5rem; }
-  header p { font-size: .9rem; }
-  .theme-toggle { top: .5rem; right: .5rem; width: 40px; height: 40px; font-size: 1.1rem; }
+  body { padding: .75rem .75rem 3rem; }
+  header { margin-bottom: 1rem; }
+  header h1 { font-size: 1.6rem; letter-spacing: -.3px; }
+  header p { font-size: .85rem; margin-top: .35rem; }
+  .theme-toggle { top: 0; right: 0; width: 38px; height: 38px; font-size: 1rem; }
 
-  .step { padding: 1rem; border-radius: 14px; }
-  .step-header { gap: .6rem; }
-  .step-num {
-    width: 28px; height: 28px; font-size: .9rem;
-    min-width: 28px;
-  }
-  .step-header h2 { font-size: 1.05rem; }
+  /* 위저드 간격 축소 */
+  .wizard { gap: .6rem; }
 
-  /* 학교 리스트는 모바일에서 더 컴팩트하게 */
-  .school-list-wrap { max-height: 280px; }
-  .school-item { padding: .65rem .75rem; gap: .5rem; }
-  .school-name { font-size: .95rem; }
-  .school-type { font-size: .75rem; padding: .15rem .4rem; }
-  .fav-star { font-size: 1.1rem; }
+  /* 스텝 카드 */
+  .step { border-radius: 12px; }
+  .step-header { gap: .55rem; padding: .75rem 1rem; }
+  .step-badge { width: 26px; height: 26px; font-size: .8rem; }
+  .step-header h2 { font-size: .95rem; }
+  .step-body { padding: .85rem; }
 
-  /* 날짜 영역: 버튼 | 날짜 | 버튼 한 줄로 */
-  .date-row { flex-wrap: nowrap; gap: .4rem; align-items: stretch; }
+  /* iOS 폼 줌 방지 (font-size 16px 필수) */
+  select { font-size: 16px; padding: .75rem .85rem; }
+  input[type="text"] { font-size: 16px; }
+
+  /* 학교 검색창 */
+  .search-wrap { margin-bottom: .6rem; }
+
+  /* 학교 목록 힌트 - 공간 최소화 */
+  #school-list-wrap .hint { padding: .85rem 1rem; font-size: .85rem; }
+  #school-list-wrap { max-height: 240px; }
+  .school-item { padding: .65rem .75rem; gap: .4rem; }
+  .school-name { font-size: .9rem; }
+  .school-type { font-size: .72rem; padding: .12rem .4rem; }
+  .fav-star { font-size: 1.1rem; padding: .2rem; }
+
+  /* 날짜 영역: ‹ 날짜 › 한 줄 */
+  .date-row { flex-wrap: nowrap; gap: .4rem; align-items: stretch; margin-bottom: 0; }
   .date-row input[type="date"] {
     min-width: 0; flex: 1 1 auto;
-    font-size: 16px; /* iOS 자동 줌 방지 */
-    padding: .65rem .5rem;
+    font-size: 16px;
+    padding: .65rem .4rem;
     text-align: center;
   }
-  /* 날짜 이동 버튼 색상/크기만 조정 (너비는 전역 설정됨) */
   #prev-date-btn, #next-date-btn {
     flex: 0 0 44px; min-width: 44px; width: 44px;
-    padding: 0; height: auto;
-    background: var(--brand);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 1.4rem;
-    font-weight: bold;
+    height: 44px; padding: 0;
+    background: var(--brand); color: #fff;
+    border: none; border-radius: var(--radius-sm);
+    font-size: 1.4rem; font-weight: bold;
     display: flex; align-items: center; justify-content: center;
-  }
-  button#search-btn {
-    font-size: 1.05rem;
-    padding: .9rem;
   }
 
   /* 모드 토글 */
-  .mode-toggle { width: 100%; }
-  .mode-toggle button { flex: 1; padding: .6rem; font-size: .9rem; }
+  .mode-toggle { width: 100%; margin-bottom: .65rem; }
+  .mode-toggle button { flex: 1; padding: .55rem; font-size: .875rem; }
+
+  /* 급식 조회 버튼 */
+  button#search-btn { font-size: 1rem; padding: .85rem; margin-top: .5rem; }
 
   /* 결과 카드 */
-  .result-header { flex-direction: column; align-items: flex-start; gap: .75rem; }
+  .result-section { margin-top: 1.25rem; }
+  .result-header { flex-direction: column; align-items: flex-start; gap: .6rem; }
   .result-actions { width: 100%; justify-content: flex-end; }
-  #result-title { font-size: 1.1rem; line-height: 1.4; }
+  #result-title { font-size: 1.05rem; line-height: 1.4; }
 
-  .meal-card-header { padding: .85rem 1rem; flex-wrap: wrap; }
-  .meal-card-header h3 { font-size: 1.05rem; }
-  .meal-icon { font-size: 1.6rem; }
-  .headcount { font-size: .8rem; }
-  .meal-card-body { padding: 1rem; }
-  .dish-list { gap: .4rem; flex-direction: column; }
+  .meal-card-header { padding: .8rem 1rem; flex-wrap: wrap; }
+  .meal-card-header h3 { font-size: 1rem; }
+  .meal-icon { font-size: 1.5rem; }
+  .headcount { font-size: .78rem; }
+  .meal-card-body { padding: .9rem; }
+
+  /* 요리 태그: 모바일에선 한 줄씩 */
+  .dish-list { gap: .35rem; flex-direction: column; }
   .dish-tag {
     padding: .55rem .85rem;
-    font-size: .9rem;
+    font-size: .88rem;
     width: 100%;
-    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 10px;
   }
 
-  /* 주간 그리드 - 가로 스크롤 대신 카드 stack */
-  .week-table { grid-template-columns: 1fr; gap: .75rem; }
+  /* 주간 그리드 */
+  .week-table { grid-template-columns: 1fr; gap: .6rem; }
   .week-day-card { min-height: auto; }
-  .week-day-header { font-size: .95rem; padding: .6rem; }
-  .week-day-meals { padding: .75rem; }
+  .week-day-header { font-size: .9rem; padding: .6rem; }
+  .week-day-meals { padding: .7rem; }
 
-  /* 즐겨찾기 칩 */
-  .favorites-bar { padding: .75rem; }
-  .fav-chip { font-size: .85rem; padding: .4rem .75rem; }
+  /* 즐겨찾기 바 */
+  .favorites-bar { padding: .65rem .75rem; gap: .5rem; }
+  .fav-chip { font-size: .82rem; padding: .35rem .65rem; }
 
   /* 선택 요약 */
-  .selection-summary { font-size: .85rem; padding: .65rem .85rem; flex-wrap: wrap; }
+  .selection-summary { font-size: .82rem; padding: .6rem .85rem; flex-wrap: wrap; gap: .35rem; }
 
-  /* 토스트는 모바일에서 하단 가운데 */
+  /* 토스트 */
   .toast {
-    left: 1rem; right: 1rem; bottom: 1rem;
+    left: .75rem; right: .75rem; bottom: 1rem;
     max-width: none; text-align: center;
+    transform: translateX(0) translateY(100px);
+    left: .75rem;
   }
+  .toast.show { transform: translateX(0) translateY(0); }
 
-  /* 키보드 힌트는 모바일에서 숨김 */
+  /* 키보드 힌트 숨김 */
   .keyboard-hint { display: none; }
 
   /* 알레르기 범례 */
-  .allergy-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: .4rem; }
-  .allergy-item { font-size: .8rem; padding: .35rem .5rem; }
-  .allergy-num { width: 20px; height: 20px; font-size: .7rem; }
+  .allergy-legend { padding: .85rem 1rem; margin-top: 1rem; }
+  .allergy-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: .35rem; }
+  .allergy-item { font-size: .78rem; padding: .3rem .5rem; }
+  .allergy-num { width: 20px; height: 20px; font-size: .68rem; }
+
+  /* 이미지 모달 */
+  .food-modal-card { max-width: calc(100vw - 2rem); }
+  .food-modal-img-wrap { height: 200px; }
+  #food-modal-title { font-size: 1.1rem; }
 }
 
 /* ── Responsive (Small Mobile) ─────────────────────────────── */
 @media (max-width: 380px) {
-  header h1 { font-size: 1.3rem; }
-  .step { padding: .85rem; }
-  .meal-card-body { padding: .85rem; }
+  header h1 { font-size: 1.4rem; }
+  .step { border-radius: 10px; }
+  .step-header { padding: .65rem .85rem; }
+  .step-body { padding: .75rem; }
+  .meal-card-body { padding: .75rem; }
   .allergy-grid { grid-template-columns: repeat(2, 1fr); }
+  button#search-btn { font-size: .95rem; }
 }
 
 /* ── Touch-friendly (no hover devices) ─────────────────────── */
