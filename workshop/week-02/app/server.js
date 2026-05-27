@@ -373,11 +373,11 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
         .replace(/\s+/g, " ")
         .trim();
 
-      // 검색 전략: 급식 컨텍스트 → 일반 요리 순으로 시도
+      // 검색 전략: 음식 단독 → 학교급식 컨텍스트 순으로 시도
       const queries = [
-        `학교급식 ${foodName}`,
         `${foodName} 요리`,
-        `${foodName}`,
+        `${foodName} 레시피`,
+        `학교급식 ${foodName}`,
       ];
 
       for (const q of queries) {
