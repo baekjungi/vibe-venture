@@ -368,23 +368,41 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
 
   if (naverClientId && naverClientSecret) {
     try {
-      const query = encodeURIComponent(`${clean} 음식`);
-      const naverRes = await fetch(
-        `https://openapi.naver.com/v1/search/image?query=${query}&display=5&sort=sim`,
-        {
-          headers: {
-            "X-Naver-Client-Id": naverClientId,
-            "X-Naver-Client-Secret": naverClientSecret,
-          },
-        }
-      );
-      if (naverRes.ok) {
+      const foodName = clean
+        .replace(/\(완\)|\(반\)|\(대\)|\(소\)/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      // 검색 전략: 급식 컨텍스트 → 일반 요리 순으로 시도
+      const queries = [
+        `학교급식 ${foodName}`,
+        `${foodName} 요리`,
+        `${foodName}`,
+      ];
+
+      for (const q of queries) {
+        const naverRes = await fetch(
+          `https://openapi.naver.com/v1/search/image?query=${encodeURIComponent(q)}&display=10&sort=sim&filter=large`,
+          {
+            headers: {
+              "X-Naver-Client-Id": naverClientId,
+              "X-Naver-Client-Secret": naverClientSecret,
+            },
+          }
+        );
+        if (!naverRes.ok) continue;
         const data = await naverRes.json();
         const items = (data.items || []).filter(item => item.thumbnail);
-        if (items.length > 0) {
-          // thumbnail은 네이버 CDN(search.pstatic.net)에서 제공 → 핫링크 차단 없음
-          return res.json({ imageUrl: items[0].thumbnail, source: "naver", alt: clean });
-        }
+        if (!items.length) continue;
+
+        // 제목에 음식명 앞 2~4글자가 포함된 결과 우선
+        const keyword = foodName.replace(/\s/g, "").slice(0, 4);
+        const matched = items.find(item => {
+          const title = (item.title || "").replace(/&amp;|&lt;|&gt;|<[^>]+>/g, "");
+          return title.includes(keyword);
+        });
+        const best = matched || items[0];
+        return res.json({ imageUrl: best.thumbnail, source: "naver", alt: clean });
       }
     } catch (err) {
       console.warn("네이버 이미지 검색 실패:", err.message);

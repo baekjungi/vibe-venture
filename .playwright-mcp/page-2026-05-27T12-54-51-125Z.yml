@@ -1,0 +1,79 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - button "테마 전환" [ref=e4] [cursor=pointer]:
+        - generic [ref=e5]: 🌙
+      - heading "🍱 학교 급식 정보" [level=1] [ref=e6]
+      - paragraph [ref=e7]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: ✓ 1
+          - heading "지역 선택" [level=2] [ref=e12]
+        - combobox [ref=e14]:
+          - option "-- 시·도 교육청을 선택하세요 --"
+          - option "서울" [selected]
+          - option "부산"
+          - option "대구"
+          - option "인천"
+          - option "광주"
+          - option "대전"
+          - option "울산"
+          - option "세종"
+          - option "경기"
+          - option "강원"
+          - option "충북"
+          - option "충남"
+          - option "전북"
+          - option "전남"
+          - option "경북"
+          - option "경남"
+          - option "제주"
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: "2"
+          - heading "학교 선택" [level=2] [ref=e26]
+          - generic [ref=e27]: 2개
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - text: 🔍
+            - textbox "학교 이름으로 검색..." [active] [ref=e30]: 서울중학교
+          - generic [ref=e31]:
+            - generic [ref=e32] [cursor=pointer]:
+              - generic [ref=e33]: 남서울중학교
+              - generic [ref=e34]: 중학교
+              - button "즐겨찾기" [ref=e35]: ★
+            - generic [ref=e36] [cursor=pointer]:
+              - generic [ref=e37]: 북서울중학교
+              - generic [ref=e38]: 중학교
+              - button "즐겨찾기" [ref=e39]: ★
+      - generic:
+        - generic:
+          - generic: "3"
+          - heading "날짜 선택" [level=2]
+        - generic:
+          - generic:
+            - button "📅 일간"
+            - button "📆 주간"
+          - generic:
+            - button "이전 날짜": ‹
+            - textbox [disabled]: 2026-05-27
+            - button "다음 날짜": ›
+          - button "🔍 급식 조회" [disabled]:
+            - generic: 🔍
+            - text: 급식 조회
+          - generic:
+            - text: 💡
+            - generic: Enter
+            - text: 로 빠르게 조회 ·
+            - generic: ←
+            - text: /
+            - generic: →
+            - text: 로 날짜 이동
+    - generic [ref=e17]:
+      - generic [ref=e18]: 📍 서울
+      - text: ›
+      - generic [ref=e19]: 📅 2026-05-27
+    - text: ▶
+  - contentinfo [ref=e15]:
+    - paragraph [ref=e16]: "NEIS Open API · 데이터 출처: 나이스 교육정보 개방 포털"

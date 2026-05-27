@@ -1,0 +1,201 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - button "테마 전환" [ref=e4] [cursor=pointer]:
+        - generic [ref=e5]: 🌙
+      - heading "🍱 학교 급식 정보" [level=1] [ref=e6]
+      - paragraph [ref=e7]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: ✓ 1
+          - heading "지역 선택" [level=2] [ref=e12]
+        - combobox [ref=e14]:
+          - option "-- 시·도 교육청을 선택하세요 --"
+          - option "서울" [selected]
+          - option "부산"
+          - option "대구"
+          - option "인천"
+          - option "광주"
+          - option "대전"
+          - option "울산"
+          - option "세종"
+          - option "경기"
+          - option "강원"
+          - option "충북"
+          - option "충남"
+          - option "전북"
+          - option "전남"
+          - option "경북"
+          - option "경남"
+          - option "제주"
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: ✓ 2
+          - heading "학교 선택" [level=2] [ref=e26]
+          - generic [ref=e27]: 1개
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - text: 🔍
+            - textbox "학교 이름으로 검색..." [ref=e30]: 광성중
+          - generic [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: 광성중학교
+            - generic [ref=e43]: 중학교
+            - button "즐겨찾기" [ref=e44]: ★
+            - text: ✓
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - generic [ref=e47]: "3"
+          - heading "날짜 선택" [level=2] [ref=e48]
+        - generic [ref=e49]:
+          - generic [ref=e50]:
+            - button "📅 일간" [ref=e51] [cursor=pointer]
+            - button "📆 주간" [ref=e52] [cursor=pointer]
+          - generic [ref=e53]:
+            - button "이전 날짜" [ref=e54] [cursor=pointer]: ‹
+            - textbox [ref=e55]: 2026-05-27
+            - button "다음 날짜" [ref=e56] [cursor=pointer]: ›
+          - button "🔍 급식 조회" [ref=e57] [cursor=pointer]:
+            - generic [ref=e58]: 🔍
+            - text: 급식 조회
+    - generic [ref=e17]:
+      - generic [ref=e63]: 📍 서울
+      - text: ›
+      - generic [ref=e64]: 🏫 광성중학교
+      - text: ›
+      - generic [ref=e65]: 📅 2026-05-27
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - heading "🏫 광성중학교 · 2026년 05월 27일 (수)" [level=2] [ref=e68]
+        - generic [ref=e69]:
+          - button "🖨️" [ref=e70] [cursor=pointer]
+          - button "🔗" [ref=e71] [cursor=pointer]
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: 🌅
+            - heading "조식" [level=3] [ref=e76]
+            - generic [ref=e77]: 👥 59명
+          - generic [ref=e78]:
+            - list [ref=e79]:
+              - listitem [ref=e80] [cursor=pointer]:
+                - text: 쌀밥
+                - generic [ref=e162]: 📷
+              - listitem [ref=e81] [cursor=pointer]:
+                - text: 호박잎된장국 (5.6)
+                - generic [ref=e163]: 📷
+              - listitem [ref=e82] [cursor=pointer]:
+                - text: 우엉조림 (5.6.13)
+                - generic [ref=e164]: 📷
+              - listitem [ref=e83] [cursor=pointer]:
+                - text: 한돈 목살 스테이크 (5.6.10.12.13.16)
+                - generic [ref=e165]: 📷
+              - listitem [ref=e84] [cursor=pointer]:
+                - text: 배추김치 (9)
+                - generic [ref=e166]: 📷
+              - listitem [ref=e85] [cursor=pointer]:
+                - text: 과일 (11.12.13)
+                - generic [ref=e167]: 📷
+            - generic [ref=e87]:
+              - generic [ref=e88]:
+                - text: 🔥
+                - strong [ref=e89]: 1015.6 Kcal
+              - generic [ref=e90]:
+                - text: 1일 권장 2400kcal 대비
+                - strong [ref=e91]: 42%
+            - generic [ref=e94]:
+              - generic [ref=e95]:
+                - strong [ref=e96]: 영양
+                - text: "탄수화물(g) : 157.9 · 단백질(g) : 39.0 · 지방(g) : 22.5 · 비타민A(R.E) : 156.1 · 티아민(mg) : 4.0 · 리보플라빈(mg) : 0.7 · 비타민C(mg) : 12.0 · 칼슘(mg) : 233.2 · 철분(mg) : 3.6"
+              - generic [ref=e97]:
+                - strong [ref=e98]: 원산지
+                - text: "쇠고기(종류) : 국내산(한우) · 쇠고기 식육가공품 : 국내산 · 돼지고기 : 국내산 · 돼지고기 식육가공품 : 국내산 · 닭고기 : 국내산 · 닭고기 식육가공품 : 국내산 · 오리고기 : 국내산 · 오리고기 가공품 : 국내산 · 쌀 : 국내산 · 배추 : 국내산 · 고춧가루 : 국내산 · 콩 : 국내산 · 낙지 : 국내산 · 고등어 : 국내산 · 갈치 : 국내산 · 오징어 : 국내산 · 꽃게 : 국내산 · 참조기 : 국내산 · 비고 :"
+        - generic [ref=e99]:
+          - generic [ref=e100]:
+            - generic [ref=e101]: 🍚
+            - heading "중식" [level=3] [ref=e102]
+            - generic [ref=e103]: 👥 782명
+          - generic [ref=e104]:
+            - list [ref=e105]:
+              - listitem [ref=e106] [cursor=pointer]:
+                - text: 수제밥버거 (1.2.5.6.9.10.15.16)
+                - generic [ref=e168]: 📷
+              - listitem [ref=e107] [cursor=pointer]:
+                - text: 어묵국 (1.5.6.7.13.18)
+                - generic [ref=e169]: 📷
+              - listitem [ref=e108] [cursor=pointer]:
+                - text: 오이피클(완)
+                - generic [ref=e170]: 📷
+              - listitem [ref=e109] [cursor=pointer]:
+                - text: 몬테크리스토튀김 (1.2.5.6.10)
+                - generic [ref=e171]: 📷
+              - listitem [ref=e110] [cursor=pointer]:
+                - text: 선택급식(우유&바나나우유) (2)
+                - generic [ref=e172]: 📷
+            - generic [ref=e112]:
+              - generic [ref=e113]:
+                - text: 🔥
+                - strong [ref=e114]: 1166.5 Kcal
+              - generic [ref=e115]:
+                - text: 1일 권장 2400kcal 대비
+                - strong [ref=e116]: 49%
+            - generic [ref=e119]:
+              - generic [ref=e120]:
+                - strong [ref=e121]: 영양
+                - text: "탄수화물(g) : 148.9 · 단백질(g) : 34.7 · 지방(g) : 46.7 · 비타민A(R.E) : 188.6 · 티아민(mg) : 0.5 · 리보플라빈(mg) : 0.6 · 비타민C(mg) : 18.0 · 칼슘(mg) : 367.6 · 철분(mg) : 7.0"
+              - generic [ref=e122]:
+                - strong [ref=e123]: 원산지
+                - text: "쇠고기(종류) : 국내산(육우) · 쇠고기 식육가공품 : 호주산 · 돼지고기 : 국내산 · 돼지고기 식육가공품 : 국내산 · 닭고기 : 국내산 · 닭고기 식육가공품 : 국내산 · 오리고기 : 국내산 · 오리고기 가공품 : 국내산 · 쌀 : 국내산 · 배추 : 국내산 · 고춧가루 : 국내산 · 콩 가공품 : 수입산 · 미꾸라지 수산가공품 : 국내산 · 낙지 : 중국산 · 낙지 수산가공품 : 중국산 · 명태 수산가공품 : 러시아 · 고등어 : 국내산 · 고등어 수산가공품 : 노르웨이 · 갈치 수산가공품 : 세내갈,모로코 · 오징어 : 국내산 또는 원양산 · 오징어 수산가공품 : 수입산 · 꽃게 수산가공품 : 국내산 · 아귀 : 국내산 · 아귀 수산가공품 : 국내산 · 주꾸미 : 베트남 · 주꾸미 수산가공품 : 베트남 · 전복 : 국내산 · 전복 수산가공품 : 국내산 · 방어 수산가공품 : 국내산"
+        - generic [ref=e124]:
+          - generic [ref=e125]:
+            - generic [ref=e126]: 🌙
+            - heading "석식" [level=3] [ref=e127]
+            - generic [ref=e128]: 👥 62명
+          - generic [ref=e129]:
+            - list [ref=e130]:
+              - listitem [ref=e131] [cursor=pointer]:
+                - text: 현미밥
+                - generic [ref=e173]: 📷
+              - listitem [ref=e132] [cursor=pointer]:
+                - text: 김치비빔우동 (5.6.9.12.13)
+                - generic [ref=e174]: 📷
+              - listitem [ref=e133] [cursor=pointer]:
+                - text: 우거지된장국 (5.6)
+                - generic [ref=e175]: 📷
+              - listitem [ref=e134] [cursor=pointer]:
+                - text: 돼지고기수육 (5.6.10.13)
+                - generic [ref=e176]: 📷
+              - listitem [ref=e135] [cursor=pointer]:
+                - text: 배추겉절이 (9)
+                - generic [ref=e177]: 📷
+              - listitem [ref=e136] [cursor=pointer]:
+                - text: 쌈장 (5.6.9.13.18)
+                - generic [ref=e178]: 📷
+              - listitem [ref=e137] [cursor=pointer]:
+                - text: 매실주스
+                - generic [ref=e179]: 📷
+            - generic [ref=e139]:
+              - generic [ref=e140]:
+                - text: 🔥
+                - strong [ref=e141]: 1112.8 Kcal
+              - generic [ref=e142]:
+                - text: 1일 권장 2400kcal 대비
+                - strong [ref=e143]: 46%
+            - generic [ref=e146]:
+              - generic [ref=e147]:
+                - strong [ref=e148]: 영양
+                - text: "탄수화물(g) : 85.2 · 단백질(g) : 60.9 · 지방(g) : 52.7 · 비타민A(R.E) : 79.4 · 티아민(mg) : 1.6 · 리보플라빈(mg) : 0.6 · 비타민C(mg) : 25.5 · 칼슘(mg) : 265.3 · 철분(mg) : 4.9"
+              - generic [ref=e149]:
+                - strong [ref=e150]: 원산지
+                - text: "쇠고기(종류) : 국내산(육우) · 쇠고기 식육가공품 : 호주산 · 돼지고기 : 국내산 · 돼지고기 식육가공품 : 국내산 · 닭고기 : 국내산 · 닭고기 식육가공품 : 국내산 · 오리고기 : 국내산 · 오리고기 가공품 : 국내산 · 쌀 : 국내산 · 배추 : 국내산 · 고춧가루 : 국내산 · 콩 가공품 : 수입산 · 미꾸라지 수산가공품 : 국내산 · 낙지 : 중국산 · 낙지 수산가공품 : 중국산 · 명태 수산가공품 : 러시아 · 고등어 : 국내산 · 고등어 수산가공품 : 노르웨이 · 갈치 수산가공품 : 세내갈,모로코 · 오징어 : 국내산 또는 원양산 · 오징어 수산가공품 : 수입산 · 꽃게 수산가공품 : 국내산 · 아귀 : 국내산 · 아귀 수산가공품 : 국내산 · 주꾸미 : 베트남 · 주꾸미 수산가공품 : 베트남 · 전복 : 국내산 · 전복 수산가공품 : 국내산 · 방어 수산가공품 : 국내산"
+      - group [ref=e151]:
+        - generic "▶ 🥚 알레르기 정보 범례 보기" [ref=e152] [cursor=pointer]
+    - dialog "쌀밥" [ref=e180]:
+      - generic [ref=e155]:
+        - button "닫기" [ref=e156] [cursor=pointer]: ✕
+        - img "쌀밥" [ref=e181]
+        - generic [ref=e159]:
+          - heading "쌀밥" [level=3] [ref=e182]
+          - paragraph [ref=e161]: 📷 이 사진은 실제 급식과 다를 수 있습니다
+  - contentinfo [ref=e15]:
+    - paragraph [ref=e16]: "NEIS Open API · 데이터 출처: 나이스 교육정보 개방 포털"
