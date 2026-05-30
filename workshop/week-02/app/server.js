@@ -358,12 +358,20 @@ function getCategoryFallback(korName) {
   return CATEGORY_IMAGES.side;
 }
 
+// ── 음식명 핵심어 추출 ────────────────────────────────────────
+function extractFoodCore(raw) {
+  return raw
+    .replace(/\([^)]*\)/g, "")           // 모든 괄호 내용 제거: (자율), (완), (대)
+    .replace(/[^\uAC00-\uD7A3a-zA-Z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 // ── Gemini AI 이미지 관련성 평가 ─────────────────────────────
 async function pickBestImageWithAI(foodName, candidates) {
   const geminiKey = process.env.GEMINI_API_KEY;
   if (!geminiKey || candidates.length === 0) return null;
 
-  // 후보 목록 (최대 10개, 번호 + 제목)
   const top = candidates.slice(0, 10);
   const titleList = top.map((item, i) => {
     const title = (item.title || "")
@@ -372,7 +380,15 @@ async function pickBestImageWithAI(foodName, candidates) {
     return `${i + 1}. ${title}`;
   }).join("\n");
 
-  const prompt = `다음은 네이버 이미지 검색 결과 제목 목록입니다.\n음식 이름: "${foodName}"\n\n${titleList}\n\n위 제목 중에서 "${foodName}" 음식 사진으로 가장 적합한 항목의 번호(숫자만)를 하나 답하세요. 관련 없는 항목만 있으면 1을 답하세요.`;
+  // AI에게 "관련 없으면 0 반환"하도록 변경
+  const prompt = `다음은 네이버 이미지 검색 결과 제목 목록입니다.
+음식 이름: "${foodName}"
+
+${titleList}
+
+위 제목 중에서 "${foodName}" 음식 사진으로 가장 적합한 항목의 번호(숫자만)를 답하세요.
+단, 음식과 전혀 관련 없는 항목이면 0을 답하세요.
+반드시 숫자 하나만 답하세요.`;
 
   try {
     const aiRes = await fetch(
@@ -382,7 +398,7 @@ async function pickBestImageWithAI(foodName, candidates) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 10, temperature: 0 },
+          generationConfig: { maxOutputTokens: 5, temperature: 0 },
         }),
       }
     );
@@ -393,6 +409,8 @@ async function pickBestImageWithAI(foodName, candidates) {
     if (!isNaN(idx) && idx >= 1 && idx <= top.length) {
       return top[idx - 1];
     }
+    // 0 또는 범위 외 → 관련 없음
+    return null;
   } catch (err) {
     console.warn("Gemini AI 평가 실패:", err.message);
   }
@@ -408,17 +426,21 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
 
   if (naverClientId && naverClientSecret) {
     try {
-      // 음식명 정규화
-      const foodName = clean
-        .replace(/\(완\)|\(반\)|\(대\)|\(소\)/g, "")
-        .replace(/[^\uAC00-\uD7A3a-zA-Z0-9\s]/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
+      // 핵심 음식명 추출 (괄호 내용 전체 제거)
+      const foodName = extractFoodCore(clean);
+      if (!foodName) {
+        return res.json({ imageUrl: null, source: "none", alt: clean });
+      }
 
       const nameChars = foodName.replace(/\s/g, "");
 
-      // 후보 이미지 수집 (2가지 쿼리 × 10개 = 최대 20개)
-      const queries = [`${foodName} 음식`, foodName];
+      // 후보 이미지 수집 (3가지 쿼리로 다양한 후보 확보)
+      const queries = [
+        `${foodName} 음식`,
+        `${foodName} 레시피`,
+        foodName,
+      ];
+      const seen = new Set();
       const candidates = [];
 
       for (const q of queries) {
@@ -433,9 +455,13 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
         );
         if (!naverRes.ok) continue;
         const data = await naverRes.json();
-        const items = (data.items || []).filter(i => i.thumbnail);
-        candidates.push(...items);
-        if (candidates.length >= 15) break;
+        for (const item of (data.items || [])) {
+          if (item.thumbnail && !seen.has(item.thumbnail)) {
+            seen.add(item.thumbnail);
+            candidates.push(item);
+          }
+        }
+        if (candidates.length >= 20) break;
       }
 
       if (candidates.length > 0) {
@@ -445,19 +471,22 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
           return res.json({ imageUrl: aiPick.thumbnail, source: "naver-ai", alt: clean });
         }
 
-        // 2차 폴백: 제목 관련성 점수 기반 선택
+        // AI가 관련없다고 판단하면 제목 점수 기반으로 한 번 더 시도
         const score = (item) => {
           const title = (item.title || "")
             .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
             .replace(/<[^>]+>/g, "");
           let s = 0;
           if (title.includes(foodName)) s += 3;
-          if (title.includes(nameChars.slice(0, 2))) s += 2;
+          if (nameChars.length >= 2 && title.includes(nameChars.slice(0, 2))) s += 2;
           if (nameChars.length >= 4 && title.includes(nameChars.slice(0, 4))) s += 1;
           return s;
         };
-        candidates.sort((a, b) => score(b) - score(a));
-        return res.json({ imageUrl: candidates[0].thumbnail, source: "naver", alt: clean });
+        const best = candidates.sort((a, b) => score(b) - score(a))[0];
+        // 점수가 0점이면 완전 관련없음 → Pollinations 폴백으로 넘어감
+        if (score(best) > 0) {
+          return res.json({ imageUrl: best.thumbnail, source: "naver", alt: clean });
+        }
       }
     } catch (err) {
       console.warn("네이버 이미지 검색 실패:", err.message);
