@@ -27,7 +27,7 @@ resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
     name: 'Basic'
   }
   properties: {
-    adminUserEnabled: false  // Managed Identity를 사용하므로 admin 비활성화
+    adminUserEnabled: true  // Contributor 계정은 roleAssignments/write 없음 → admin 자격증명으로 pull
   }
 }
 
@@ -61,14 +61,38 @@ resource containerAppsEnv 'Microsoft.App/managedEnvironments@2024-03-01' = {
 }
 
 // ── Container App ─────────────────────────────────────────────────────────────
-// Phase 1: placeholder image — azd deploy가 ACR 이미지로 교체
+// placeholder image — azd deploy 이후 ACR 이미지로 교체
+// 선택적 API 키: 빈 값이면 secret/envvar 자체를 생략 (Container Apps는 빈 secret 허용 안 함)
+var baseSecrets = [
+  { name: 'neis-api-key', value: neisApiKey }
+]
+var naverSecrets = empty(naverClientId) ? [] : [
+  { name: 'naver-client-id',     value: naverClientId }
+  { name: 'naver-client-secret', value: naverClientSecret }
+]
+var geminiSecrets = empty(geminiApiKey) ? [] : [
+  { name: 'gemini-api-key', value: geminiApiKey }
+]
+var allSecrets = concat(baseSecrets, naverSecrets, geminiSecrets)
+
+var baseEnvVars = [
+  { name: 'NODE_ENV', value: 'production' }
+  { name: 'PORT',     value: '3000' }
+  { name: 'NEIS_API_KEY', secretRef: 'neis-api-key' }
+]
+var naverEnvVars = empty(naverClientId) ? [] : [
+  { name: 'NAVER_CLIENT_ID',     secretRef: 'naver-client-id' }
+  { name: 'NAVER_CLIENT_SECRET', secretRef: 'naver-client-secret' }
+]
+var geminiEnvVars = empty(geminiApiKey) ? [] : [
+  { name: 'GEMINI_API_KEY', secretRef: 'gemini-api-key' }
+]
+var allEnvVars = concat(baseEnvVars, naverEnvVars, geminiEnvVars)
+
 resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: 'ca-${environmentName}-${resourceSuffix}'
   location: location
   tags: union(tags, { 'azd-service-name': 'app' })
-  identity: {
-    type: 'SystemAssigned'
-  }
   properties: {
     environmentId: containerAppsEnv.id
     configuration: {
@@ -78,12 +102,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
         transport: 'auto'
         allowInsecure: false
       }
-      secrets: [
-        { name: 'neis-api-key',        value: neisApiKey }
-        { name: 'naver-client-id',     value: naverClientId }
-        { name: 'naver-client-secret', value: naverClientSecret }
-        { name: 'gemini-api-key',      value: geminiApiKey }
-      ]
+      secrets: allSecrets
     }
     template: {
       containers: [
@@ -94,14 +113,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json('0.5')
             memory: '1Gi'
           }
-          env: [
-            { name: 'NODE_ENV',              value: 'production' }
-            { name: 'PORT',                  value: '3000' }
-            { name: 'NEIS_API_KEY',          secretRef: 'neis-api-key' }
-            { name: 'NAVER_CLIENT_ID',       secretRef: 'naver-client-id' }
-            { name: 'NAVER_CLIENT_SECRET',   secretRef: 'naver-client-secret' }
-            { name: 'GEMINI_API_KEY',        secretRef: 'gemini-api-key' }
-          ]
+          env: allEnvVars
           probes: [
             {
               type: 'Liveness'
@@ -150,4 +162,4 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
 output acrName string = acr.name
 output acrLoginServer string = acr.properties.loginServer
 output containerAppUri string = 'https://${containerApp.properties.configuration.ingress.fqdn}'
-output containerAppPrincipalId string = containerApp.identity.principalId
+output containerAppName string = containerApp.name
