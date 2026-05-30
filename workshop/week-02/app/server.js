@@ -362,27 +362,30 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
   const { name = "" } = req.query;
   const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
 
-  // 네이버 이미지 검색 API (키가 설정된 경우)
   const naverClientId = process.env.NAVER_CLIENT_ID;
   const naverClientSecret = process.env.NAVER_CLIENT_SECRET;
 
   if (naverClientId && naverClientSecret) {
     try {
+      // 음식명 정규화: 괄호/숫자/특수문자 제거
       const foodName = clean
         .replace(/\(완\)|\(반\)|\(대\)|\(소\)/g, "")
+        .replace(/[^\uAC00-\uD7A3a-zA-Z0-9\s]/g, "")
         .replace(/\s+/g, " ")
         .trim();
 
-      // 검색 전략: 음식 단독 → 학교급식 컨텍스트 순으로 시도
-      const queries = [
-        `${foodName} 요리`,
-        `${foodName} 레시피`,
-        `학교급식 ${foodName}`,
-      ];
+      // 음식명을 의미 단위로 분리 (예: "김치볶음밥" → ["김치볶음밥","김치","볶음밥"])
+      const nameChars = foodName.replace(/\s/g, "");
+      const searchTokens = [foodName];
+      if (nameChars.length >= 3) searchTokens.push(nameChars.slice(0, Math.ceil(nameChars.length / 2) + 1));
+
+      // 후보 이미지 수집: 최대 2가지 쿼리로 20개 후보 확보
+      const queries = [`${foodName} 음식`, foodName];
+      const candidates = [];
 
       for (const q of queries) {
         const naverRes = await fetch(
-          `https://openapi.naver.com/v1/search/image?query=${encodeURIComponent(q)}&display=10&sort=sim&filter=large`,
+          `https://openapi.naver.com/v1/search/image?query=${encodeURIComponent(q)}&display=10&sort=sim&filter=medium`,
           {
             headers: {
               "X-Naver-Client-Id": naverClientId,
@@ -392,16 +395,30 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
         );
         if (!naverRes.ok) continue;
         const data = await naverRes.json();
-        const items = (data.items || []).filter(item => item.thumbnail);
-        if (!items.length) continue;
+        const items = (data.items || []).filter(i => i.thumbnail);
+        candidates.push(...items);
+        if (candidates.length >= 15) break;
+      }
 
-        // 제목에 음식명 앞 2~4글자가 포함된 결과 우선
-        const keyword = foodName.replace(/\s/g, "").slice(0, 4);
-        const matched = items.find(item => {
-          const title = (item.title || "").replace(/&amp;|&lt;|&gt;|<[^>]+>/g, "");
-          return title.includes(keyword);
-        });
-        const best = matched || items[0];
+      if (candidates.length > 0) {
+        // 관련성 점수 계산
+        const score = (item) => {
+          const title = (item.title || "")
+            .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+            .replace(/<[^>]+>/g, "");
+          let s = 0;
+          // 음식명 전체가 제목에 있으면 +3
+          if (title.includes(foodName)) s += 3;
+          // 음식명 앞 2글자가 있으면 +2
+          if (title.includes(nameChars.slice(0, 2))) s += 2;
+          // 음식명 앞 4글자가 있으면 +1 추가
+          if (nameChars.length >= 4 && title.includes(nameChars.slice(0, 4))) s += 1;
+          return s;
+        };
+
+        // 점수 내림차순 정렬 후 최고 후보 선택
+        candidates.sort((a, b) => score(b) - score(a));
+        const best = candidates[0];
         return res.json({ imageUrl: best.thumbnail, source: "naver", alt: clean });
       }
     } catch (err) {
