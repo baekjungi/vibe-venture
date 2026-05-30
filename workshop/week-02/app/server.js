@@ -75,12 +75,17 @@ function loadExcelSchools() {
     const wb = XLSX.readFile(EXCEL_PATH);
     const ws = wb.Sheets[wb.SheetNames[0]];
     const rows = XLSX.utils.sheet_to_json(ws, { defval: "" });
+    // 보안: xlsx에 알려진 prototype pollution 취약점(GHSA-4r6h-8v6p-xvw6)이 있으나
+    // 이 앱은 사용자 입력이 아닌 신뢰된 정적 파일만 로드하고, 아래처럼 고정 키로만
+    // 접근하므로 실제 위험은 없음. 그래도 위험 키는 명시적으로 차단한다.
+    const DANGEROUS_KEYS = new Set(["__proto__", "constructor", "prototype"]);
     for (const row of rows) {
       const regionCode = String(row["시도교육청코드"] || "").trim();
-      const schoolCode = String(row["행정표준코드"] || "").trim();
-      const schoolName = String(row["학교명"] || "").trim();
-      const schoolType = String(row["학교종류명"] || "").trim();
+      const schoolCode = String(row["행정표준코드"]   || "").trim();
+      const schoolName = String(row["학교명"]         || "").trim();
+      const schoolType = String(row["학교종류명"]     || "").trim();
       if (!regionCode || !schoolCode || !schoolName) continue;
+      if (DANGEROUS_KEYS.has(regionCode) || DANGEROUS_KEYS.has(schoolCode)) continue;
       if (!excelSchoolMap.has(regionCode)) excelSchoolMap.set(regionCode, []);
       excelSchoolMap.get(regionCode).push({ schoolCode, schoolName, schoolType });
     }
@@ -155,9 +160,12 @@ function extractRows(data, key) {
 
 // ── 간단한 인메모리 Rate Limiter ─────────────────────────────────────────────
 const rateStore = new Map(); // ip → { count, resetAt }
-const RATE_WINDOW_MS = 60_000; // 1분
-const RATE_LIMIT_API  = 60;    // API 엔드포인트: 분당 60회
-const RATE_LIMIT_MEAL = 20;    // /api/meal: 분당 20회 (NEIS 키 보호)
+const RATE_WINDOW_MS  = 60_000; // 1분
+const RATE_LIMIT_API  = 60;     // API 엔드포인트: 분당 60회
+const RATE_LIMIT_MEAL = 20;     // /api/meal: 분당 20회 (NEIS 키 보호)
+const RATE_LIMIT_IMG  = 30;     // /api/food-image: 분당 30회 (Naver/Gemini 비용 보호)
+// 메모리 폭주 방지: rateStore 최대 항목 수 (LRU 비슷하게 가장 오래된 만료 후보 제거)
+const RATE_STORE_MAX = 10_000;
 
 function rateLimiter(maxPerWindow) {
   return (req, res, next) => {
@@ -169,6 +177,12 @@ function rateLimiter(maxPerWindow) {
     const entry = rateStore.get(key);
 
     if (!entry || now > entry.resetAt) {
+      // 메모리 보호: 항목 수가 너무 많으면 만료된 것 일괄 정리
+      if (rateStore.size >= RATE_STORE_MAX) {
+        for (const [k, v] of rateStore) {
+          if (now > v.resetAt) rateStore.delete(k);
+        }
+      }
       rateStore.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS });
       return next();
     }
@@ -202,19 +216,27 @@ app.set("trust proxy", 1);
 app.use((_req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
-  res.setHeader("X-XSS-Protection", "1; mode=block");
+  res.setHeader("X-XSS-Protection", "0"); // deprecated, 명시적 OFF가 권장 (구형 IE의 XSS 필터 부작용 방지)
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   res.setHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
-  // CSP: 외부 리소스 차단 (폰트 허용, 인라인 스타일/스크립트 불허)
+  // HSTS: HTTPS 강제 (Render는 자동 HTTPS, 1년 + 서브도메인 포함)
+  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  // 추가 격리 헤더
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  // CSP: 외부 리소스는 정확한 호스트만 허용 (img-src 와일드카드 제거)
   res.setHeader(
     "Content-Security-Policy",
     "default-src 'self'; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "script-src 'self'; " +
-    "img-src 'self' data: https: blob: https://search.pstatic.net https://image.pollinations.ai; " +
+    "img-src 'self' data: blob: https://*.pstatic.net https://image.pollinations.ai https://www.themealdb.com; " +
     "connect-src 'self'; " +
-    "frame-ancestors 'none';"
+    "frame-ancestors 'none'; " +
+    "base-uri 'self'; " +
+    "form-action 'self'; " +
+    "object-src 'none';"
   );
   next();
 });
@@ -255,7 +277,7 @@ app.get("/api/schools", rateLimiter(RATE_LIMIT_API), async (req, res) => {
     return res.json(schools);
   } catch (err) {
     console.error("[/api/schools]", err.message);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: "학교 목록을 가져오는 중 오류가 발생했습니다." });
   }
 });
 
@@ -316,8 +338,9 @@ app.get("/api/meal", rateLimiter(RATE_LIMIT_MEAL), async (req, res) => {
     return res.json(meals);
   } catch (err) {
     console.error("[/api/meal]", err.message);
+    // 클라이언트에는 일반화된 메시지만, 내부 오류 코드만 노출 (메시지/스택 비공개)
     const safe = err.neisCode
-      ? `NEIS 오류 (${err.neisCode}): ${err.message}`
+      ? `급식 정보를 가져올 수 없습니다 (코드: ${err.neisCode})`
       : "급식 정보를 가져오는 중 오류가 발생했습니다.";
     return res.status(500).json({ error: safe });
   }
@@ -441,7 +464,7 @@ ${titleList}
   return null;
 }
 
-app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
+app.get("/api/food-image", rateLimiter(RATE_LIMIT_IMG), async (req, res) => {
   // 입력 검증: 타입·길이 제한으로 업스트림 API 비용 폭주 / DoS 방지
   let { name = "" } = req.query;
   if (typeof name !== "string") {
@@ -543,6 +566,20 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
   const imageUrl = `https://image.pollinations.ai/prompt/${prompt}?width=400&height=300&seed=${seed}&nologo=true`;
 
   return res.json({ imageUrl, source: "ai-generated", alt: clean });
+});
+
+// ── 404 / 글로벌 에러 핸들러 (스택 노출 방지) ────────────────────────────────
+app.use((req, res) => {
+  if (req.path.startsWith("/api/")) {
+    return res.status(404).json({ error: "요청한 API를 찾을 수 없습니다." });
+  }
+  res.status(404).send("Not Found");
+});
+
+// eslint-disable-next-line no-unused-vars
+app.use((err, _req, res, _next) => {
+  console.error("[unhandled]", err && err.stack ? err.stack : err);
+  res.status(500).json({ error: "서버 내부 오류가 발생했습니다." });
 });
 
 // ── 서버 시작 (로컬/Render) 또는 서버리스 export (Vercel) ────────────────────

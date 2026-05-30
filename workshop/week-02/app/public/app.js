@@ -853,10 +853,10 @@ function renderFeedbacks() {
   el.innerHTML = list.map(f => `
     <div class="feedback-item">
       <div class="feedback-item-header">
-        <span class="feedback-badge">${TYPE_LABEL[f.type] || "💭 기타"}</span>
-        <span class="feedback-item-time">${f.time}</span>
+        <span class="feedback-badge">${escHtml(TYPE_LABEL[f.type] || "💭 기타")}</span>
+        <span class="feedback-item-time">${escHtml(f.time || "")}</span>
       </div>
-      <div class="feedback-item-text">${escHtml(f.text)}</div>
+      <div class="feedback-item-text">${escHtml(f.text || "")}</div>
     </div>
   `).join("");
 }
@@ -876,11 +876,15 @@ if (feedbackForm) {
     e.preventDefault();
     const text = feedbackText.value.trim();
     if (!text) { feedbackText.focus(); return; }
-    const type = document.getElementById("feedback-type").value;
+    // 길이 제한: localStorage 폭주/UI 깨짐 방지 (XSS는 escHtml로 별도 차단)
+    const safeText = text.slice(0, 500);
+    const rawType = document.getElementById("feedback-type").value;
+    // 타입 화이트리스트: 정해진 값만 허용
+    const type = ["bug", "suggestion", "compliment", "other"].includes(rawType) ? rawType : "other";
     const now = new Date();
     const time = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
     const list = loadFeedbacks();
-    list.unshift({ type, text, time });
+    list.unshift({ type, text: safeText, time });
     saveFeedbacks(list);
     feedbackText.value = "";
     feedbackChar.textContent = "0 / 500";
