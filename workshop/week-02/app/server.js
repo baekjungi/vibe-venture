@@ -104,21 +104,36 @@ function callNeisApi(endpoint, params) {
   }
   const qs = new URLSearchParams({ KEY: apiKey, Type: "json", pIndex: "1", pSize: "1000", ...params });
   const url = `https://open.neis.go.kr/hub/${endpoint}?${qs}`;
+  const TIMEOUT_MS = 7000;
+  const MAX_BODY_BYTES = 5 * 1024 * 1024; // 5MB 응답 크기 상한 (메모리 보호)
 
   return new Promise((resolve, reject) => {
-    https
-      .get(url, { headers: { "User-Agent": "school-meal-webapp/1.0" } }, (res) => {
+    const req = https.get(
+      url,
+      { headers: { "User-Agent": "school-meal-webapp/1.0" }, timeout: TIMEOUT_MS },
+      (res) => {
         let body = "";
-        res.on("data", (chunk) => (body += chunk));
-        res.on("end", () => {
-          try {
-            resolve(JSON.parse(body));
-          } catch {
-            reject(new Error("응답 파싱 실패"));
+        let bytes = 0;
+        res.on("data", (chunk) => {
+          bytes += chunk.length;
+          if (bytes > MAX_BODY_BYTES) {
+            res.destroy();
+            reject(new Error("응답이 너무 큽니다."));
+            return;
           }
+          body += chunk;
         });
-      })
-      .on("error", reject);
+        res.on("end", () => {
+          try { resolve(JSON.parse(body)); }
+          catch { reject(new Error("응답 파싱 실패")); }
+        });
+        res.on("error", reject);
+      }
+    );
+    req.on("timeout", () => {
+      req.destroy(new Error("NEIS API 응답 시간 초과"));
+    });
+    req.on("error", reject);
   });
 }
 
@@ -408,6 +423,7 @@ ${titleList}
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: { maxOutputTokens: 5, temperature: 0 },
         }),
+        signal: AbortSignal.timeout(5000),
       }
     );
     if (!aiRes.ok) return null;
@@ -471,6 +487,7 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
               "X-Naver-Client-Id": naverClientId,
               "X-Naver-Client-Secret": naverClientSecret,
             },
+            signal: AbortSignal.timeout(5000),
           }
         );
         if (!naverRes.ok) continue;
