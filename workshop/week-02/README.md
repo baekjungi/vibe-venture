@@ -57,3 +57,94 @@
 - 보안 주의사항:
   - 검색용 API 키는 화면에 노출시키면 안됨
   - 검색용 API 키는 애플리케이션 안에 저장하면 안됨
+
+---
+
+## 학교 급식 검색 웹 앱 (`app/`)
+
+지역 → 학교 → 날짜를 선택하면 해당 날짜의 급식 정보를 보여주는 웹 애플리케이션입니다.  
+NEIS Open API를 서버에서 프록시하여 **API 키가 브라우저에 절대 노출되지 않습니다.**
+
+### 기술 스택
+
+| 구분 | 사용 기술 |
+|------|-----------|
+| 서버 | Node.js + Express |
+| 클라이언트 | 바닐라 HTML / CSS / JS |
+| 급식 API | [NEIS Open API](https://open.neis.go.kr) |
+| 이미지 AI | Naver 이미지 검색 + Gemini AI 관련성 평가 |
+| 배포 | Render.com |
+
+### 사전 준비
+
+1. **NEIS API 키 발급** — [https://open.neis.go.kr](https://open.neis.go.kr/portal/guide/actKeyPage.do)  
+2. **Naver 검색 API 키 발급** (선택) — [Naver Developers](https://developers.naver.com/apps/#/register)  
+3. **Gemini API 키 발급** (선택) — [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+### 실행 방법
+
+```bash
+# 1. 앱 디렉토리로 이동
+cd workshop/week-02/app
+
+# 2. 의존성 설치
+npm install
+
+# 3. 환경 변수 설정
+cp .env.example .env
+# .env 파일을 열어 실제 API 키 입력
+#   NEIS_API_KEY=발급받은_NEIS_키
+#   NAVER_CLIENT_ID=네이버_클라이언트_ID        (선택)
+#   NAVER_CLIENT_SECRET=네이버_클라이언트_시크릿 (선택)
+#   GEMINI_API_KEY=제미나이_API_키              (선택)
+
+# 4-A. 운영 모드로 실행
+npm start
+# → http://localhost:3000
+
+# 4-B. 개발 모드로 실행 (파일 변경 시 자동 재시작)
+npm run dev
+# → http://localhost:3000
+```
+
+> **보안**: `.env` 파일은 절대 Git에 커밋하지 마세요. `.gitignore`에 이미 등록되어 있습니다.
+
+### 테스트 방법
+
+```bash
+# 앱 디렉토리에서 실행
+cd workshop/week-02/app
+
+# 전체 테스트 실행 (단위 + 통합)
+npm test
+
+# 단위 테스트만
+npm run test:unit
+
+# 통합 테스트만
+npm run test:integration
+
+# 커버리지 리포트 포함
+npm run test:coverage
+
+# 파일 변경 감지 모드 (개발 중 실시간 실행)
+npm run test:watch
+```
+
+#### 테스트 구조
+
+```
+app/__tests__/
+├── unit/                          # 단위 테스트 — 분기 로직 · 보안 검증
+│   ├── extractRows.test.js        # NEIS 응답 파싱 (정상·빈값·에러 5개 분기)
+│   ├── getCategoryFallback.test.js # 카테고리 regex 우선순위 edge case
+│   └── inputValidation.test.js    # 입력값 보안 검증 (정규식·길이·제어문자)
+└── integration/                   # 통합 테스트 — 실제 HTTP 요청/응답
+    ├── api.regions.test.js        # GET /api/regions
+    ├── api.schools.test.js        # GET /api/schools (입력 검증 포함)
+    ├── api.meal.test.js           # GET /api/meal (NEIS mock, 날짜 분기)
+    ├── api.foodImage.test.js      # GET /api/food-image (Naver+Gemini mock, 폴백 분기)
+    └── security.headers.test.js  # CSP·HSTS·Rate Limit 보안 헤더 검증
+```
+
+> 통합 테스트는 외부 API(NEIS, Naver, Gemini)를 mock으로 대체하므로 **API 키 없이 실행 가능**합니다.
