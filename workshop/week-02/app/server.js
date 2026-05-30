@@ -426,8 +426,20 @@ ${titleList}
 }
 
 app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
-  const { name = "" } = req.query;
+  // 입력 검증: 타입·길이 제한으로 업스트림 API 비용 폭주 / DoS 방지
+  let { name = "" } = req.query;
+  if (typeof name !== "string") {
+    return res.status(400).json({ error: "name 파라미터는 문자열이어야 합니다." });
+  }
+  if (name.length > 50) {
+    return res.status(400).json({ error: "name 파라미터가 너무 깁니다 (최대 50자)." });
+  }
+  // 제어문자 제거 (인젝션/로그 위조 방지)
+  name = name.replace(/[\u0000-\u001F\u007F]/g, "");
   const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
+  if (!clean) {
+    return res.json({ imageUrl: null, source: "none", alt: "" });
+  }
 
   const naverClientId = process.env.NAVER_CLIENT_ID;
   const naverClientSecret = process.env.NAVER_CLIENT_SECRET;
