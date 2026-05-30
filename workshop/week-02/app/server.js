@@ -146,7 +146,9 @@ const RATE_LIMIT_MEAL = 20;    // /api/meal: 분당 20회 (NEIS 키 보호)
 
 function rateLimiter(maxPerWindow) {
   return (req, res, next) => {
-    const ip = req.socket.remoteAddress || "unknown";
+    // Render/Vercel 등 리버스 프록시 뒤에서는 req.ip(=X-Forwarded-For 첫 번째)를 사용해야
+    // 클라이언트 IP별로 정확히 카운트된다. trust proxy 설정과 함께 동작.
+    const ip = req.ip || req.socket.remoteAddress || "unknown";
     const key = `${ip}:${req.path}`;
     const now = Date.now();
     const entry = rateStore.get(key);
@@ -174,6 +176,12 @@ setInterval(() => {
 
 // ── Express 앱 설정 ──────────────────────────────────────────────────────────
 const app = express();
+
+// 리버스 프록시(Render/Vercel) 뒤에서 실제 클라이언트 IP를 인식하도록 설정.
+// rate limiter가 req.ip를 통해 X-Forwarded-For 첫 번째 IP를 사용하여
+// 단일 게이트웨이 IP로 모든 사용자가 한 카운터를 공유하는 문제를 방지한다.
+// 값 1 = 바로 앞 프록시 1단계만 신뢰 (위조 방지).
+app.set("trust proxy", 1);
 
 // 보안 HTTP 헤더 (helmet 미사용, 직접 설정)
 app.use((_req, res, next) => {
