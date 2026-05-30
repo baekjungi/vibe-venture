@@ -1,0 +1,16 @@
+# Azure Developer CLI 설정 파일
+# 사용법:
+#   azd auth login
+#   azd env new <env-name>
+#   azd env set NEIS_API_KEY <your-key>   # 필수
+#   azd up                                # provision + deploy
+#   azd down                              # 리소스 삭제
+name: school-meal-app
+
+services:
+  app:
+    project: ./workshop/week-02/app
+    host: containerapp
+    docker:
+      path: ./workshop/week-02/app/Dockerfile
+      context: ./workshop/week-02/app
