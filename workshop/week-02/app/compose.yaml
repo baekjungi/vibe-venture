@@ -1,0 +1,80 @@
+# Docker Compose — 전국 학교 급식 정보 검색 웹앱
+#
+# 사용법:
+#   cp .env.example .env        # .env에 실제 API 키 입력
+#   docker compose up           # 운영 모드 (이미지 빌드 포함)
+#   docker compose up --watch   # 개발 모드 (파일 변경 시 자동 동기화)
+#   docker compose down         # 컨테이너 중지 + 제거
+
+services:
+  app:
+    # ── 빌드 설정 ──────────────────────────────────────────────────────────────
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # 캐시 재사용을 위한 이미지 태그
+      tags:
+        - "school-meal-app:local"
+
+    # ── 이미지 이름 (레지스트리 push 시 사용) ─────────────────────────────────
+    image: school-meal-app:local
+
+    # ── 포트 매핑 ──────────────────────────────────────────────────────────────
+    ports:
+      - "${PORT:-3000}:3000"
+
+    # ── 환경 변수 — API 키는 .env 파일에서만 로드 (이미지에 절대 포함 금지) ──
+    env_file:
+      - path: .env
+        required: false        # .env 없어도 실행 가능 (키 없으면 기능 제한)
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      # 아래 변수들은 .env 파일에 값을 입력하세요
+      # NEIS_API_KEY:
+      # NAVER_CLIENT_ID:
+      # NAVER_CLIENT_SECRET:
+      # GEMINI_API_KEY:
+
+    # ── 헬스체크 (Dockerfile HEALTHCHECK와 동일 기준) ─────────────────────────
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/regions"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    # ── 재시작 정책 ────────────────────────────────────────────────────────────
+    restart: unless-stopped
+
+    # ── 리소스 제한 (메모리 폭주 방어) ────────────────────────────────────────
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+          cpus: "0.5"
+        reservations:
+          memory: 64m
+
+    # ── 개발 모드: 파일 변경 감지 후 자동 동기화 (compose up --watch) ─────────
+    develop:
+      watch:
+        # 소스 파일 변경 → 컨테이너 내부에 즉시 sync (재빌드 없이)
+        - action: sync
+          path: ./public
+          target: /app/public
+        - action: sync
+          path: ./server.js
+          target: /app/server.js
+        # 의존성 변경 → 이미지 재빌드
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: package-lock.json
+
+    # ── 로깅 (컨테이너 로그 용량 제한) ───────────────────────────────────────
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
