@@ -1,0 +1,43 @@
+# 의존성 (컨테이너 안에서 npm ci로 새로 설치)
+node_modules/
+
+# 환경 변수 / 시크릿 (절대 이미지에 포함 금지)
+.env
+.env.*
+*.secret
+
+# 테스트 코드 (프로덕션 이미지 불필요)
+__tests__/
+jest.config.js
+*.test.js
+*.spec.js
+coverage/
+
+# 개발 전용 스크립트
+autostart.bat
+autostart.ps1
+start.bat
+start.ps1
+
+# 로그
+*.log
+logs/
+cf-tunnel.log
+tunnel.log
+
+# Git
+.git/
+.gitignore
+
+# CI / 배포 설정
+.github/
+vercel.json
+render.yaml
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# 문서 (README는 이미지에 불필요)
+README.md
