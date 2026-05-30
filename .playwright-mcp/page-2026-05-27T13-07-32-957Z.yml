@@ -1,0 +1,104 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - button "테마 전환" [ref=e4] [cursor=pointer]:
+        - generic [ref=e5]: 🌙
+      - heading "🍱 학교 급식 정보" [level=1] [ref=e6]
+      - paragraph [ref=e7]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: ✓ 1
+          - heading "지역 선택" [level=2] [ref=e12]
+        - combobox [ref=e14]:
+          - option "-- 시·도 교육청을 선택하세요 --"
+          - option "서울" [selected]
+          - option "부산"
+          - option "대구"
+          - option "인천"
+          - option "광주"
+          - option "대전"
+          - option "울산"
+          - option "세종"
+          - option "경기"
+          - option "강원"
+          - option "충북"
+          - option "충남"
+          - option "전북"
+          - option "전남"
+          - option "경북"
+          - option "경남"
+          - option "제주"
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: "2"
+          - heading "학교 선택" [level=2] [ref=e43]
+          - generic [ref=e44]: 1개
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - text: 🔍
+            - textbox "학교 이름으로 검색..." [active] [ref=e47]: 광성중
+          - generic [ref=e4057] [cursor=pointer]:
+            - generic [ref=e4058]: 광성중학교
+            - generic [ref=e4059]: 중학교
+            - button "즐겨찾기" [ref=e4060]: ★
+      - generic:
+        - generic:
+          - generic: "3"
+          - heading "날짜 선택" [level=2]
+        - generic:
+          - generic:
+            - button "📅 일간"
+            - button "📆 주간"
+          - generic:
+            - button "이전 날짜": ‹
+            - textbox [disabled]: 2026-05-27
+            - button "다음 날짜": ›
+          - button "🔍 급식 조회" [disabled]:
+            - generic: 🔍
+            - text: 급식 조회
+          - generic:
+            - text: 💡
+            - generic: Enter
+            - text: 로 빠르게 조회 ·
+            - generic: ←
+            - text: /
+            - generic: →
+            - text: 로 날짜 이동
+    - generic [ref=e4049]:
+      - generic [ref=e4052]: 📍 서울
+      - text: ›
+      - generic [ref=e4053]: 📅 2026-05-27
+    - text: ▶
+  - generic [ref=e16]:
+    - heading "💬 의견 남기기" [level=2] [ref=e17]
+    - paragraph [ref=e18]: 급식 앱을 사용해 보셨나요? 불편한 점이나 개선 사항을 알려주세요!
+    - generic [ref=e19]:
+      - combobox [ref=e21] [cursor=pointer]:
+        - option "🐛 오류 신고" [selected]
+        - option "💡 기능 제안"
+        - option "⭐ 칭찬"
+        - option "💭 기타"
+      - textbox "의견을 자유롭게 작성해 주세요..." [ref=e22]
+      - generic [ref=e23]:
+        - generic [ref=e24]: 0 / 500
+        - button "전송하기 ✈️" [ref=e25] [cursor=pointer]
+  - contentinfo [ref=e26]:
+    - generic [ref=e27]:
+      - generic [ref=e28]: 📌 출처 및 이용 정보
+      - list [ref=e29]:
+        - listitem [ref=e30]:
+          - strong [ref=e31]: 급식 데이터
+          - link "NEIS 교육정보 개방 포털" [ref=e32] [cursor=pointer]:
+            - /url: https://open.neis.go.kr
+          - text: — 나이스(NEIS) Open API, 교육부
+        - listitem [ref=e33]:
+          - strong [ref=e34]: 음식 이미지
+          - link "Pollinations.ai" [ref=e35] [cursor=pointer]:
+            - /url: https://pollinations.ai
+          - text: — AI 생성 이미지 (실제 음식과 다를 수 있음)
+        - listitem [ref=e36]:
+          - strong [ref=e37]: 학교 기본 정보
+          - link "NEIS 학교기본정보 API" [ref=e38] [cursor=pointer]:
+            - /url: https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010119743&infSeq=2
+      - paragraph [ref=e39]: 본 서비스는 공공 데이터를 활용한 비상업적 교육용 프로젝트입니다.

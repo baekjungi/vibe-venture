@@ -467,8 +467,8 @@ function openFoodModal(dishName) {
         foodModalSpinner.classList.add("hidden");
         const disc = foodModal.querySelector(".food-modal-disclaimer");
         if (disc) {
-          disc.textContent = data.source === "naver"
-            ? "📷 네이버 이미지 검색 결과"
+          disc.textContent = data.source === "naver" || data.source === "naver-ai"
+            ? (data.source === "naver-ai" ? "🤖 AI가 선택한 관련 이미지 (네이버)" : "📷 네이버 이미지 검색 결과")
             : "🤖 AI가 생성한 이미지로 실제와 다를 수 있습니다";
         }
       };

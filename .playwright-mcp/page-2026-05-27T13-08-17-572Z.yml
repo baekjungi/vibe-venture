@@ -1,0 +1,193 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - button "테마 전환" [ref=e4] [cursor=pointer]:
+        - generic [ref=e5]: 🌙
+      - heading "🍱 학교 급식 정보" [level=1] [ref=e6]
+      - paragraph [ref=e7]: 지역 · 학교 · 날짜를 선택하면 급식 메뉴를 알려드려요
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: ✓ 1
+          - heading "지역 선택" [level=2] [ref=e12]
+        - combobox [ref=e14]:
+          - option "-- 시·도 교육청을 선택하세요 --"
+          - option "서울" [selected]
+          - option "부산"
+          - option "대구"
+          - option "인천"
+          - option "광주"
+          - option "대전"
+          - option "울산"
+          - option "세종"
+          - option "경기"
+          - option "강원"
+          - option "충북"
+          - option "충남"
+          - option "전북"
+          - option "전남"
+          - option "경북"
+          - option "경남"
+          - option "제주"
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: ✓ 2
+          - heading "학교 선택" [level=2] [ref=e43]
+          - generic [ref=e44]: 1개
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - text: 🔍
+            - textbox "학교 이름으로 검색..." [ref=e47]: 광성중
+          - generic [ref=e4057] [cursor=pointer]:
+            - generic [ref=e4058]: 광성중학교
+            - generic [ref=e4059]: 중학교
+            - button "즐겨찾기" [ref=e4060]: ★
+            - text: ✓
+      - generic [ref=e4061]:
+        - generic [ref=e4062]:
+          - generic [ref=e4063]: "3"
+          - heading "날짜 선택" [level=2] [ref=e4064]
+        - generic [ref=e4065]:
+          - generic [ref=e4066]:
+            - button "📅 일간" [ref=e4067] [cursor=pointer]
+            - button "📆 주간" [ref=e4068] [cursor=pointer]
+          - generic [ref=e4069]:
+            - button "이전 날짜" [ref=e4070] [cursor=pointer]: ‹
+            - textbox [ref=e4071]: 2026-05-27
+            - button "다음 날짜" [ref=e4072] [cursor=pointer]: ›
+          - button "🔍 급식 조회" [active] [ref=e4073] [cursor=pointer]:
+            - generic [ref=e4074]: 🔍
+            - text: 급식 조회
+          - generic [ref=e4075]:
+            - text: 💡
+            - generic [ref=e4076]: Enter
+            - text: 로 빠르게 조회 ·
+            - generic [ref=e4077]: ←
+            - text: /
+            - generic [ref=e4078]: →
+            - text: 로 날짜 이동
+    - generic [ref=e4049]:
+      - generic [ref=e4079]: 📍 서울
+      - text: ›
+      - generic [ref=e4080]: 🏫 광성중학교
+      - text: ›
+      - generic [ref=e4081]: 📅 2026-05-27
+    - generic [ref=e4082]:
+      - generic [ref=e4083]:
+        - heading "🏫 광성중학교 · 2026년 05월 27일 (수)" [level=2] [ref=e4084]
+        - generic [ref=e4085]:
+          - button "🖨️" [ref=e4086] [cursor=pointer]
+          - button "🔗" [ref=e4087] [cursor=pointer]
+      - generic [ref=e4088]:
+        - generic [ref=e4089]:
+          - generic [ref=e4090]:
+            - generic [ref=e4091]: 🌅
+            - heading "조식" [level=3] [ref=e4092]
+            - generic [ref=e4093]: 👥 59명
+          - generic [ref=e4094]:
+            - list [ref=e4095]:
+              - listitem [ref=e4096] [cursor=pointer]: 쌀밥📷
+              - listitem [ref=e4097] [cursor=pointer]: 호박잎된장국 (5.6)📷
+              - listitem [ref=e4098] [cursor=pointer]: 우엉조림 (5.6.13)📷
+              - listitem [ref=e4099] [cursor=pointer]: 한돈 목살 스테이크 (5.6.10.12.13.16)📷
+              - listitem [ref=e4100] [cursor=pointer]: 배추김치 (9)📷
+              - listitem [ref=e4101] [cursor=pointer]: 과일 (11.12.13)📷
+            - generic [ref=e4103]:
+              - generic [ref=e4104]:
+                - text: 🔥
+                - strong [ref=e4105]: 1015.6 Kcal
+              - generic [ref=e4106]:
+                - text: 1일 권장 2400kcal 대비
+                - strong [ref=e4107]: 42%
+            - generic [ref=e4110]:
+              - generic [ref=e4111]:
+                - strong [ref=e4112]: 영양
+                - text: "탄수화물(g) : 157.9 · 단백질(g) : 39.0 · 지방(g) : 22.5 · 비타민A(R.E) : 156.1 · 티아민(mg) : 4.0 · 리보플라빈(mg) : 0.7 · 비타민C(mg) : 12.0 · 칼슘(mg) : 233.2 · 철분(mg) : 3.6"
+              - group [ref=e4113]:
+                - generic "▶ 원산지 정보" [ref=e4114] [cursor=pointer]
+        - generic [ref=e4115]:
+          - generic [ref=e4116]:
+            - generic [ref=e4117]: 🍚
+            - heading "중식" [level=3] [ref=e4118]
+            - generic [ref=e4119]: 👥 782명
+          - generic [ref=e4120]:
+            - list [ref=e4121]:
+              - listitem [ref=e4122] [cursor=pointer]: 수제밥버거 (1.2.5.6.9.10.15.16)📷
+              - listitem [ref=e4123] [cursor=pointer]: 어묵국 (1.5.6.7.13.18)📷
+              - listitem [ref=e4124] [cursor=pointer]: 오이피클(완)📷
+              - listitem [ref=e4125] [cursor=pointer]: 몬테크리스토튀김 (1.2.5.6.10)📷
+              - listitem [ref=e4126] [cursor=pointer]: 선택급식(우유&바나나우유) (2)📷
+            - generic [ref=e4128]:
+              - generic [ref=e4129]:
+                - text: 🔥
+                - strong [ref=e4130]: 1166.5 Kcal
+              - generic [ref=e4131]:
+                - text: 1일 권장 2400kcal 대비
+                - strong [ref=e4132]: 49%
+            - generic [ref=e4135]:
+              - generic [ref=e4136]:
+                - strong [ref=e4137]: 영양
+                - text: "탄수화물(g) : 148.9 · 단백질(g) : 34.7 · 지방(g) : 46.7 · 비타민A(R.E) : 188.6 · 티아민(mg) : 0.5 · 리보플라빈(mg) : 0.6 · 비타민C(mg) : 18.0 · 칼슘(mg) : 367.6 · 철분(mg) : 7.0"
+              - group [ref=e4138]:
+                - generic "▶ 원산지 정보" [ref=e4139] [cursor=pointer]
+        - generic [ref=e4140]:
+          - generic [ref=e4141]:
+            - generic [ref=e4142]: 🌙
+            - heading "석식" [level=3] [ref=e4143]
+            - generic [ref=e4144]: 👥 62명
+          - generic [ref=e4145]:
+            - list [ref=e4146]:
+              - listitem [ref=e4147] [cursor=pointer]: 현미밥📷
+              - listitem [ref=e4148] [cursor=pointer]: 김치비빔우동 (5.6.9.12.13)📷
+              - listitem [ref=e4149] [cursor=pointer]: 우거지된장국 (5.6)📷
+              - listitem [ref=e4150] [cursor=pointer]: 돼지고기수육 (5.6.10.13)📷
+              - listitem [ref=e4151] [cursor=pointer]: 배추겉절이 (9)📷
+              - listitem [ref=e4152] [cursor=pointer]: 쌈장 (5.6.9.13.18)📷
+              - listitem [ref=e4153] [cursor=pointer]: 매실주스📷
+            - generic [ref=e4155]:
+              - generic [ref=e4156]:
+                - text: 🔥
+                - strong [ref=e4157]: 1112.8 Kcal
+              - generic [ref=e4158]:
+                - text: 1일 권장 2400kcal 대비
+                - strong [ref=e4159]: 46%
+            - generic [ref=e4162]:
+              - generic [ref=e4163]:
+                - strong [ref=e4164]: 영양
+                - text: "탄수화물(g) : 85.2 · 단백질(g) : 60.9 · 지방(g) : 52.7 · 비타민A(R.E) : 79.4 · 티아민(mg) : 1.6 · 리보플라빈(mg) : 0.6 · 비타민C(mg) : 25.5 · 칼슘(mg) : 265.3 · 철분(mg) : 4.9"
+              - group [ref=e4165]:
+                - generic "▶ 원산지 정보" [ref=e4166] [cursor=pointer]
+      - group [ref=e4167]:
+        - generic "▶ 🥚 알레르기 정보 범례 보기" [ref=e4168] [cursor=pointer]
+  - generic [ref=e16]:
+    - heading "💬 의견 남기기" [level=2] [ref=e17]
+    - paragraph [ref=e18]: 급식 앱을 사용해 보셨나요? 불편한 점이나 개선 사항을 알려주세요!
+    - generic [ref=e19]:
+      - combobox [ref=e21] [cursor=pointer]:
+        - option "🐛 오류 신고" [selected]
+        - option "💡 기능 제안"
+        - option "⭐ 칭찬"
+        - option "💭 기타"
+      - textbox "의견을 자유롭게 작성해 주세요..." [ref=e22]
+      - generic [ref=e23]:
+        - generic [ref=e24]: 0 / 500
+        - button "전송하기 ✈️" [ref=e25] [cursor=pointer]
+  - contentinfo [ref=e26]:
+    - generic [ref=e27]:
+      - generic [ref=e28]: 📌 출처 및 이용 정보
+      - list [ref=e29]:
+        - listitem [ref=e30]:
+          - strong [ref=e31]: 급식 데이터
+          - link "NEIS 교육정보 개방 포털" [ref=e32] [cursor=pointer]:
+            - /url: https://open.neis.go.kr
+          - text: — 나이스(NEIS) Open API, 교육부
+        - listitem [ref=e33]:
+          - strong [ref=e34]: 음식 이미지
+          - link "Pollinations.ai" [ref=e35] [cursor=pointer]:
+            - /url: https://pollinations.ai
+          - text: — AI 생성 이미지 (실제 음식과 다를 수 있음)
+        - listitem [ref=e36]:
+          - strong [ref=e37]: 학교 기본 정보
+          - link "NEIS 학교기본정보 API" [ref=e38] [cursor=pointer]:
+            - /url: https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17020190531110010119743&infSeq=2
+      - paragraph [ref=e39]: 본 서비스는 공공 데이터를 활용한 비상업적 교육용 프로젝트입니다.

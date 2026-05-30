@@ -358,6 +358,47 @@ function getCategoryFallback(korName) {
   return CATEGORY_IMAGES.side;
 }
 
+// ── Gemini AI 이미지 관련성 평가 ─────────────────────────────
+async function pickBestImageWithAI(foodName, candidates) {
+  const geminiKey = process.env.GEMINI_API_KEY;
+  if (!geminiKey || candidates.length === 0) return null;
+
+  // 후보 목록 (최대 10개, 번호 + 제목)
+  const top = candidates.slice(0, 10);
+  const titleList = top.map((item, i) => {
+    const title = (item.title || "")
+      .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+      .replace(/<[^>]+>/g, "").trim();
+    return `${i + 1}. ${title}`;
+  }).join("\n");
+
+  const prompt = `다음은 네이버 이미지 검색 결과 제목 목록입니다.\n음식 이름: "${foodName}"\n\n${titleList}\n\n위 제목 중에서 "${foodName}" 음식 사진으로 가장 적합한 항목의 번호(숫자만)를 하나 답하세요. 관련 없는 항목만 있으면 1을 답하세요.`;
+
+  try {
+    const aiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { maxOutputTokens: 10, temperature: 0 },
+        }),
+      }
+    );
+    if (!aiRes.ok) return null;
+    const aiData = await aiRes.json();
+    const answer = (aiData?.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
+    const idx = parseInt(answer, 10);
+    if (!isNaN(idx) && idx >= 1 && idx <= top.length) {
+      return top[idx - 1];
+    }
+  } catch (err) {
+    console.warn("Gemini AI 평가 실패:", err.message);
+  }
+  return null;
+}
+
 app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
   const { name = "" } = req.query;
   const clean = name.replace(/\s*\([\d.,\s]+\.\)\s*/g, "").trim();
@@ -367,19 +408,16 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
 
   if (naverClientId && naverClientSecret) {
     try {
-      // 음식명 정규화: 괄호/숫자/특수문자 제거
+      // 음식명 정규화
       const foodName = clean
         .replace(/\(완\)|\(반\)|\(대\)|\(소\)/g, "")
         .replace(/[^\uAC00-\uD7A3a-zA-Z0-9\s]/g, "")
         .replace(/\s+/g, " ")
         .trim();
 
-      // 음식명을 의미 단위로 분리 (예: "김치볶음밥" → ["김치볶음밥","김치","볶음밥"])
       const nameChars = foodName.replace(/\s/g, "");
-      const searchTokens = [foodName];
-      if (nameChars.length >= 3) searchTokens.push(nameChars.slice(0, Math.ceil(nameChars.length / 2) + 1));
 
-      // 후보 이미지 수집: 최대 2가지 쿼리로 20개 후보 확보
+      // 후보 이미지 수집 (2가지 쿼리 × 10개 = 최대 20개)
       const queries = [`${foodName} 음식`, foodName];
       const candidates = [];
 
@@ -401,25 +439,25 @@ app.get("/api/food-image", rateLimiter(RATE_LIMIT_API), async (req, res) => {
       }
 
       if (candidates.length > 0) {
-        // 관련성 점수 계산
+        // 1차: Gemini AI 평가로 최적 선택
+        const aiPick = await pickBestImageWithAI(foodName, candidates);
+        if (aiPick) {
+          return res.json({ imageUrl: aiPick.thumbnail, source: "naver-ai", alt: clean });
+        }
+
+        // 2차 폴백: 제목 관련성 점수 기반 선택
         const score = (item) => {
           const title = (item.title || "")
             .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
             .replace(/<[^>]+>/g, "");
           let s = 0;
-          // 음식명 전체가 제목에 있으면 +3
           if (title.includes(foodName)) s += 3;
-          // 음식명 앞 2글자가 있으면 +2
           if (title.includes(nameChars.slice(0, 2))) s += 2;
-          // 음식명 앞 4글자가 있으면 +1 추가
           if (nameChars.length >= 4 && title.includes(nameChars.slice(0, 4))) s += 1;
           return s;
         };
-
-        // 점수 내림차순 정렬 후 최고 후보 선택
         candidates.sort((a, b) => score(b) - score(a));
-        const best = candidates[0];
-        return res.json({ imageUrl: best.thumbnail, source: "naver", alt: clean });
+        return res.json({ imageUrl: candidates[0].thumbnail, source: "naver", alt: clean });
       }
     } catch (err) {
       console.warn("네이버 이미지 검색 실패:", err.message);
