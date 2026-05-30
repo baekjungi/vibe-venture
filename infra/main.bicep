@@ -19,7 +19,9 @@ resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   tags: tags
 }
 
-// ── Phase 1: ACR + Log Analytics + Container Apps Env + Container App ─────────
+// ── ACR + Log Analytics + Container Apps Env + Container App ─────────────────
+// Note: AcrPull role assignment 제거 (Contributor 계정의 roleAssignments/write 제한)
+// 대신 ACR admin 자격증명으로 Container App registry 인증
 module resources './modules/resources.bicep' = {
   name: 'resources'
   scope: rg
@@ -32,16 +34,6 @@ module resources './modules/resources.bicep' = {
     naverClientId: naverClientId
     naverClientSecret: naverClientSecret
     geminiApiKey: geminiApiKey
-  }
-}
-
-// ── Phase 2: AcrPull role (separate module — no circular dependency) ──────────
-module acrPullRole './modules/acr-pull-role.bicep' = {
-  name: 'acrPullRole'
-  scope: rg
-  params: {
-    acrName: resources.outputs.acrName
-    principalId: resources.outputs.containerAppPrincipalId
   }
 }
 
@@ -67,3 +59,4 @@ output AZURE_RESOURCE_GROUP string = rg.name
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = resources.outputs.acrLoginServer
 output AZURE_CONTAINER_REGISTRY_NAME string = resources.outputs.acrName
 output SERVICE_APP_URI string = resources.outputs.containerAppUri
+output CONTAINER_APP_NAME string = resources.outputs.containerAppName

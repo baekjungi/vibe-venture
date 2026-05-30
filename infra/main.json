@@ -1,0 +1,344 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.43.8.12551",
+      "templateHash": "13336665213808053543"
+    }
+  },
+  "parameters": {
+    "environmentName": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64,
+      "metadata": {
+        "description": "Name of the environment (e.g. dev, prod). Min 3 chars required for ACR name uniqueness."
+      }
+    },
+    "location": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Azure region for all resources"
+      }
+    },
+    "neisApiKey": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "NEIS Open API key (required)"
+      }
+    },
+    "naverClientId": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Naver API Client ID (optional)"
+      }
+    },
+    "naverClientSecret": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Naver API Client Secret (optional)"
+      }
+    },
+    "geminiApiKey": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Google Gemini API key (optional)"
+      }
+    }
+  },
+  "variables": {
+    "resourceSuffix": "[take(uniqueString(subscription().id, parameters('environmentName'), parameters('location')), 6)]",
+    "tags": {
+      "azd-env-name": "[parameters('environmentName')]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2023-07-01",
+      "name": "[format('rg-{0}', parameters('environmentName'))]",
+      "location": "[parameters('location')]",
+      "tags": "[variables('tags')]"
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "resources",
+      "resourceGroup": "[format('rg-{0}', parameters('environmentName'))]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "environmentName": {
+            "value": "[parameters('environmentName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "resourceSuffix": {
+            "value": "[variables('resourceSuffix')]"
+          },
+          "tags": {
+            "value": "[variables('tags')]"
+          },
+          "neisApiKey": {
+            "value": "[parameters('neisApiKey')]"
+          },
+          "naverClientId": {
+            "value": "[parameters('naverClientId')]"
+          },
+          "naverClientSecret": {
+            "value": "[parameters('naverClientSecret')]"
+          },
+          "geminiApiKey": {
+            "value": "[parameters('geminiApiKey')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.43.8.12551",
+              "templateHash": "12240776691666981174"
+            }
+          },
+          "parameters": {
+            "environmentName": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            },
+            "resourceSuffix": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {}
+            },
+            "neisApiKey": {
+              "type": "securestring",
+              "defaultValue": ""
+            },
+            "naverClientId": {
+              "type": "securestring",
+              "defaultValue": ""
+            },
+            "naverClientSecret": {
+              "type": "securestring",
+              "defaultValue": ""
+            },
+            "geminiApiKey": {
+              "type": "securestring",
+              "defaultValue": ""
+            }
+          },
+          "variables": {
+            "acrName": "[replace(format('cr{0}{1}', parameters('environmentName'), parameters('resourceSuffix')), '-', '')]",
+            "baseSecrets": [
+              {
+                "name": "neis-api-key",
+                "value": "[parameters('neisApiKey')]"
+              }
+            ],
+            "naverSecrets": "[if(empty(parameters('naverClientId')), createArray(), createArray(createObject('name', 'naver-client-id', 'value', parameters('naverClientId')), createObject('name', 'naver-client-secret', 'value', parameters('naverClientSecret'))))]",
+            "geminiSecrets": "[if(empty(parameters('geminiApiKey')), createArray(), createArray(createObject('name', 'gemini-api-key', 'value', parameters('geminiApiKey'))))]",
+            "allSecrets": "[concat(variables('baseSecrets'), variables('naverSecrets'), variables('geminiSecrets'))]",
+            "baseEnvVars": [
+              {
+                "name": "NODE_ENV",
+                "value": "production"
+              },
+              {
+                "name": "PORT",
+                "value": "3000"
+              },
+              {
+                "name": "NEIS_API_KEY",
+                "secretRef": "neis-api-key"
+              }
+            ],
+            "naverEnvVars": "[if(empty(parameters('naverClientId')), createArray(), createArray(createObject('name', 'NAVER_CLIENT_ID', 'secretRef', 'naver-client-id'), createObject('name', 'NAVER_CLIENT_SECRET', 'secretRef', 'naver-client-secret')))]",
+            "geminiEnvVars": "[if(empty(parameters('geminiApiKey')), createArray(), createArray(createObject('name', 'GEMINI_API_KEY', 'secretRef', 'gemini-api-key')))]",
+            "allEnvVars": "[concat(variables('baseEnvVars'), variables('naverEnvVars'), variables('geminiEnvVars'))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.ContainerRegistry/registries",
+              "apiVersion": "2023-07-01",
+              "name": "[take(variables('acrName'), 50)]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "sku": {
+                "name": "Basic"
+              },
+              "properties": {
+                "adminUserEnabled": true
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces",
+              "apiVersion": "2022-10-01",
+              "name": "[format('log-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix'))]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "sku": {
+                  "name": "PerGB2018"
+                },
+                "retentionInDays": 30
+              }
+            },
+            {
+              "type": "Microsoft.App/managedEnvironments",
+              "apiVersion": "2024-03-01",
+              "name": "[format('cae-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix'))]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "appLogsConfiguration": {
+                  "destination": "log-analytics",
+                  "logAnalyticsConfiguration": {
+                    "customerId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', format('log-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix'))), '2022-10-01').customerId]",
+                    "sharedKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', format('log-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix'))), '2022-10-01').primarySharedKey]"
+                  }
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.OperationalInsights/workspaces', format('log-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix')))]"
+              ]
+            },
+            {
+              "type": "Microsoft.App/containerApps",
+              "apiVersion": "2024-03-01",
+              "name": "[format('ca-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix'))]",
+              "location": "[parameters('location')]",
+              "tags": "[union(parameters('tags'), createObject('azd-service-name', 'app'))]",
+              "properties": {
+                "environmentId": "[resourceId('Microsoft.App/managedEnvironments', format('cae-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix')))]",
+                "configuration": {
+                  "ingress": {
+                    "external": true,
+                    "targetPort": 3000,
+                    "transport": "auto",
+                    "allowInsecure": false
+                  },
+                  "secrets": "[variables('allSecrets')]"
+                },
+                "template": {
+                  "containers": [
+                    {
+                      "name": "app",
+                      "image": "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",
+                      "resources": {
+                        "cpu": "[json('0.5')]",
+                        "memory": "1Gi"
+                      },
+                      "env": "[variables('allEnvVars')]",
+                      "probes": [
+                        {
+                          "type": "Liveness",
+                          "httpGet": {
+                            "path": "/api/regions",
+                            "port": 3000,
+                            "scheme": "HTTP"
+                          },
+                          "initialDelaySeconds": 15,
+                          "periodSeconds": 30,
+                          "failureThreshold": 3
+                        },
+                        {
+                          "type": "Readiness",
+                          "httpGet": {
+                            "path": "/api/regions",
+                            "port": 3000,
+                            "scheme": "HTTP"
+                          },
+                          "initialDelaySeconds": 5,
+                          "periodSeconds": 10,
+                          "failureThreshold": 3
+                        }
+                      ]
+                    }
+                  ],
+                  "scale": {
+                    "minReplicas": 0,
+                    "maxReplicas": 3,
+                    "rules": [
+                      {
+                        "name": "http-scaling",
+                        "http": {
+                          "metadata": {
+                            "concurrentRequests": "20"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.App/managedEnvironments', format('cae-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix')))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "acrName": {
+              "type": "string",
+              "value": "[take(variables('acrName'), 50)]"
+            },
+            "acrLoginServer": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries', take(variables('acrName'), 50)), '2023-07-01').loginServer]"
+            },
+            "containerAppUri": {
+              "type": "string",
+              "value": "[format('https://{0}', reference(resourceId('Microsoft.App/containerApps', format('ca-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix'))), '2024-03-01').configuration.ingress.fqdn)]"
+            },
+            "containerAppName": {
+              "type": "string",
+              "value": "[format('ca-{0}-{1}', parameters('environmentName'), parameters('resourceSuffix'))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('rg-{0}', parameters('environmentName')))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "AZURE_RESOURCE_GROUP": {
+      "type": "string",
+      "value": "[format('rg-{0}', parameters('environmentName'))]"
+    },
+    "AZURE_CONTAINER_REGISTRY_ENDPOINT": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('rg-{0}', parameters('environmentName'))), 'Microsoft.Resources/deployments', 'resources'), '2025-04-01').outputs.acrLoginServer.value]"
+    },
+    "AZURE_CONTAINER_REGISTRY_NAME": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('rg-{0}', parameters('environmentName'))), 'Microsoft.Resources/deployments', 'resources'), '2025-04-01').outputs.acrName.value]"
+    },
+    "SERVICE_APP_URI": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('rg-{0}', parameters('environmentName'))), 'Microsoft.Resources/deployments', 'resources'), '2025-04-01').outputs.containerAppUri.value]"
+    },
+    "CONTAINER_APP_NAME": {
+      "type": "string",
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('rg-{0}', parameters('environmentName'))), 'Microsoft.Resources/deployments', 'resources'), '2025-04-01').outputs.containerAppName.value]"
+    }
+  }
+}
