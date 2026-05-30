@@ -68,11 +68,17 @@ describe("GET /api/food-image — Naver + Gemini mock", () => {
 
 describe("GET /api/food-image — Naver 실패 시 Pollinations 폴백", () => {
   let spy;
+  let warnSpy;
 
   beforeEach(() => {
     spy = jest.spyOn(global, "fetch").mockRejectedValue(new Error("네트워크 오류"));
+    // 의도된 실패이므로 console.warn 출력 억제
+    warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
   });
-  afterEach(() => { spy.mockRestore(); });
+  afterEach(() => {
+    spy.mockRestore();
+    warnSpy.mockRestore();
+  });
 
   test("네트워크 오류 시 Pollinations URL 반환", async () => {
     const res = await request(app).get("/api/food-image?name=김치찌개");

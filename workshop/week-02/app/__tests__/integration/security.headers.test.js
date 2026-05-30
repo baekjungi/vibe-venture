@@ -3,7 +3,7 @@
 const request = require("supertest");
 const app     = require("../../server");
 
-const ENDPOINTS = ["/api/regions", "/api/schools?regionCode=B10"];
+const ENDPOINTS = ["/api/regions", "/api/schools?regionCode=D10"];
 
 describe("보안 헤더 검증", () => {
   // 모든 공개 엔드포인트에 보안 헤더 적용 확인

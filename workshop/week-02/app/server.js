@@ -196,12 +196,13 @@ function rateLimiter(maxPerWindow) {
 }
 
 // 메모리 누수 방지: 만료된 항목 주기적 정리
+// .unref()로 이 타이머가 Node.js 이벤트 루프를 붙잡지 않도록 설정 (Jest 종료 허용)
 setInterval(() => {
   const now = Date.now();
   for (const [key, val] of rateStore) {
     if (now > val.resetAt) rateStore.delete(key);
   }
-}, RATE_WINDOW_MS);
+}, RATE_WINDOW_MS).unref();
 
 // ── Express 앱 설정 ──────────────────────────────────────────────────────────
 const app = express();
