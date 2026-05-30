@@ -1,0 +1,29 @@
+{
+  "lastBuildDate": "Mon, 27 May 2024 10:00:00 +0900",
+  "total": 3,
+  "start": 1,
+  "display": 3,
+  "items": [
+    {
+      "title": "맛있는 <b>김치찌개</b> 만드는 법",
+      "link": "https://example.com/1",
+      "thumbnail": "https://search.pstatic.net/common/?src=test1.jpg&type=m260",
+      "sizeheight": "260",
+      "sizewidth": "260"
+    },
+    {
+      "title": "<b>김치찌개</b> 레시피",
+      "link": "https://example.com/2",
+      "thumbnail": "https://search.pstatic.net/common/?src=test2.jpg&type=m260",
+      "sizeheight": "260",
+      "sizewidth": "260"
+    },
+    {
+      "title": "한국 음식 모음",
+      "link": "https://example.com/3",
+      "thumbnail": "https://search.pstatic.net/common/?src=test3.jpg&type=m260",
+      "sizeheight": "260",
+      "sizewidth": "260"
+    }
+  ]
+}

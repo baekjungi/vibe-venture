@@ -596,3 +596,8 @@ if (require.main === module) {
 }
 
 module.exports = app;
+
+// 테스트에서 순수 함수를 직접 임포트할 수 있도록 named export
+module.exports.extractFoodCore    = extractFoodCore;
+module.exports.extractRows        = extractRows;
+module.exports.getCategoryFallback = getCategoryFallback;

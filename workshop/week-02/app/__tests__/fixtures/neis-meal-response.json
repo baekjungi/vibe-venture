@@ -1,0 +1,30 @@
+{
+  "mealServiceDietInfo": [
+    {
+      "head": [
+        { "list_total_count": 1 },
+        { "RESULT": { "CODE": "INFO-000", "MESSAGE": "정상 처리되었습니다." } }
+      ]
+    },
+    {
+      "row": [
+        {
+          "ATPT_OFCDC_SC_CODE": "B10",
+          "ATPT_OFCDC_SC_NM":   "서울특별시교육청",
+          "SD_SCHUL_CODE":       "7010057",
+          "SCHUL_NM":            "테스트초등학교",
+          "MMEAL_SC_CODE":       "2",
+          "MMEAL_SC_NM":         "중식",
+          "MLSV_YMD":            "20240304",
+          "DDISH_NM":            "쌀밥<br/>김치찌개(5.9.13.)<br/>제육볶음(2.5.6.10.13.)<br/>배추김치(9.13.)",
+          "ORPLC_INFO":          "쌀 : 국내산<br/>돼지고기 : 국내산",
+          "CAL_INFO":            "887.8 Kcal",
+          "NTR_INFO":            "탄수화물(g) : 134.1<br/>단백질(g) : 35.6<br/>지방(g) : 26.5",
+          "MLSV_FGR":            "320",
+          "MLSV_FROM_YMD":       "20240304",
+          "MLSV_TO_YMD":         "20240304"
+        }
+      ]
+    }
+  ]
+}
