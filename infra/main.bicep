@@ -1,8 +1,8 @@
 targetScope = 'subscription'
 
-@minLength(1)
+@minLength(3)
 @maxLength(64)
-@description('Name of the environment (e.g. dev, prod)')
+@description('Name of the environment (e.g. dev, prod). Min 3 chars required for ACR name uniqueness.')
 param environmentName string
 
 @minLength(1)

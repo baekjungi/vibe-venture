@@ -10,7 +10,8 @@ name: school-meal-app
 services:
   app:
     project: ./workshop/week-02/app
+    language: js
     host: containerapp
     docker:
-      path: ./workshop/week-02/app/Dockerfile
-      context: ./workshop/week-02/app
+      path: Dockerfile
+      context: .

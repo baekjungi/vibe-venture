@@ -1,6 +1,6 @@
 # Deployment Plan — School Meal App
 
-**Status:** Ready for Validation
+**Status:** Validated
 
 ## App Summary
 - **Name:** school-meal-app
@@ -21,8 +21,11 @@
 ## Recipe
 - **IaC:** Bicep (azd default)
 - **Deployment tool:** `azd`
+- **Environment:** `school-meal-m9p2`
+- **Subscription:** 왕선중 백준기 (`e76a2d60-1461-4a8b-9577-7c298f4dbe0d`)
+- **Location:** `koreacentral`
 
-## Files to Create
+## Files Created
 | File | Purpose |
 |------|---------|
 | `azure.yaml` | azd project config |
@@ -38,3 +41,15 @@
 - [x] azure.yaml generated
 - [x] Security hardened (Managed Identity, secrets via Container Apps secrets, no adminUser)
 - [x] Plan status → Ready for Validation
+
+## Section 7: Validation Proof
+
+| Check | Command | Result |
+|-------|---------|--------|
+| azd installed | `azd version` | v1.25.1 ✅ |
+| Auth check | `azd auth login --check-status` | Logged in as beakjg2013@innodgvibeventure.onmicrosoft.com ✅ |
+| azure.yaml schema | `azd validate_azure_yaml` | Valid ✅ |
+| Environment setup | `azd env new school-meal-m9p2` | Created ✅ |
+| Bicep build | `az bicep build --file infra/main.bicep` | Success (warning only: BCP334 static analysis, no runtime impact) ✅ |
+| Provision preview | `azd provision --preview --no-prompt` | 5 resources previewed: rg, ACR, Log Analytics, ContainerApps Env, Container App ✅ |
+| Package build | `azd package --no-prompt` | Docker image `school-meal-app/app-school-meal-m9p2:azd-deploy-*` built ✅ |
