@@ -12,3 +12,10 @@ services:
         value: 10000
     healthCheckPath: /api/regions
     autoDeploy: true
+
+  - type: web
+    name: hourglass-hollow
+    runtime: static
+    rootDir: workshop/hourglass-hollow
+    staticPublishPath: .
+    autoDeploy: true
