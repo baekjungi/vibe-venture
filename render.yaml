@@ -7,7 +7,7 @@ services:
     startCommand: node server.js
     envVars:
       - key: NEIS_API_KEY
-        sync: false          # 대시보드에서 직접 입력 (코드에 노출 안 됨)
+        sync: false
       - key: PORT
         value: 10000
     healthCheckPath: /api/regions
@@ -15,7 +15,11 @@ services:
 
   - type: web
     name: hourglass-hollow
-    runtime: static
+    runtime: node
     rootDir: workshop/hourglass-hollow
-    staticPublishPath: .
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 8766
     autoDeploy: true
